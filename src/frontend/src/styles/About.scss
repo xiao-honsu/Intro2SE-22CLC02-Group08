@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+.about-community-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin: 20px;
+  }
+  
+  
+  .about-section {
+    background: linear-gradient(to bottom, #ff9800, #ffc107);
+    border-radius: 20px;
+    padding: 40px;
+    margin: 2rem 6rem;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .about-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 20px;
+  }
+  
+  .about-content p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
+    line-height: 1.6;
+    text-align: justify; 
+    font-family: Jua;
+  }
+  
+  
+  .community-section {
+    margin: 2rem 6rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    background: #8ECAE3;
+    border-radius: 20px;
+    padding: 40px;
+    color: white;
+    height: 24rem;
+  }
+  
+  
+  .community-messages {
+    flex: 1; 
+    position: relative;
+  }
+  
+  .community-bubble {
+    width: 80%;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: white;
+    color: black;
+    border: 2px solid #000;
+    border-radius: 40px;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+    position: absolute; 
+  }
+  
+  .community-bubble.hitori {
+    top: 0;
+    left: 6rem;
+  }
+  
+  .community-bubble.ryo {
+    top: 5rem;
+    left: 0;
+  }
+  
+  .community-bubble.nijika {
+    top: 10rem;
+    left: 5rem;
+  }
+  
+  .community-bubble.ikuyo {
+    top: 15rem;
+    left: 1rem;
+  }
+
+  .community-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  
+  .community-text {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  
+ 
+  .community-info {
+    flex: 1; 
+    text-align: justify;
+  }
+  
+  .community-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #FB8500;
+  }
+  
+  .community-info p {
+    font-size: 16px;
+    margin-bottom: 15px;
+    line-height: 1.6;
+    font-family: Jua;
+    color: #FB8500;
+  }
+  
+ 
+  @media (max-width: 768px) {
+    .community-section {
+      flex-direction: column;
+    }
+  }

@@ -1,0 +1,156 @@
+.main-container {
+  height: 100vh; 
+  margin: 0; 
+  padding: 0; 
+  display: flex;
+  flex-direction: column; 
+ 
+}
+
+
+.header-wrapper {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #fff; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.home-container {
+  padding-top: 60px;
+  width: 100%;
+
+  @media (max-width: 1024px) {
+    padding-top: 50px;
+  }
+}
+
+.category-nav {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  gap: 2rem;
+  background-color: #023047;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-item {
+    flex-shrink: 0;
+    .nav-link {
+      color: #FFB703;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 14px;
+      text-decoration: none;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+}
+
+
+.homepage-most-searched-container {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 3rem;
+  
+  @media (max-width: 576px) {
+    padding: 0;
+    
+  }
+}
+
+
+
+.product-list-container {
+  padding: 3rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.product-list-title {
+  margin: 2.5rem auto;
+  color: #FB8500; 
+  font-weight: bold;
+  font-size: 24px;
+  text-align: center; 
+}
+
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 col */
+  gap: 2rem; 
+}
+
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 col trên màn hình nhỏ */
+  }
+}
+
+@media (max-width: 576px) {
+  .product-grid {
+    grid-template-columns: repeat(1, 1fr); /* 1 col trên màn hình rất nhỏ */
+  }
+}
+
+
+
+.recommendation-banner {
+  background-color: #04293A; 
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  margin: 6rem 0;
+}
+
+.recommendation-text {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.sign-in-button {
+  background-color: #FB8500;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 15px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.sign-in-button:hover {
+  background-color: #FFB703; 
+}
+
+.new-customer-text {
+  font-size: 14px;
+  margin-top: 10px;
+  color: white;
+}
+
+.start-here-link {
+  color: #FB8500;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.start-here-link:hover {
+  text-decoration: underline;
+}

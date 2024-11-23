@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+.banner-container {
+    position: relative;
+    width: 100%;
+    height: 500px; 
+    overflow: hidden;
+  
+    /* cố định */
+    .banner-overlay {
+      position: absolute; 
+      top: 45%; 
+      left: 30%; 
+      transform: translate(-50%, -50%); 
+      text-align: center;
+      z-index: 10; 
+      color: #000; 
+  
+      .banner-title {
+        font-family: Jua;
+        font-size: 3.2rem;
+        font-weight: bold;
+        color: #023047;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+  
+      .banner-subtitle {
+        font-size: 1.8rem; 
+        font-style: italic;
+        color: #023047; 
+        letter-spacing: 0.02em; 
+        line-height: 1.4; 
+    }
+    
+      .banner-description {
+        font-size: 1.25rem;
+        margin-bottom: 1.5rem;
+        color: #555;
+      }
+  
+      .banner-button {
+        height: 98px;
+        width: 224px;
+        margin-top: 3rem;
+        background-color: #FB8500;
+        color: #fff;
+        font-weight: bold;
+        font-size: 1.7rem;
+        border: none;
+        border-radius: 40px;
+        cursor: pointer;
+        transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+       
+    
+        &:hover {
+            background-color: #FFB703;
+            border: 4px solid #023047;
+            transform: scale(1.1);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+    }
+    
+    
+    }
+  
+    
+    .carousel {
+      position: relative;
+      height: 100%; 
+  
+      img {
+        height: 500px;
+        object-fit: cover; 
+      }
+    }
+
+    @media (max-width: 1200px) {
+      .banner-overlay {
+          left: 40%; 
+          .banner-title {
+              font-size: 2.8rem;
+          }
+          .banner-subtitle {
+              font-size: 1.6rem;
+          }
+          .banner-button {
+              width: 200px;
+              height: 85px;
+              font-size: 1.2rem;
+          }
+      }
+  }
+
+  @media (max-width: 992px) {
+      height: 400px; 
+      .banner-overlay {
+          left: 50%; 
+          .banner-title {
+              font-size: 2.4rem;
+          }
+          .banner-subtitle {
+              font-size: 1.4rem;
+          }
+          .banner-button {
+              width: 180px;
+              height: 75px;
+              font-size: 1.2rem;
+          }
+      }
+  }
+
+  @media (max-width: 768px) {
+      height: 350px;
+      .banner-overlay {
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          .banner-title {
+              font-size: 2rem;
+          }
+          .banner-subtitle {
+              font-size: 1.2rem;
+          }
+          .banner-description {
+              font-size: 1rem;
+          }
+          .banner-button {
+              width: 150px;
+              height: 65px;
+              font-size: 1rem;
+          }
+      }
+      .carousel img {
+          height: 350px;
+      }
+  }
+
+  @media (max-width: 576px) {
+      height: 300px;
+      .banner-overlay {
+          .banner-title {
+              font-size: 1.8rem;
+          }
+          .banner-subtitle {
+              font-size: 1rem;
+          }
+          .banner-description {
+              font-size: 0.9rem;
+          }
+          .banner-button {
+              margin-top: 0;
+              width: 130px;
+              height: 55px;
+              font-size: 1rem;
+          }
+      }
+      .carousel img {
+          height: 300px;
+      }
+  }
+
+
+}
+  
