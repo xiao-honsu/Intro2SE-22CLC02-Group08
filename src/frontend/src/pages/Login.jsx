@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react';    
+import { Link } from "react-router-dom";
 import { Card, Form, Button } from "react-bootstrap";
 import Header from '../components/Header';
 import '../styles/Login.scss'
@@ -20,7 +21,9 @@ function LoginPage () {
                            <Form.Group controlId="formPassword" className="mb-3">
                                 <Form.Control type="password" placeholder="Your password" className="login-input" />
                             </Form.Group> 
-                            <Button variant="warning" className="login-button">Login</Button>
+                            <Link to="/ChooseRole">
+                                <Button variant="warning" className="login-button">Login</Button>
+                            </Link>
                         </Form>
 
                         <hr />
@@ -29,7 +32,7 @@ function LoginPage () {
                         </p>
                         <hr />
                         <p className="signup-text">
-                        Forgot password? <a href="">Reset password</a>
+                        Forgot password? <a href="/PasswordRecovery">Reset password</a>
                         </p>
                     </Card.Body>
                 </Card>

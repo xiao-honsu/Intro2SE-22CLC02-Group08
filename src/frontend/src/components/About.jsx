@@ -30,25 +30,26 @@ const About = () => {
             <div className="community-bubble hitori">
                 <img src="/avt1.jpg" alt="Hitori" className="community-avatar" />
                 <p className="community-text">
-                    <strong>Hitori</strong> <br /> Bla bla bla bla bla bla bla bla bla bla bla
+                    <strong>A hau 17 Tran Dan Huy</strong> <br /> The products of Lyouk shop look very new, <br />I have bought items of this shop 3 times
+
                 </p>
             </div>
             <div className="community-bubble ryo">
                 <img src="/avt2.jpg" alt="Ryo" className="community-avatar" />
                 <p className="community-text">
-                    <strong>Ryo</strong> <br /> Bla bla bla bla bla bla bla bla bla bla bla
+                    <strong>A sand wall</strong> <br /> OMG, a very cheap but really good item!  
                 </p>
             </div>
             <div className="community-bubble nijika">
                 <img src="/avt3.jpg" alt="Nijika" className="community-avatar" />
                 <p className="community-text">
-                    <strong>Nijika</strong> <br /> Bla bla bla bla bla bla bla bla bla bla bla
+                    <strong>Bao Dai Gia</strong> <br /> Hummm..., It looks so old but by the way <br />it still works :v
                 </p>
             </div>
             <div className="community-bubble ikuyo">
                 <img src="/avt4.jpg" alt="Ikuyo" className="community-avatar" />
                 <p className="community-text">
-                    <strong>Ikuyo</strong> <br /> Bla bla bla bla bla bla bla bla bla bla bla
+                    <strong>Duck</strong> <br /> Nice, hehe :v
                 </p>
             </div>
         </div>
@@ -57,16 +58,13 @@ const About = () => {
         <div className="community-info">
             <h2 className="community-title">t2hands community</h2>
             <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor quod
-            est dicta deleniti quis esse fuga repellat, temporibus minima
-            facere. Voluptate eaque doloremque necessitatibus quae minima id
-            dolores totam rerum?
-            </p>
-            <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor quod
-            est dicta deleniti quis esse fuga repellat, temporibus minima
-            facere. Voluptate eaque doloremque necessitatibus quae minima id
-            dolores totam rerum?
+            Our shop provides a thriving community where users can connect, 
+            share experiences, and recommend a wide range of secondhand items.
+            From fashion and electronics to home goods and collectibles,
+            our community members can share their knowledge and help others 
+            find great deals on pre-loved products. By fostering this community, 
+            we aim to empower our users to make sustainable choices 
+            and discover unique treasures.
             </p>
         </div>
      

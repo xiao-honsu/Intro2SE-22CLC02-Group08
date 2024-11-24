@@ -9,8 +9,8 @@ function Banner({ userType }) {
       case "guest":
         return {
           title: "Welcome to t2hands",
-          subtitle: "find your perfect deal",
-          description: "Sign up to explore the best second-hand items.",
+          subtitle: "Old but gold",
+          description: "You can list your second-hand items for sale,<br />You can find what you need at a reasonable price.",
           buttonText: "SHOP NOW",
         };
       case "seller":
@@ -46,7 +46,8 @@ function Banner({ userType }) {
       <div className="banner-overlay">
         <h1 className="banner-title">{bannerContent.title}</h1>
         <h2 className="banner-subtitle">{bannerContent.subtitle}</h2>
-        <p className="banner-description">{bannerContent.description}</p>
+        {/* <p className="banner-description">{bannerContent.description}</p> */} 
+        <div className="banner-description" dangerouslySetInnerHTML={{ __html: bannerContent.description }} />
         <button className="banner-button">{bannerContent.buttonText}</button>
       </div>
 

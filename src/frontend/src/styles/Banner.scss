@@ -9,10 +9,10 @@
     /* cố định */
     .banner-overlay {
       position: absolute; 
-      top: 45%; 
-      left: 30%; 
+      top: 50%; 
+      left: 20%; 
       transform: translate(-50%, -50%); 
-      text-align: center;
+      text-align: left;
       z-index: 10; 
       color: #000; 
   
@@ -25,7 +25,8 @@
       }
   
       .banner-subtitle {
-        font-size: 1.8rem; 
+        font-family: Jua;
+        font-size: 2.0rem; 
         font-style: italic;
         color: #023047; 
         letter-spacing: 0.02em; 
@@ -33,9 +34,11 @@
     }
     
       .banner-description {
+        font-family: Jua;
         font-size: 1.25rem;
         margin-bottom: 1.5rem;
         color: #555;
+        white-space: pre-wrap;
       }
   
       .banner-button {

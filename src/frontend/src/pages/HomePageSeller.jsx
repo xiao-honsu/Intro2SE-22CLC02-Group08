@@ -5,11 +5,11 @@ import Banner from '../components/Banner';
 import MostSearchedItems from '../components/MostSearchedItem';
 import ProductCard from '../components/ProductCard';
 import About from '../components/About';
-import { Link } from "react-router-dom";
 import '../styles/HomePage.scss';
+import RecentPostedSeller from '../components/RecentPostedSeller';
 
-function HomePage() {
-  const [userType, setUserType] = useState('guest'); // guest, seller, buyer, admin, default là guest
+function HomePageSeller() {
+  const [userType, setUserType] = useState('seller'); // guest, seller, buyer, admin, default là guest
 
   const dummyProducts = Array(16).fill({  // tạo tạm trước khi có sb
     image: '/mostSearch-laptop.jpg', 
@@ -23,8 +23,7 @@ function HomePage() {
       <div className="header-wrapper">
         <Header userType={userType} />
       </div>
-
-    
+ 
       <div className="home-container">
         <Nav className="category-nav">
           <Nav.Item className="nav-item">
@@ -61,8 +60,18 @@ function HomePage() {
 
         <Banner userType={userType} />
 
-        <div className="homepage-most-searched-container">
+        <div className="homepageseller-most-searched-container">
           <MostSearchedItems />
+        </div>
+
+        <div className="homepageseller-recent-posted-container">
+          <RecentPostedSeller />
+        </div>
+
+        <div className="sell-all-seller-wrapper">
+            <p className="sell-all-seller-text">
+                <a href="">See all</a>
+            </p>
         </div>
 
         <div className="product-list-container">
@@ -80,20 +89,10 @@ function HomePage() {
           </div>
         </div>
         
-        <div className="recommendation-banner">
-      <h2 className="recommendation-text">See personalized recommendations</h2>
-      <Link to='/login'>
-        <button className="sign-in-button">Sign in</button>
-      </Link>
-      <p className="new-customer-text">
-        New customer? <a href="/SignUp" className="start-here-link">Start here!</a>
-      </p>
-    </div>
-
     <About />
       </div>
     </div>
   );
 }
 
-export default HomePage;
+export default HomePageSeller;

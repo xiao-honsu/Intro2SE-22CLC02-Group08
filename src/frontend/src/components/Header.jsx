@@ -37,7 +37,7 @@ function Header({ userType, showSearch = true, showNav = true }) {
                     <Link to="/login" className="nav-link mx-2" onClick={() => console.log('Navigating to login')}>
   Login
 </Link>
-                    <Link to="/register" className="nav-link mx-2">Sign up</Link>
+                    <Link to="/SignUp" className="nav-link mx-2" onClick={() => console.log('Navigating to sign up')}> Sign Up</Link>
                     <Link to="/sell" className="btn btn-warning mx-2">Sell now</Link>
                     <Link to="/cart" className="nav-icon mx-2">
                         <FontAwesomeIcon icon={faCartShopping} />

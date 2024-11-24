@@ -1,0 +1,89 @@
+.RecentPostedSeller-container {
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .RecentPostedSeller-title {
+    text-align: left;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+  
+  .RecentPostedSeller-content {
+    display: flex;
+    justify-content: space-around; /* Chia đều khoảng cách giữa các mục */
+    gap: 20px;
+  }
+  
+  .RecentPostedSeller-section {
+    flex: 1;
+    max-width: 350px;
+  }
+  
+  .RecentPostedSeller-card {
+    border: none;
+    background-color: #FFB703;
+    text-align: center;
+    border-radius: 10px;
+    padding: 15px;
+  }
+  
+  .RecentPostedSeller-img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    object-fit: cover;
+    border: 2px solid black;
+  }
+  
+  .RecentPostedSeller-title-text {
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .RecentPostedSeller-price {
+    text-align: left;
+    color: #333;
+    font-weight: bold;
+    font-size: 19px;
+  }
+  
+  .RecentPostedSeller-status {
+    text-align: left;
+    font-size: 17px;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .RecentPostedSeller-button-wrapper {
+    text-align: right; /* Căn nút sang bên phải */
+  }
+
+  .RecentPostedSeller-details-btn {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 25px;
+    font-weight: bold;
+  }
+  
+  .RecentPostedSeller-details-btn:hover {
+    background-color: #444;
+  }
+  
+  @media (max-width: 768px) {
+    .RecentPostedSeller-content {
+      flex-direction: column; /* Xếp chồng các phần khi màn hình nhỏ */
+    }
+  
+    .RecentPostedSeller-section {
+      margin-bottom: 20px;
+    }
+  }
+  
