@@ -40,6 +40,9 @@ function RecentPostedSeller() {
           </div>
         ))}
       </div>
+      <div className="sell-all-seller-wrapper">
+                <a href="">See all</a>
+        </div>
     </div>
   );
 }

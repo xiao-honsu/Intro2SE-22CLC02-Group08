@@ -1,23 +1,45 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Form, FormControl } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faCartShopping, faUser, faBell, faCommentDots } from "@fortawesome/free-solid-svg-icons";
+
+import UserContext from "../context/userContext";
+
 import "../styles/Header.scss";
 
-function Header({ userType, showSearch = true, showNav = true }) {
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+function Header({ showSearch = true, showNav = true }) {
+    const { userType } = useContext(UserContext);
+    const navigate = useNavigate();
 
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
 
+    const handleLogout = () => {
+        event.preventDefault(); 
+        console.log("id: ", localStorage.getItem("id"));
+        localStorage.removeItem("id");
+        localStorage.removeItem("userType");
+        console.log("id: ", localStorage.getItem("id"));
+        navigate("/login"); 
+    };
+
+    const handleToHome = () => {
+        if (userType === "admin") navigate("/");
+        else if (userType === "buyer") navigate("/HomePageBuyer");
+        else if (userType === "seller") navigate("/HomePageSeller");
+        else if (userType === "guest") navigate("/");
+    }
+
     return (
         <header className="header d-flex align-items-center justify-content-between">
         <div className="header-logo">
-            <Link to="/" className="logo-link">
+            <button className="logo-link" onClick={handleToHome}>
                 <h1 className="logo">t2hands</h1>
-            </Link>
+            </button>
         </div>
 
         {showSearch && (
@@ -49,7 +71,7 @@ function Header({ userType, showSearch = true, showNav = true }) {
                         </div>
                         {isDropdownOpen && (
                             <div className="dropdown-menu">
-                                <Link to="/" className="dropdown-item">Log in</Link>
+                                <Link to="/login" className="dropdown-item">Log in</Link>
                             </div>
                         )}
                     </div>
@@ -72,9 +94,9 @@ function Header({ userType, showSearch = true, showNav = true }) {
                         </div>
                         {isDropdownOpen && (
                             <div className="dropdown-menu">
-                                <Link to="/" className="dropdown-item">Profile</Link>
-                                <Link to="/" className="dropdown-item">Role</Link>
-                                <Link to="/" className="dropdown-item">Log out</Link>
+                                <Link to="/Profile" className="dropdown-item">Profile</Link>
+                                <Link to="/ChooseRole" className="dropdown-item">Role</Link>
+                                <Link to="/login" onClick={handleLogout}>Log out</Link>
                             </div>
                         )}
                     </div>
@@ -99,9 +121,9 @@ function Header({ userType, showSearch = true, showNav = true }) {
                         </div>
                         {isDropdownOpen && (
                             <div className="dropdown-menu">
-                                <Link to="/" className="dropdown-item">Profile</Link>
-                                <Link to="/" className="dropdown-item">Role</Link>
-                                <Link to="/" className="dropdown-item">Log out</Link>
+                                <Link to="/Profile" className="dropdown-item">Profile</Link>
+                                <Link to="/ChooseRole" className="dropdown-item">Role</Link>
+                                <Link to="/login" className="dropdown-item" onClick={handleLogout}>Log out</Link>
                             </div>
                         )}
                     </div>
@@ -123,7 +145,7 @@ function Header({ userType, showSearch = true, showNav = true }) {
                         </div>
                         {isDropdownOpen && (
                             <div className="dropdown-menu">
-                                <Link to="/" className="dropdown-item">Log out</Link>
+                                <Link to="/login" className="dropdown-item" onClick={handleLogout}>Log out</Link>
                             </div>
                         )}
                     </div>

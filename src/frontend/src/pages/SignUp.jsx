@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from "react-router-dom";
 import { Card, Form, Button } from "react-bootstrap";
 import Header from '../components/Header';
+import Footer from '../components/Footer';
+import UserContext from "../context/userContext";
 import '../styles/SignUp.scss'
+
 function SignUpPage () {
-    const userType = "guest";
+    const { setUserType } = useContext(UserContext);
+    setUserType("guest")
     return (
         <div className="main-container">
             <div className="header-wrapper">
-                <Header userType={userType} showSearch={false} showNav={false}  />
+                <Header showSearch={false} showNav={false}  />
             </div>
             <div className="signup-container">
                 <Card className="signup-card">
@@ -36,6 +40,7 @@ function SignUpPage () {
                     </Card.Body>
                 </Card>
             </div>
+            <Footer showBanner={ false }/>
         </div>
     );
 }

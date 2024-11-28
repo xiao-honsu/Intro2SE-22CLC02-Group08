@@ -1,9 +1,18 @@
-import React from "react";
-import { Card } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
-import "../styles/ProductCard.scss"; 
-const ProductCard = ({ image, name, price }) => {
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { Card, Button } from "react-bootstrap";
+import UserContext from "../context/userContext";
+import "../styles/ProductCard.scss";
+
+const ProductCard = ({ id, image, name, price }) => {
+  const navigate = useNavigate();
+  const { userType } = useContext(UserContext);
+
+  const handleSeePreview = () => {
+    if (userType === "guest") navigate("/");
+    else navigate(`/preview_product/${id}`);
+  }
   return (
     <div className="product-card-container">
       <Card className="product-card">
@@ -17,7 +26,9 @@ const ProductCard = ({ image, name, price }) => {
           <Card.Title className="product-card-title">{name}</Card.Title>
           <p className="product-card-price">{price}</p>
         </Card.Body>
-        <button className="preview-button">See preview</button>
+        <Button className="preview-button" onClick={handleSeePreview}>
+          See preview
+        </Button>
       </Card>
     </div>
   );

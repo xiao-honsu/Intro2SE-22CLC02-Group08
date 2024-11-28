@@ -1,0 +1,43 @@
+.user-sidebar {
+    background: #ffc04d;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+  
+    .user-avatar img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 2px solid white;
+    }
+  
+    .user-info {
+      h4 {
+        font-size: 18px;
+        margin-bottom: 5px;
+      }
+      p {
+        font-size: 14px;
+        margin: 0;
+      }
+    }
+  
+    .edit-profile-button {
+      margin-top: 10px;
+      a {
+        font-size: 14px;
+        color: white;
+        text-decoration: underline;
+      }
+    }
+  
+    .add-product-button {
+      margin-top: 15px;
+      .btn {
+        border-radius: 5px;
+      }
+    }
+  }
+  

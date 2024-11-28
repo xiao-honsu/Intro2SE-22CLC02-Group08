@@ -1,0 +1,24 @@
+[
+  {
+    "UserID": "1",
+    "Roles": "buyer",
+    "Username": "user1",
+    "Password": "123",
+    "Email": "user1@e.com",
+    "RegistrationDate": "2024-01-01",
+    "Status": "active",
+    "isVerified": true,
+    "profilePicture": "./avt1.jpg"
+  },
+  {
+    "UserID": "2",
+    "Roles": "buyer",
+    "Username": "user2",
+    "Password": "123",
+    "Email": "user2@e.com",
+    "RegistrationDate": "2024-01-02",
+    "Status": "active",
+    "isVerified": true,
+    "profilePicture": "./avt2.jpg"
+  }
+]

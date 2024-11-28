@@ -26,13 +26,17 @@ $border-radius: 20px;
   box-sizing: border-box; 
 
   &-logo {
+    cursor: pointer;
+    .logo-link {
+      all: unset;
+    }
     .logo {
       font-family: "Jua", $font-family;
       font-weight: bold;
       font-size: 36px;
       color: $font-color;
       text-decoration: none;
-      margin: 0 5px;
+      margin: 0 5px;    
     }
   }
 
@@ -121,7 +125,7 @@ $border-radius: 20px;
         color: #023047;
         padding: 8px 10px;
         border-radius: 5px;
-  
+        
         &:hover {
           background-color: #f8f9fa;
         }

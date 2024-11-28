@@ -1,17 +1,24 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import Header from '../components/Header';
 import Nav from 'react-bootstrap/Nav';
 import Banner from '../components/Banner';
 import MostSearchedItems from '../components/MostSearchedItem';
 import ProductCard from '../components/ProductCard';
 import About from '../components/About';
+import UserContext from "../context/userContext";
+
 import { Link } from "react-router-dom";
+
+import Footer from '../components/Footer';
+
+
 import '../styles/HomePage.scss';
 
 function HomePage() {
-  const [userType, setUserType] = useState('guest'); // guest, seller, buyer, admin, default là guest
+  const { userType } = useContext(UserContext);
 
   const dummyProducts = Array(16).fill({  // tạo tạm trước khi có sb
+    id: '1',
     image: '/mostSearch-laptop.jpg', 
     name: 'Tên đồ', 
     price: 'Giá tiền', 
@@ -21,7 +28,7 @@ function HomePage() {
     <div className="main-container">
     
       <div className="header-wrapper">
-        <Header userType={userType} />
+        <Header />
       </div>
 
     
@@ -68,9 +75,10 @@ function HomePage() {
         <div className="product-list-container">
           <h2 className="product-list-title">Recently Posted</h2>
           <div className="product-grid">
-            {dummyProducts.map((product, index) => (
+            {dummyProducts.map((product) => (
               <ProductCard
-                key={index}
+                key={product.id}
+                id={product.id}
                 image={product.image}
                 name={product.name}
                 price={product.price}
@@ -91,6 +99,9 @@ function HomePage() {
     </div>
 
     <About />
+
+    <Footer />
+
       </div>
     </div>
   );

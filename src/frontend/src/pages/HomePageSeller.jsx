@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import Header from '../components/Header';
 import Nav from 'react-bootstrap/Nav';
 import Banner from '../components/Banner';
 import MostSearchedItems from '../components/MostSearchedItem';
 import ProductCard from '../components/ProductCard';
 import About from '../components/About';
-import '../styles/HomePage.scss';
+import Footer from '../components/Footer';
 import RecentPostedSeller from '../components/RecentPostedSeller';
+import UserContext from "../context/userContext";
+import '../styles/HomePage.scss';
+
 
 function HomePageSeller() {
-  const [userType, setUserType] = useState('seller'); // guest, seller, buyer, admin, default là guest
+  const { userType } = useContext(UserContext);
 
   const dummyProducts = Array(16).fill({  // tạo tạm trước khi có sb
     image: '/mostSearch-laptop.jpg', 
@@ -21,7 +24,7 @@ function HomePageSeller() {
     <div className="main-container">
     
       <div className="header-wrapper">
-        <Header userType={userType} />
+        <Header />
       </div>
  
       <div className="home-container">
@@ -68,11 +71,7 @@ function HomePageSeller() {
           <RecentPostedSeller />
         </div>
 
-        <div className="sell-all-seller-wrapper">
-            <p className="sell-all-seller-text">
-                <a href="">See all</a>
-            </p>
-        </div>
+        
 
         <div className="product-list-container">
           <h2 className="product-list-title">Recently Posted</h2>
@@ -90,6 +89,7 @@ function HomePageSeller() {
         </div>
         
     <About />
+    <Footer />
       </div>
     </div>
   );

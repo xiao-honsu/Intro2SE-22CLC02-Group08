@@ -3,7 +3,7 @@ import "../styles/About.scss";
 
 const About = () => {
   return (
-    <div className="about-community-container">
+    <div id="to-about" className="about-community-container">
       
       <div className="about-section">
         <h2 className="about-title">About t2hands</h2>
@@ -30,20 +30,20 @@ const About = () => {
             <div className="community-bubble hitori">
                 <img src="/avt1.jpg" alt="Hitori" className="community-avatar" />
                 <p className="community-text">
-                    <strong>A hau 17 Tran Dan Huy</strong> <br /> The products of Lyouk shop look very new, <br />I have bought items of this shop 3 times
+                    <strong>A hau 17 Tran Dan Huy</strong> <br /> Products look very new, I have bought items of this shop 3 times
 
                 </p>
             </div>
             <div className="community-bubble ryo">
                 <img src="/avt2.jpg" alt="Ryo" className="community-avatar" />
                 <p className="community-text">
-                    <strong>A sand wall</strong> <br /> OMG, a very cheap but really good item!  
+                    <strong>A sand wall</strong> <br /> OMG, a very cheap but good item!  
                 </p>
             </div>
             <div className="community-bubble nijika">
                 <img src="/avt3.jpg" alt="Nijika" className="community-avatar" />
                 <p className="community-text">
-                    <strong>Bao Dai Gia</strong> <br /> Hummm..., It looks so old but by the way <br />it still works :v
+                    <strong>Bao Dai Gia</strong> <br /> It looks so old but by the way, it still works :v
                 </p>
             </div>
             <div className="community-bubble ikuyo">

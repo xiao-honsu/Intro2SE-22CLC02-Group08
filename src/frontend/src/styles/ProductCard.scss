@@ -68,6 +68,15 @@
     background-color: #ffb703;
   }
   
+  .preview-button:active {
+    background-color: #fff !important; 
+    box-shadow: none; 
+  }
+  
+  .preview-button:focus {
+    outline: none; 
+    box-shadow: none; 
+  }
  
   .product-card-container:hover .preview-button {
     display: block;

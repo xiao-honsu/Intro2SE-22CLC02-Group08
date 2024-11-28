@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import Header from '../components/Header';
 import Nav from 'react-bootstrap/Nav';
 import Banner from '../components/Banner';
 import MostSearchedItems from '../components/MostSearchedItem';
 import ProductCard from '../components/ProductCard';
 import About from '../components/About';
+import Footer from '../components/Footer';
+import UserContext from "../context/userContext";
 import '../styles/HomePageBuyer.scss';
 
 function HomePageBuyer() {
-  const [userType, setUserType] = useState('buyer'); // guest, seller, buyer, admin, default là guest
+  const { userType } = useContext(UserContext);
 
   const dummyProducts = Array(16).fill({  // tạo tạm trước khi có sb
     image: '/mostSearch-laptop.jpg', 
@@ -20,7 +22,7 @@ function HomePageBuyer() {
     <div className="main-container">
     
       <div className="header-wrapper">
-        <Header userType={userType} />
+        <Header />
       </div>
 
     
@@ -80,6 +82,7 @@ function HomePageBuyer() {
         </div>
 
     <About />
+    <Footer />
       </div>
     </div>
   );

@@ -1,131 +1,196 @@
 @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 
+
 .about-community-container {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    margin: 20px;
-  }
-  
-  
-  .about-section {
-    background: linear-gradient(to bottom, #ff9800, #ffc107);
-    border-radius: 20px;
-    padding: 40px;
-    margin: 2rem 6rem;
-    text-align: center;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin: 20px auto;
+  max-width: 1200px;
+  padding: 0 1rem;
+}
+
+/* About Section */
+.about-section {
+  background: linear-gradient(to bottom, #ff9800, #ffc107);
+  border-radius: 20px;
+  padding: 40px;
+  margin: 1.5rem auto;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+
   .about-title {
-    font-size: 28px;
+    font-size: 2rem;
     font-weight: bold;
     color: white;
     margin-bottom: 20px;
-  }
-  
-  .about-content p {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 15px;
-    line-height: 1.6;
-    text-align: justify; 
     font-family: Jua;
-  }
-  
-  
-  .community-section {
-    margin: 2rem 6rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 40px;
-    background: #8ECAE3;
-    border-radius: 20px;
-    padding: 40px;
-    color: white;
-    height: 24rem;
-  }
-  
-  
-  .community-messages {
-    flex: 1; 
-    position: relative;
-  }
-  
-  .community-bubble {
-    width: 80%;
-    height: 4rem;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background: white;
-    color: black;
-    border: 4px solid #000;
-    border-radius: 40px;
-    padding: 10px 20px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
-    position: absolute; 
-  }
-  
-  .community-bubble.hitori {
-    top: 0;
-    left: 6rem;
-  }
-  
-  .community-bubble.ryo {
-    top: 5rem;
-    left: 0;
-  }
-  
-  .community-bubble.nijika {
-    top: 10rem;
-    left: 5rem;
-  }
-  
-  .community-bubble.ikuyo {
-    top: 15rem;
-    left: 1rem;
   }
 
-  .community-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 2.5px black solid;
-  }
-  
-  .community-text {
-    padding: 4px;
-    font-size: 14px;
-    line-height: 1;
-    font-weight: 400;
-  }
-  
- 
-  .community-info {
-    flex: 1; 
-    text-align: justify;
-  }
-  
-  .community-title {
-    font-size: 26px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #023047;
-    text-align: center;
-  }
-  
-  .community-info p {
-    font-size: 18px;
+  .about-content p {
+    font-size: 1rem;
+    color: #333;
     margin-bottom: 15px;
-    line-height: 1.6;
+    line-height: 1.8;
+    text-align: justify;
     font-family: Jua;
-    color: #023047;
   }
-  
- 
-  @media (max-width: 768px) {
-    .community-section {
-      flex-direction: column;
+}
+
+/* Community Section */
+.community-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  background: #8ECAE3;
+  border-radius: 20px;
+  padding: 40px;
+  color: #fff;
+  margin: 1.5rem auto;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: Jua;
+
+  .community-messages {
+    flex: 1;
+    position: relative;
+    min-width: 280px;
+  }
+
+  .community-bubble {
+    width: 80%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    color: black;
+    border: 2px solid #000;
+    border-radius: 40px;
+    padding: 0px 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    position: absolute;
+
+    .community-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .community-text {
+      font-size: 0.9rem;
+      line-height: 1.4;
     }
   }
+
+  .community-bubble.hitori {
+    top: -10%;
+    left: 20%;
+  }
+
+  .community-bubble.ryo {
+    top: 25%;
+    left: 0;
+  }
+
+  .community-bubble.nijika {
+    top: 53%;
+    left: 10%;
+  }
+
+  .community-bubble.ikuyo {
+    top: 85%;
+    left: 0;
+  }
+
+  .community-info {
+    flex: 1;
+    text-align: justify;
+
+    .community-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #FB8500;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 15px;
+      line-height: 1.8;
+      color: #FB8500;
+    }
+  }
+}
+
+
+@media (max-width: 768px) {
+  .about-section {
+    padding: 20px;
+    margin: 1rem;
+  }
+
+  .about-title {
+    font-size: 1.5rem;
+  }
+
+  .about-content p {
+    font-size: 0.9rem;
+  }
+
+  .community-section {
+    flex-direction: column-reverse;
+  
+  }
+
+  .community-messages {
+    .community-bubble {
+      position: static; 
+      width: 90%; 
+      margin-bottom: 15px; 
+      box-sizing: border-box;
+    }
+  }
+  
+}
+
+
+@media (max-width: 480px) {
+  .about-section {
+    padding: 15px;
+  }
+
+  .about-title {
+    font-size: 1.2rem;
+  }
+
+  .about-content p {
+    font-size: 0.8rem;
+  }
+
+  .community-section {
+    padding: 15px;
+    gap: 5px;
+  }
+
+  .community-messages {
+    margin-top: 10px;
+  }
+
+  .community-messages {
+    .community-bubble {
+      padding: 8px;
+      font-size: 0.8rem; 
+      margin-bottom: 10px; 
+    }
+  }
+ 
+
+  .community-info {
+    .community-title {
+      font-size: 1.2rem;
+    }
+
+    p {
+      font-size: 0.8rem;
+    }
+  }
+}
