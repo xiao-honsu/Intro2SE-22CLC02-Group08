@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+
+body {
+  font-family: 'Roboto';
+  margin: 0;
+  padding: 0;
+}
+
+
+.stats {
+  margin-top: 100px;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.stat-box {
+  font-family: 'Roboto';
+  width: 25%;
+  text-align: center;
+  padding: 20px;
+  background-color: #ffb703;
+  color: black;
+  font-weight: bold;
+  font-size: 32px;
+  border-radius: 20px;
+  height: 130px;
+}
+
+.stats #button:hover {
+  background-color:#fb8500;
+}
+
+section {
+  padding: 20px;
+}
+
+.today-post, .unapproved-products, .reports {
+  margin-top: 70px;
+  justify-items: center;
+}
+
+.today-post-text, .unapproved-products-text, .reports-text {
+  font-family: 'Inter';
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  color: #023047;
+}
+
+.post-item, .reports-item {
+  display: flex;
+  margin: 50px;
+}
+
+.products .post-item:hover {
+  box-shadow: 0 0 5px rgba(0, 91, 179, 0.5);
+}
+
+.post-item .avt, .reports-item .avt {
+  margin-right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  border: 2px black solid;
+}
+
+.post-item .prtImg  {
+  margin-left: 30px;
+  width: 150px;
+  height: 150px;
+  border: 2px black solid;
+}
+
+.post-item h6, .reports-item h6 {
+  padding-top: 10px;
+  font-family: 'Roboto';
+  font-size: 15px;
+  width: 150px;
+}
+
+
+.post-details {
+  margin-left: 50px;
+  position: relative;
+}
+
+.button-container {
+  place-items: center;
+}
+
+.inner-today-post a:link, .inner-today-post a:hover, .inner-today-post a:active, .inner-today-post a:visited, 
+.inner-unapproved-products a:link, .inner-unapproved-products a:hover, .inner-unapproved-products a:active, .inner-unapproved-products a:visited,
+.inner-reports a:link, .inner-reports a:hover, .inner-reports a:active, .inner-reports a:visited  {
+  text-decoration: none;
+  position: absolute;
+  background-color: inherit;
+  border: unset;
+  font-family: 'Roboto';
+  font-size: large;
+  color: black;
+  right: 50%;
+  bottom: 10px;
+}
+
+
+.inner-today-post, .inner-unapproved-products, .inner-reports {
+  background-color: #d9d9d9;
+  width: 80%;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 20px;
+  position: relative;
+}
+
+.inner-header, .inner-report-header {
+  display: flex;
+  border-bottom: 2px black solid;
+}
+
+.inner-header-name, .inner-report-header-name  {
+  text-align: center;
+  width: 30%;
+}
+
+.inner-report-header-psid, .inner-report-header-prtid {
+  text-align: center;
+  width: 15%;
+}
+
+.inner-report-header-des {
+  text-align: center;
+  width: 40%;
+}
+
+.inner-header-product {
+  width: 70%;
+}
+
+.reports-item p {
+  margin: 0 5rem;
+}
+
+
+
