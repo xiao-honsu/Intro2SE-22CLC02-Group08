@@ -60,7 +60,7 @@ function Header({ showSearch = true, showNav = true }) {
   Login
 </Link>
                     <Link to="/SignUp" className="nav-link mx-2" onClick={() => console.log('Navigating to sign up')}> Sign Up</Link>
-                    <Link to="/sell" className="btn btn-warning mx-2">Sell now</Link>
+                    <Link to="/login" className="btn btn-warning mx-2">Sell now</Link>
                     <Link to="/cart" className="nav-icon mx-2">
                         <FontAwesomeIcon icon={faCartShopping} />
                     </Link>
@@ -80,7 +80,7 @@ function Header({ showSearch = true, showNav = true }) {
 
             {userType === "seller" && (
                 <>
-                    <Link to="/sell" className="btn btn-warning mx-2">Sell now</Link>
+                    <Link to="/SellerUploadProduct" className="btn btn-warning mx-2">Sell now</Link>
                     <Link to="/" className="nav-icon mx-2">
                         <FontAwesomeIcon icon={faBell} />
                     </Link>
