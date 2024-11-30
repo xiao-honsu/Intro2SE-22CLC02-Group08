@@ -7,9 +7,11 @@ import '../styles/ChooseRole.scss'
 
 import UserContext from "../context/userContext"; 
 import authAPI from "../services/auth";
+import userAPI from "../services/user";
 
 function ChooseRolePage () {
     const { setUserType } = useContext(UserContext);
+    const { userInfo, setUserInfo } = useContext(UserContext);
     const navigate = useNavigate();
 
     const handleRoleSelect = async (role) => {
@@ -23,7 +25,19 @@ function ChooseRolePage () {
             const response = await authAPI.choose_role({ id, role });
             if (response.success) {
                 setUserType(role);
+                localStorage.setItem("userType", role);
+
+                console.log("id: ", localStorage.getItem("id"));
+                console.log("type: ", localStorage.getItem("userType"));
                 
+                const userInfo = await userAPI.getProfile(id); // Gọi API lấy thông tin người dùng
+                if (userInfo.success) {
+                    setUserInfo(userInfo);  // Lưu thông tin người dùng vào context
+                    console.log(userInfo);
+                } else {
+                    console.error("Failed to fetch user info.");
+                }
+
                 if (role === "buyer") {
                     navigate("/HomePageBuyer");
                 } else if (role === "seller") {

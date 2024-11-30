@@ -16,7 +16,7 @@ function UnapprovedDetail() {
                 <div className="box">
                     <div className="unapproved-item">
                         <img src="avt1.jpg" className="avt" alt="Post" />
-                        <h6>Dog Tuong</h6>
+                        <h6>Bocchi</h6>
                         <div className="item-details">
                             <img src="mostSearch-bag.jpg" className="prtImg" alt="Post" />
                             <p>blabla</p>

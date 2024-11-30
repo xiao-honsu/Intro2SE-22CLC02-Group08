@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Header from '../components/Header';
 import Nav from 'react-bootstrap/Nav';
 import Banner from '../components/Banner';
@@ -12,13 +12,25 @@ import '../styles/HomePage.scss';
 
 
 function HomePageSeller() {
-  const { userType } = useContext(UserContext);
+  const { userType, setUserType } = useContext(UserContext);
+  const { userInfo, setUserInfo } = useContext(UserContext);
 
   const dummyProducts = Array(16).fill({  // tạo tạm trước khi có sb
     image: '/mostSearch-laptop.jpg', 
     name: 'Tên đồ', 
     price: 'Giá tiền', 
   });
+
+  useEffect(() => {
+    const stored_userType = localStorage.getItem("userType");
+    if (stored_userType) {
+      setUserType(stored_userType);
+    }
+  }, [setUserType]);
+
+  console.log("id: ", localStorage.getItem("id"));
+                console.log("type: ", localStorage.getItem("userType"));
+  
 
   return (
     <div className="main-container">

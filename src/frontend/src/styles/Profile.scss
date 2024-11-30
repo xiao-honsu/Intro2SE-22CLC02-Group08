@@ -16,104 +16,70 @@
 }
 
 .profile-page-container {
+  flex: 1;
   padding-top: 60px;
   width: 100%;
-  display: flex; /* Sử dụng flexbox để căn chỉnh các thành phần ngang hàng */
-  gap: 20px; /* Khoảng cách giữa sidebar và content */
+  display: flex; 
+  gap: 20px; 
 
   .profile-sidebar {
-    flex: 0 0 250px; /* Đặt chiều rộng cố định cho sidebar */
-    background: #fff7e6;
-    border-radius: 10px;
+    flex: 0 0 250px; 
     padding: 20px;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-    .user-avatar img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      margin-bottom: 10px;
-      object-fit: cover;
-    }
-
-    .add-product-btn {
-      margin-top: 10px;
-    }
   }
 
   .profile-content {
-    flex: 1; /* Phần content sẽ chiếm hết không gian còn lại */
+    padding: 20px;
+    flex: 1; 
     display: flex;
     flex-direction: column;
     gap: 15px;
+    
 
-    .order-card {
-      background: #f8f8f8;
-      border: 1px solid #e3e3e3;
-      border-radius: 10px;
-      padding: 15px;
+    .tabs {
+      background-color: #FB8500;
+      border-radius: 20px;
       display: flex;
-      flex-direction: column;
-      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
-
-      .order-info {
-        display: flex;
-        align-items: center;
-
-        .order-image {
-          width: 100px;
-          height: 100px;
-          margin-right: 15px;
-          border-radius: 5px;
-          object-fit: cover;
-          border: 1px solid #ccc;
-        }
-
-        .order-details {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-
-          h5 {
-            font-size: 16px;
-            margin: 0 0 5px;
-          }
-
-          p {
-            margin: 0;
-            font-size: 14px;
-            color: #666;
-          }
-        }
-      }
-
-      .order-status {
-        margin-top: 10px;
+      justify-content: center;
+      gap: 5%; /* Dùng % để linh hoạt khoảng cách */
+    
+      .nav-link {
+        color: #023047;
+        background: transparent;
+        border: none;
         font-weight: bold;
-        color: #333;
+        font-size: clamp(12px, 1.5vw, 16px); /* Kích thước font linh hoạt */
+        transition: color 0.3s ease;
+    
+        &:hover {
+          color: #fff;
+        }
       }
-
-      .order-actions {
-        margin-top: 10px;
-
-        .btn {
-          margin-right: 10px;
-          border-radius: 5px;
+    
+      .nav-link.active {
+        color: #fff;
+      }
+    
+      @media (max-width: 768px) {
+        gap: 1%; /* Giảm khoảng cách hơn trên màn hình nhỏ */
+        .nav-link {
+          font-size: clamp(9px, 1vw, 12px); /* Font nhỏ hơn trên điện thoại */
         }
       }
     }
+    
+    
   }
 }
 
 @media (max-width: 1024px) {
   .profile-page-container {
-    flex-direction: column; /* Đặt các thành phần theo chiều dọc trên màn hình nhỏ */
+    flex-direction: column;
     gap: 20px;
 
     .profile-sidebar {
       flex: none;
-      margin-right: 0; /* Loại bỏ khoảng cách giữa các thành phần */
+      margin-right: 0; 
     }
 
     .profile-content {

@@ -38,13 +38,13 @@ function ListUser() {
                     <div className="inner-box">
                         <div className="user-item">
                             <div className="id">
-                                22127444
+                                22127
                             </div>
                             <div className="name">
-                                Dog Tuong
+                                bocchi
                             </div>
                             <div className="email">
-                                dogtuong@blabla.com
+                                bocchi@blabla.com
                             </div>
                             <div className="phone-num">
                                 1234567890
@@ -55,13 +55,13 @@ function ListUser() {
                         </div>
                         <div className="user-item">
                             <div className="id">
-                                22127444
+                                22127
                             </div>
                             <div className="name">
-                                Dog Tuong
+                                bocchi
                             </div>
                             <div className="email">
-                                dogtuong@blabla.com
+                                bocchi@blabla.com
                             </div>
                             <div className="phone-num">
                                 1234567890

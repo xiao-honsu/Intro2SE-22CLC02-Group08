@@ -6,15 +6,15 @@ const Reports = () => {
       <section className="reports-container">
         <div className="reports-item">
         <img src="avt1.jpg" className="avt" alt="Post" />
-        <h6>Dog Tuong</h6>
-        <p>22127444</p>
+        <h6>bocchi</h6>
+        <p>22127</p>
         <p>123</p>
         <p>blabla</p>
         </div>
         <div className="reports-item">
         <img src="avt1.jpg" className="avt" alt="Post" />
-        <h6>Dog Tuong</h6>
-        <p>22127444</p>
+        <h6>bocchi</h6>
+        <p>22127</p>
         <p>123</p>
         <p>blabla</p>       
         </div>

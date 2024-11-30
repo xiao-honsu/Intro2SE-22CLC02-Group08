@@ -6,12 +6,15 @@ import Footer from '../components/Footer';
 
 import UserContext from "../context/userContext";
 import authAPI from "../services/auth";
+import adminAPI from "../services/admin";
 
 import '../styles/Login.scss'
 
 function LoginPage() {
     const { setUserType } = useContext(UserContext);
+    const { userInfo, setUserInfo } = useContext(UserContext); // dung cho admin (mac du la "user")
     const navigate = useNavigate(); 
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [toast, setToast] = useState({ show: false, message: "", variant: "" });
@@ -25,10 +28,21 @@ function LoginPage() {
                 setToast({ show: true, message: `Logged in as ${res.userType}`, variant: "success" });
                 setUserType(res.userType);
                 localStorage.setItem("id", res.id);
+                localStorage.setItem("userType", res.userType);
                 console.log("id: ", localStorage.getItem("id"));
+                console.log("type: ", localStorage.getItem("userType"));
                 // Điều hướng dựa trên userType
-                if (res.userType === "admin")  
-                    navigate("/");
+                if (res.userType === "admin") {
+                    const userInfo = await adminAPI.getProfile(localStorage.getItem("id")); // Gọi API lấy thông tin admin
+                    if (userInfo.success) {
+                        setUserInfo(userInfo);  // Lưu thông tin admin vào context
+                        console.log(userInfo);
+                    } else {
+                        console.error("Failed to fetch user info.");
+                    }
+                    navigate("/HomePageAdmin");
+                }
+                    
                 
                 else if (res.userType === "buyer" || res.userType === "seller") 
                     navigate("/ChooseRole");

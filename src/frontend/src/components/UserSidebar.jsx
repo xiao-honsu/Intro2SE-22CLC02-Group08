@@ -1,18 +1,41 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from 'react';
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
+import UserContext from "../context/userContext";
+import userAPI from "../services/user";
+
 import "../styles/UserSidebar.scss"
-const UserSidebar = ({ userType, userInfo }) => {
+const UserSidebar = () => {
+    const { userType, setUserType, userInfo, setUserInfo } = useContext(UserContext);
+
+  const [activeStatus, setActiveStatus] = useState("all");
+  
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+        const userId = localStorage.getItem("id");
+        setUserType(localStorage.getItem("userType"))
+        if (userId) {
+            userAPI.getProfile(userId).then(data => {
+                if (data) {
+                    setUserInfo(data);
+                }
+            })
+        }
+    };
+
+    fetchUserInfo();
+}, [setUserInfo]);
+
     return (
         <div className="user-sidebar">
             <div className="user-avatar">
-                <img src={userInfo.avatar || "/default_avatar.jpg"} alt="avatar" />
+                <img src={userInfo.profileImage} alt="avatar" />
             </div>
             <div className="user-info">
-                <h4> {userInfo.name || "username" } </h4>
-                <p>Joined on: {userInfo.joinDate} </p>
+                <h4> {userInfo.username || "username" } </h4>
+                <p>Joined on: {userInfo.signupDate} </p>
                 {userType === "seller" && (
                     <>
                         <p> Sold: {userInfo.numItems} items </p>

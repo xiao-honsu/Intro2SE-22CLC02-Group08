@@ -5,7 +5,7 @@ const Posts = () => {
       <section className="posts">
         <div className="post-item">
           <img src="avt1.jpg" className="avt" alt="Post" />
-          <h6>Dog Tuong</h6>
+          <h6>bocchi</h6>
           <img src="mostSearch-bag.jpg" className="prtImg" alt="Post" />
           <div className="post-details">
             <p>blabla</p>

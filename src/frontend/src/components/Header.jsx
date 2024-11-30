@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Form, FormControl } from "react-bootstrap";
@@ -6,32 +6,74 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faCartShopping, faUser, faBell, faCommentDots } from "@fortawesome/free-solid-svg-icons";
 
 import UserContext from "../context/userContext";
+import userAPI from "../services/user";
+import adminAPI from "../services/admin";
 
 import "../styles/Header.scss";
 
 function Header({ showSearch = true, showNav = true }) {
-    const { userType } = useContext(UserContext);
+    const { userType, setUserType, userInfo, setUserInfo } = useContext(UserContext);
+
     const navigate = useNavigate();
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
+
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            if (userType === "admin") {
+                const userId = localStorage.getItem("id");
+                setUserType(localStorage.getItem("userType"))
+                if (userId) {
+                    adminAPI.getProfile(userId).then(data => {
+                        if (data) {
+                            setUserInfo(data);
+                        }
+                    })
+                } else {
+                    setUserType(null);
+                    setUserInfo(null);
+                }
+            }
+            else {
+                const userId = localStorage.getItem("id");
+                setUserType(localStorage.getItem("userType"))
+                if (userId) {
+                    userAPI.getProfile(userId).then(data => {
+                        if (data) {
+                            setUserInfo(data);
+                        }
+                    })
+                } else {
+                    setUserType(null);
+                    setUserInfo(null);
+                }
+            }
+        };
+
+        fetchUserInfo();
+    }, [setUserInfo]);
 
     const handleLogout = () => {
         event.preventDefault(); 
         console.log("id: ", localStorage.getItem("id"));
         localStorage.removeItem("id");
         localStorage.removeItem("userType");
+        setUserType(null); 
+        setUserInfo(null);
         console.log("id: ", localStorage.getItem("id"));
+        console.log("type: ", localStorage.getItem("userType"));
         navigate("/login"); 
     };
 
     const handleToHome = () => {
-        if (userType === "admin") navigate("/");
+        if (userType === "admin") navigate("/HomePageAdmin");
         else if (userType === "buyer") navigate("/HomePageBuyer");
         else if (userType === "seller") navigate("/HomePageSeller");
-        else if (userType === "guest") navigate("/");
+        else navigate("/");
     }
 
     return (
@@ -54,7 +96,7 @@ function Header({ showSearch = true, showNav = true }) {
         
         {showNav && (
         <nav className="header-nav d-flex align-items-center">
-            {userType === "guest" && (
+            {(userType !== "admin" && userType !== "buyer" && userType !== "seller") && (
                 <>
                     <Link to="/login" className="nav-link mx-2" onClick={() => console.log('Navigating to login')}>
   Login
@@ -78,7 +120,7 @@ function Header({ showSearch = true, showNav = true }) {
                 </>
             )}
 
-            {userType === "seller" && (
+            {userType === "seller" && userInfo && (
                 <>
                     <Link to="/SellerUploadProduct" className="btn btn-warning mx-2">Sell now</Link>
                     <Link to="/" className="nav-icon mx-2">
@@ -90,20 +132,20 @@ function Header({ showSearch = true, showNav = true }) {
 
                     <div className="profile-dropdown">
                         <div className="nav-icon mx-2 profile-icon" onClick={toggleDropdown} style={{ cursor: "pointer" }} >
-                            <img src="/avt1.jpg" alt="Avatar" style={{width: "40px", height: "40px", borderRadius: "50%", objectFit: "cover", }} />
+                            <img src={userInfo.profileImage} alt="Avatar" style={{width: "40px", height: "40px", borderRadius: "50%", objectFit: "cover", }} />
                         </div>
                         {isDropdownOpen && (
                             <div className="dropdown-menu">
                                 <Link to="/Profile" className="dropdown-item">Profile</Link>
                                 <Link to="/ChooseRole" className="dropdown-item">Role</Link>
-                                <Link to="/login" onClick={handleLogout}>Log out</Link>
+                                <Link to="/login" className="dropdown-item" onClick={handleLogout}>Log out</Link>
                             </div>
                         )}
                     </div>
                 </>
             )}
 
-            {userType === "buyer" && (
+            {userType === "buyer" && userInfo && (
                 <>
                     <Link to="/cart" className="nav-icon mx-2">
                         <FontAwesomeIcon icon={faCartShopping} />
@@ -117,7 +159,7 @@ function Header({ showSearch = true, showNav = true }) {
 
                     <div className="profile-dropdown">
                         <div className="nav-icon mx-2 profile-icon" onClick={toggleDropdown} style={{ cursor: "pointer" }} >
-                            <img src="/avt2.jpg" alt="Avatar" style={{width: "40px", height: "40px", borderRadius: "50%", objectFit: "cover", }} />
+                            <img src={userInfo.profileImage} alt="Avatar" style={{width: "40px", height: "40px", borderRadius: "50%", objectFit: "cover", }} />
                         </div>
                         {isDropdownOpen && (
                             <div className="dropdown-menu">
@@ -141,7 +183,7 @@ function Header({ showSearch = true, showNav = true }) {
 
                     <div className="profile-dropdown">
                         <div className="nav-icon mx-2 profile-icon" onClick={toggleDropdown} style={{ cursor: "pointer" }} >
-                            <img src="/avt3.jpg" alt="Avatar" style={{width: "40px", height: "40px", borderRadius: "50%", objectFit: "cover", }} />
+                            <img src={userInfo.profileImage} alt="Avatar" style={{width: "40px", height: "40px", borderRadius: "50%", objectFit: "cover", }} />
                         </div>
                         {isDropdownOpen && (
                             <div className="dropdown-menu">

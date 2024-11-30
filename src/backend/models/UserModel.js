@@ -35,7 +35,15 @@ const UserModel = {
   create: (newUser) => {
     const users = getMockData();
     const nextId = users.length > 0 ? String(Number(users[users.length - 1].UserID) + 1) : '1';
-    const userToSave = { UserID: nextId, RegistrationDate: new Date().toISOString().split('T')[0], ...newUser };
+    
+    // Lưu thông tin người dùng mới vào mock data
+    const userToSave = {
+      UserID: nextId,
+      RegistrationDate: new Date().toISOString().split('T')[0],
+      profileImage: newUser.profileImage || null, // Đảm bảo lưu ảnh nếu có
+      ...newUser
+    };
+    
     users.push(userToSave);
     saveMockData(users);
     return userToSave;

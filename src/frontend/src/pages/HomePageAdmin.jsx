@@ -22,7 +22,10 @@ function HomePageAdmin() {
                 </div>  
                 <div className="inner-today-post">
                     <Posts />
-                    <a href="/PostsSeeAll" >See All</a>
+                    <Link to='/PostsSeeAll'>
+                        See All
+                    </Link>
+                    
                 </div>
             </div>
             <div className="unapproved-products">
@@ -31,7 +34,10 @@ function HomePageAdmin() {
                 </div>
                 <div className="inner-unapproved-products">
                     <Products />
-                    <a href="/ProductsSeeAll" >See All</a>
+                    <Link to='/ProductsSeeAll'>
+                        See All
+                    </Link>
+                    
                 </div>
             </div>
             <div className="reports">
@@ -40,7 +46,10 @@ function HomePageAdmin() {
                 </div>
                 <div className="inner-reports">
                     <Reports />
-                    <a href="/ReportsSeeAll" >See All</a>
+                    <Link to='/ReportsSeeAll'>
+                        See All
+                    </Link>
+                    
                 </div>
             </div>
         </div>

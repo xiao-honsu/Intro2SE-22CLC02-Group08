@@ -1,28 +1,24 @@
 const UserModel = require('../models/UserModel');
-const AdminModel = require('../models/AdminModel');
 const path = require('path');
 const fs = require('fs');
 
-// Controller logic
-const authController = {
-    // controller về login
-    login: async (req, res) => {
-        const { email, password } = req.body;
+const userController = {
+    getProfile: async (req, res) => {
+        const { userId } = req.params;
 
         try {
-            const admin = AdminModel.findOne({
-                where: { Email: email, Password: password },
-            });
-            if (admin) 
-                return res.status(200).json({ success: true, userType: "admin", id: admin.AdminID });
+            const user = await UserModel.findOne({ where: { UserID: userId } });
 
-            const user = UserModel.findOne({
-                where: { Email: email, Password: password },
+            if (!user) {
+                return res.status(404).json({ success: false, message: "User not found" });
+            }
+
+            return res.status(200).json({ success: true, 
+                                          userId: user.UserID,
+                                          username: user.Username,
+                                          profileImage: user.profilePicture,
+                                          signupDate: user.RegistrationDate,
             });
-            if (user) 
-                return res.status(200).json({ success: true, userType: user.Roles, id: user.UserID });
-      
-            return res.status(401).json({ success: false, message: "Invalid email or password" });
         } catch (error) {
             console.error("Error during login: ", error);
             return res.status(500).json({ success: false, message: "An error occurred while processing the login" });
@@ -51,4 +47,4 @@ const authController = {
 
 };
 
-module.exports = authController;
+module.exports = userController;

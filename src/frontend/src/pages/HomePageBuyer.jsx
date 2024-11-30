@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Header from '../components/Header';
 import Nav from 'react-bootstrap/Nav';
 import Banner from '../components/Banner';
@@ -7,16 +7,41 @@ import ProductCard from '../components/ProductCard';
 import About from '../components/About';
 import Footer from '../components/Footer';
 import UserContext from "../context/userContext";
+import userAPI from "../services/user";
+
 import '../styles/HomePageBuyer.scss';
 
 function HomePageBuyer() {
-  const { userType } = useContext(UserContext);
+  const { userType, setUserType, userInfo, setUserInfo } = useContext(UserContext);
 
   const dummyProducts = Array(16).fill({  // tạo tạm trước khi có sb
     image: '/mostSearch-laptop.jpg', 
     name: 'Tên đồ', 
     price: 'Giá tiền', 
   });
+
+  useEffect(() => {
+    const userId = localStorage.getItem("id");  
+
+    if (userId) {
+      userAPI.getProfile(userId).then(data => {
+        if (data.success) {
+          setUserInfo(data);  
+        } else {
+          console.error("Failed to fetch user info");
+        }
+      });
+    }
+
+    const stored_userType = localStorage.getItem("userType");
+    if (stored_userType) {
+      setUserType(stored_userType);
+    }
+
+  }, [setUserType, setUserInfo]);
+
+  console.log("id: ", localStorage.getItem("id"));
+                console.log("type: ", localStorage.getItem("userType"));
 
   return (
     <div className="main-container">

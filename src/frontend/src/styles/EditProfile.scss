@@ -1,0 +1,123 @@
+.main-container {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .header-wrapper {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+
+.information-container {
+    flex: 1;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 80px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #023047;
+    margin-bottom: 20px;
+  }
+  
+  .profile-image-section {
+    text-align: center;
+    margin-bottom: 20px;
+  
+    .image-upload-label {
+      cursor: pointer;
+  
+      .image-upload-box {
+        width: 120px;
+        height: 120px;
+        border: 2px dashed #bbb;
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background-color: #fff;
+  
+        .uploaded-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 8px;
+        }
+  
+        .placeholder {
+          color: #bbb;
+          font-size: 14px;
+  
+          span {
+            font-size: 24px;
+            color: #023047;
+          }
+        }
+      }
+    }
+  }
+  
+  .form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  
+    label {
+      display: flex;
+      flex-direction: column;
+      font-size: 16px;
+      color: #023047;
+  
+      input {
+        height: 40px;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+    }
+  }
+  
+  .button-section {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+  
+    .cancel-button,
+    .save-button {
+      background-color: #fb8500;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+  
+      &:hover {
+        background-color: #ffa733;
+      }
+    }
+  
+    .cancel-button {
+      background-color: #bbb;
+  
+      &:hover {
+        background-color: #ddd;
+      }
+    }
+  }
+  

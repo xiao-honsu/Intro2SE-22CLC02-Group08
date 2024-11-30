@@ -2,8 +2,23 @@
     {
       "AdminID": "1",
       "Username": "admin1",
-      "Password": "adminpass",
-      "Email": "admin1@example.com"
+      "Password": "456",
+      "Email": "admin1@e.com",
+      "profilePicture": "http://localhost:3000/mockData/avt3.jpg"
+    },
+    {
+      "AdminID": "2",
+      "Username": "admin2",
+      "Password": "456",
+      "Email": "admin2@e.com",
+      "profilePicture": "http://localhost:3000/mockData/avt3.jpg"
+    },
+    {
+      "AdminID": "3",
+      "Username": "admin3",
+      "Password": "456",
+      "Email": "admin3@e.com",
+      "profilePicture": "http://localhost:3000/mockData/avt3.jpg"
     }
   ]
   
