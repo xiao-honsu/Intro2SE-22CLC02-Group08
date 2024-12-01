@@ -26,12 +26,9 @@ function HomePage() {
 
   return (
     <div className="main-container">
-    
-      <div className="header-wrapper">
         <Header />
-      </div>
-
     
+
       <div className="home-container">
         <Nav className="category-nav">
           <Nav.Item className="nav-item">

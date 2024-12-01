@@ -12,9 +12,9 @@ function HomePageAdmin() {
 
     return (
         <div className="main-container">
-            <div className="header-wrapper">
+            
                 <Header userType={userType} />
-            </div>
+           
             <Stats />
             <div className="today-post">
                 <div className="today-post-text">

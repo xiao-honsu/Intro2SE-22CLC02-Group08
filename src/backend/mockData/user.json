@@ -1,7 +1,7 @@
 [
   {
     "UserID": "1",
-    "Roles": "seller",
+    "Roles": "buyer",
     "Username": "user1",
     "Password": "123",
     "Email": "user1@e.com",
