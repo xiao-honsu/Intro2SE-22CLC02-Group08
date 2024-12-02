@@ -29,6 +29,8 @@ import ReportsSeeAll from './pages/ReportsSeeAll';
 import UnapprovedDetail from './pages/UnapprovedDetail';
 import ListUser from './pages/ListUser';
 
+import SupportPageSeller from './pages/SupportPageSeller';
+
 
 function App() {
   return (
@@ -60,6 +62,8 @@ function App() {
         <Route path="/ReportsSeeAll" element={<ReportsSeeAll />} />
         <Route path="/UnapprovedDetail" element={<UnapprovedDetail />} />
         <Route path="/ListUser" element={<ListUser />} />
+
+        <Route path="/SupportPageSeller" element={<SupportPageSeller />} />
 
       </Routes>
     </Router>
