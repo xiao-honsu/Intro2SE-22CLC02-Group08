@@ -11,10 +11,12 @@ const app = express();
 app.use('/mockData', express.static(path.join(__dirname, 'mockData')));
 // Middleware
 app.use(cors({
-    origin: "http://localhost:5173", 
+    origin: '*', 
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
+
+app.options('*', cors());
 app.use(express.json()); // Parse JSON request body
 
 
@@ -23,6 +25,6 @@ app.use("/user", userRoutes);
 app.use("/admin", adminRoutes);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Backend is running at http://localhost:${PORT}`);
 });

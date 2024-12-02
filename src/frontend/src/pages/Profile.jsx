@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Tabs, Tab, Card, Button } from "react-bootstrap";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Category from '../components/Category';
 
 import BuyerProduct from "../components/BuyerProduct";
 import SellerProduct from "../components/SellerProduct";
@@ -68,8 +69,12 @@ function Profile() {
   return (
     <div className="main-container">
       <Header />
-
+      <div className="category-container">
+        <Category />
+      </div>
+      
       <div className="profile-page-container">
+      
         <div className="profile-sidebar">
           <UserSidebar />
         </div>

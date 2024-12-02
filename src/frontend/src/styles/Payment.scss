@@ -1,0 +1,185 @@
+.main-container {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+
+.information-container {
+    flex: 1;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 80px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #023047;
+    margin-bottom: 20px;
+  }
+  
+  
+  .form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  
+    label {
+      display: flex;
+      flex-direction: column;
+      font-size: 16px;
+      color: #023047;
+  
+      input {
+        height: 40px;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #eee;
+      }
+    }
+  }
+  
+  .button-section {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+  
+    .cancel-button,
+    .confirm-button {
+      background-color: #fb8500;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+  
+      &:hover {
+        background-color: #ffa733;
+      }
+    }
+  
+    .cancel-button {
+      background-color: #bbb;
+  
+      &:hover {
+        background-color: #ddd;
+      }
+    }
+  }
+  
+
+
+  .seller-bank-info {
+    margin-top: 20px;
+  
+    p {
+      font-size: 14px;
+      font-weight: bold;
+      margin: 5px 0;
+  
+      strong {
+        font-weight: bold;
+        color: #333;
+      }
+    }
+  }
+  
+  .payment-method {
+    margin-top: 20px;
+  
+    h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .payment-options {
+      display: flex;
+      gap: 15px;
+  
+      .payment-button {
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff;
+        background-color: #fb8500;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+  
+        &.active {
+          background-color: #ffb703;
+        }
+  
+        &:hover {
+          background-color: #ffb703;
+        }
+      }
+    }
+  }
+  
+  .banking-section {
+    margin-top: 20px;
+  
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 10px;
+  
+      input {
+        width: 100%;
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-top: 5px;
+        background-color: #eee;
+      }
+    }
+  }
+  
+  .button-section {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+  
+    .cancel-button,
+    .confirm-button {
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+  
+      &.cancel-button {
+        background-color: #ccc;
+        color: #333;
+  
+        &:hover {
+          background-color: #bbb;
+        }
+      }
+  
+      &.confirm-button {
+        background-color: #fb8500;
+        color: #fff;
+  
+        &:hover {
+          background-color: #ffb703;
+        }
+      }
+    }
+  }
+  

@@ -147,7 +147,7 @@ function Header({ showSearch = true, showNav = true }) {
 
             {userType === "buyer" && userInfo && (
                 <>
-                    <Link to="/cart" className="nav-icon mx-2">
+                    <Link to="/CartPage" className="nav-icon mx-2">
                         <FontAwesomeIcon icon={faCartShopping} />
                     </Link>
                     <Link to="/" className="nav-icon mx-2">
