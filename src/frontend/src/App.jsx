@@ -30,6 +30,9 @@ import UnapprovedDetail from './pages/UnapprovedDetail';
 import ListUser from './pages/ListUser';
 
 import SupportPageSeller from './pages/SupportPageSeller';
+import SupportPageBuyer from './pages/SupportPageBuyer';
+import PoliciesPageSeller from './pages/PoliciesPageSeller';
+import PoliciesPageBuyer from './pages/PoliciesPageBuyer';
 
 
 function App() {
@@ -64,6 +67,9 @@ function App() {
         <Route path="/ListUser" element={<ListUser />} />
 
         <Route path="/SupportPageSeller" element={<SupportPageSeller />} />
+        <Route path="/SupportPageBuyer" element={<SupportPageBuyer />} />
+        <Route path="/PoliciesPageSeller" element={<PoliciesPageSeller />} />
+        <Route path="/PoliciesPageBuyer" element={<PoliciesPageBuyer />} />
 
       </Routes>
     </Router>
