@@ -1,31 +1,41 @@
 const UserModel = require('../models/UserModel');
 const AdminModel = require('../models/AdminModel');
-const path = require('path');
-const fs = require('fs');
 
-// Controller logic
 const authController = {
-    // controller về login
     login: async (req, res) => {
         const { email, password } = req.body;
 
         try {
-            const admin = AdminModel.findOne({
-                where: { Email: email, Password: password },
-            });
-            if (admin) 
-                return res.status(200).json({ success: true, userType: "admin", id: admin.AdminID });
+            const admin = await AdminModel.findOne({ email: email, password: password });
+            if (admin) {
+                return res.status(200).json({
+                    success: true,
+                    userType: "admin",
+                    id: admin._id,
+                    username: admin.username
+                });
+            }
 
-            const user = UserModel.findOne({
-                where: { Email: email, Password: password },
+            const user = await UserModel.findOne({ email: email, password: password });
+            if (user) {
+                return res.status(200).json({
+                    success: true,
+                    userType: "user",
+                    id: user._id, 
+                    username: user.username
+                });
+            }
+
+            return res.status(401).json({
+                success: false,
+                message: "Invalid email or password"
             });
-            if (user) 
-                return res.status(200).json({ success: true, userType: user.Roles, id: user.UserID });
-      
-            return res.status(401).json({ success: false, message: "Invalid email or password" });
         } catch (error) {
-            console.error("Error during login: ", error);
-            return res.status(500).json({ success: false, message: "An error occurred while processing the login" });
+            console.error("Error during login:", error);
+            return res.status(500).json({
+                success: false,
+                message: "An error occurred while processing the login"
+            });
         }
     },
 
@@ -33,22 +43,32 @@ const authController = {
         const { id, role } = req.body;
 
         try {
-            const updateUser = await UserModel.update({ Roles: role }, { where: { UserID: id } });
-    
-            if (updateUser[0] > 0) {
-                return res.status(200).json({ success: true, message: "Role updated successfully" });
+            const updateUser = await UserModel.findOneAndUpdate(
+                { _id: id },          
+                { $set: { role: role } }, 
+                { new: true }            
+            );
+
+            if (updateUser) {
+                return res.status(200).json({
+                    success: true,
+                    message: "Role updated successfully",
+                    updatedUser: updateUser
+                });
             } else {
-                return res.status(404).json({ success: false, message: "User not found or role unchanged" });
+                return res.status(404).json({
+                    success: false,
+                    message: "User not found or role unchanged"
+                });
             }
         } catch (error) {
             console.error("Error during role update:", error);
-            return res.status(500).json({ success: false, message: "An error occurred while updating the role" });
+            return res.status(500).json({
+                success: false,
+                message: "An error occurred while updating the role"
+            });
         }
     },
-
-   
-
-
 };
 
 module.exports = authController;

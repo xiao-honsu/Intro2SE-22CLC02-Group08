@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const mongoose = require("mongoose");
 const path = require("path");
 const authRoutes = require("./routes/authRoute"); 
 const userRoutes = require("./routes/userRoute");
@@ -15,6 +16,11 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
+
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.error("MongoDB connection error:", err));
 
 app.options('*', cors());
 app.use(express.json()); // Parse JSON request body
