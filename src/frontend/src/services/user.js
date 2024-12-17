@@ -15,12 +15,10 @@ const userAPI = {
     },
 
     updateProfile: async (userId, updatedData) => {
-        try {
+        try {    
             const response = await fetch(`${BASE_URL}/${userId}`, {
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json", },
                 body: JSON.stringify(updatedData),
             });
     
@@ -28,8 +26,7 @@ const userAPI = {
                 throw new Error('Failed to update user profile');
             }
     
-            const data = await response.json();
-            return data; // Trả về dữ liệu đã được cập nhật
+            return await response.json();
         } catch (error) {
             console.error("Error updating user profile:", error);
             return null;

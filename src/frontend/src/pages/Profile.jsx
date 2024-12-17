@@ -33,12 +33,7 @@ function Profile() {
 
     fetchUserInfo();
 }, [setUserInfo]);
-
-
-
-  console.log("id: ", localStorage.getItem("id"));
-                console.log("type: ", localStorage.getItem("userType"));
-       
+     
   const orders = [
     { name: "Basic T-shirt", price: "₫70.000", shopName: "Ahau19LsyTanShop's", status: "Received", image: "http://localhost:3000/mockData/product.jpg" },
     { name: "SamSung Fridge", price: "₫4.300.000", shopName: "Danhuyshop's", status: "Confirming", image: "http://localhost:3000/mockData/product.jpg" },

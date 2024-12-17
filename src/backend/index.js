@@ -5,7 +5,9 @@ const mongoose = require("mongoose");
 const path = require("path");
 const authRoutes = require("./routes/authRoute"); 
 const userRoutes = require("./routes/userRoute");
-const adminRoutes = require("./routes/adminRoute")
+const adminRoutes = require("./routes/adminRoute");
+const productRoutes = require("./routes/productRoute");
+const categoryRoutes = require("./routes/categoryRoute");
 
 dotenv.config();
 const app = express();
@@ -23,12 +25,14 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 
 app.options('*', cors());
-app.use(express.json()); // Parse JSON request body
+app.use(express.json()); 
 
 
 app.use("/auth", authRoutes); 
 app.use("/user", userRoutes);
 app.use("/admin", adminRoutes);
+app.use("/products", productRoutes);
+app.use("/categories", categoryRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {

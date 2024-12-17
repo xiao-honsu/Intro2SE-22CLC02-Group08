@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
-    orderID: { type: mongoose.Schema.Types.ObjectId, auto: true },
     buyerID: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     receiverName: { type: String, required: true },
     receiverPhoneNumber: { type: String, required: true },

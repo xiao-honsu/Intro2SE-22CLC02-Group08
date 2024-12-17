@@ -1,15 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/EditProfile.scss";
 
+import UserContext from "../context/userContext";
+import userAPI from "../services/user";
+
 const EditProfile = () => {
+  const { userInfo, setUserInfo } = useContext(UserContext);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
-    profileImage: null,
+    avatar: "",
     username: "",
     bank: "",
     bankAccount: "",
   });
+
+  useEffect(() => {
+    if (userInfo) {
+      setFormData({
+        avatar: userInfo.avatar || "",
+        usename: userInfo.username || "",
+        bank: userInfo.bank || "",
+        bankAccount: userInfo.bankAccount || "",
+      });
+    }
+  }, [userInfo]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -19,23 +37,39 @@ const EditProfile = () => {
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setFormData({ ...formData, profileImage: imageUrl });
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, avatar: reader.result});
+      }
+      reader.readAsDataURL(file);
     }
   };
 
   const handleCancel = () => {
-    setFormData({
-      profileImage: null,
-      username: "",
-      bank: "",
-      bankAccount: "",
-    });
+    navigate("/profile");
   };
 
-  const handleSave = () => {
-    console.log("Saved Data:", formData);
-    alert("Information saved!");
+  const handleSave = async () => {
+    try {
+      const res = await userAPI.updateProfile(userInfo.userId, formData);
+        
+        if (!res) {
+            console.error("Failed to update profile: Response is null");
+            alert("Failed to update profile. Please try again.");
+            return;
+        }
+
+        if (res.success) {
+            alert("Profile updated successfully!");
+            setUserInfo(res.updatedUser); 
+            navigate("/profile");
+        } else {
+            alert(response.message || "Failed to update profile");
+        }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("An error occurred while updating the profile.");
+    }
   };
 
   return (
@@ -46,19 +80,12 @@ const EditProfile = () => {
       <h2>Information</h2>
       <div className="profile-image-section">
         <label className="image-upload-label">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
+          <input type="file" accept="image/*" onChange={handleImageUpload}
             style={{ display: "none" }}
           />
           <div className="image-upload-box">
-            {formData.profileImage ? (
-              <img
-                src={formData.profileImage}
-                alt="Profile"
-                className="uploaded-image"
-              />
+            {formData.avatar ? (
+              <img src={formData.avatar} alt="Profile" className="uploaded-image" />
             ) : (
               <div className="placeholder">
                 <span>+</span>
@@ -72,30 +99,15 @@ const EditProfile = () => {
       <div className="form-section">
         <label>
           Username
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleInputChange}
-          />
+          <input type="text" name="username" value={formData.username} onChange={handleInputChange} />
         </label>
         <label>
           Bank
-          <input
-            type="text"
-            name="bank"
-            value={formData.bank}
-            onChange={handleInputChange}
-          />
+          <input type="text" name="bank" value={formData.bank} onChange={handleInputChange} />
         </label>
         <label>
           Bank Account
-          <input
-            type="text"
-            name="bankAccount"
-            value={formData.bankAccount}
-            onChange={handleInputChange}
-          />
+          <input type="text" name="bankAccount" value={formData.bankAccount} onChange={handleInputChange} />
         </label>
       </div>
 

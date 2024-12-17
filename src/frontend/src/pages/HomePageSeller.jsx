@@ -28,10 +28,6 @@ function HomePageSeller() {
     }
   }, [setUserType]);
 
-  console.log("id: ", localStorage.getItem("id"));
-                console.log("type: ", localStorage.getItem("userType"));
-  
-
   return (
     <div className="main-container">
     

@@ -27,7 +27,7 @@ function Header({ showSearch = true, showNav = true }) {
             if (userType === "admin") {
                 const userId = localStorage.getItem("id");
                 setUserType(localStorage.getItem("userType"))
-                if (userId) {
+                if (userId && userId.trim() !== "") {
                     adminAPI.getProfile(userId).then(data => {
                         if (data) {
                             setUserInfo(data);
@@ -41,7 +41,7 @@ function Header({ showSearch = true, showNav = true }) {
             else {
                 const userId = localStorage.getItem("id");
                 setUserType(localStorage.getItem("userType"))
-                if (userId) {
+                if (userId && userId.trim() !== "") {
                     userAPI.getProfile(userId).then(data => {
                         if (data) {
                             setUserInfo(data);
@@ -132,7 +132,11 @@ function Header({ showSearch = true, showNav = true }) {
 
                     <div className="profile-dropdown">
                         <div className="nav-icon mx-2 profile-icon" onClick={toggleDropdown} style={{ cursor: "pointer" }} >
-                            <img src={userInfo.profileImage} alt="Avatar" style={{width: "40px", height: "40px", borderRadius: "50%", objectFit: "cover", }} />
+                            {userInfo.avatar ? (  
+                                <img src={userInfo.avatar} alt="Avatar" style={{width: "40px", height: "40px", borderRadius: "50%", objectFit: "cover", }} />
+                            ) : (
+                                <FontAwesomeIcon icon={faUser} />
+                            )} 
                         </div>
                         {isDropdownOpen && (
                             <div className="dropdown-menu">
@@ -159,7 +163,11 @@ function Header({ showSearch = true, showNav = true }) {
 
                     <div className="profile-dropdown">
                         <div className="nav-icon mx-2 profile-icon" onClick={toggleDropdown} style={{ cursor: "pointer" }} >
-                            <img src={userInfo.profileImage} alt="Avatar" style={{width: "40px", height: "40px", borderRadius: "50%", objectFit: "cover", }} />
+                            {userInfo.avatar ? (  
+                                <img src={userInfo.avatar} alt="Avatar" style={{width: "40px", height: "40px", borderRadius: "50%", objectFit: "cover", }} />
+                            ) : (
+                                <FontAwesomeIcon icon={faUser} />
+                            )} 
                         </div>
                         {isDropdownOpen && (
                             <div className="dropdown-menu">
@@ -183,7 +191,11 @@ function Header({ showSearch = true, showNav = true }) {
 
                     <div className="profile-dropdown">
                         <div className="nav-icon mx-2 profile-icon" onClick={toggleDropdown} style={{ cursor: "pointer" }} >
-                            <img src={userInfo.profileImage} alt="Avatar" style={{width: "40px", height: "40px", borderRadius: "50%", objectFit: "cover", }} />
+                            {userInfo.avatar ? (  
+                                <img src={userInfo.avatar} alt="Avatar" style={{width: "40px", height: "40px", borderRadius: "50%", objectFit: "cover", }} />
+                            ) : (
+                                <FontAwesomeIcon icon={faUser} />
+                            )} 
                         </div>
                         {isDropdownOpen && (
                             <div className="dropdown-menu">

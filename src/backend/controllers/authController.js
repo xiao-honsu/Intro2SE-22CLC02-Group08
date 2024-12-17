@@ -2,6 +2,45 @@ const UserModel = require('../models/UserModel');
 const AdminModel = require('../models/AdminModel');
 
 const authController = {
+
+    signup: async (req, res) => {
+        const { email, password } = req.body;
+
+        try {
+
+            const existingUser = await UserModel.findOne({ email });
+            if (existingUser) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Email already exists"
+                });
+            }
+
+            const newUser = new UserModel({
+                email: email,
+                password: password, 
+                username: email.split("@")[0] 
+            });
+
+            await newUser.save();
+
+            return res.status(201).json({
+                success: true,
+                message: "User registered successfully",
+                id: newUser._id,
+                email: newUser.email,
+                username: newUser.username
+            });
+        } catch (error) {
+            console.error("Error during sign up:", error);
+            return res.status(500).json({
+                success: false,
+                message: "An error occurred while registering the user"
+            });
+        }
+    },
+
+
     login: async (req, res) => {
         const { email, password } = req.body;
 

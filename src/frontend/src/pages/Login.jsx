@@ -29,8 +29,10 @@ function LoginPage() {
                 setUserType(res.userType);
                 localStorage.setItem("id", res.id);
                 localStorage.setItem("userType", res.userType);
+
                 console.log("id: ", localStorage.getItem("id"));
                 console.log("type: ", localStorage.getItem("userType"));
+
                 // Điều hướng dựa trên userType
                 if (res.userType === "admin") {
                     const userInfo = await adminAPI.getProfile(localStorage.getItem("id")); // Gọi API lấy thông tin admin
@@ -44,7 +46,7 @@ function LoginPage() {
                 }
                     
                 
-                else if (res.userType === "buyer" || res.userType === "seller") 
+                else if (res.userType === "user") 
                     navigate("/ChooseRole");
                 
             } else {
