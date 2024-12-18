@@ -38,7 +38,7 @@ const productController = {
 
     getAllProducts: async (req, res) => {
         try {
-            const products = await ProductModel.find().populate('categoryID', 'categoryName').populate('sellerID', 'username');
+            const products = await ProductModel.find().populate('categoryIDs', 'categoryName').populate('sellerID', 'username');
             return res.status(200).json({ success: true, products });
         } catch (error) {
             console.error("Error fetching products:", error);
@@ -48,7 +48,7 @@ const productController = {
 
     getProductById: async (req, res) => {
         try {
-            const product = await ProductModel.findById(req.params.id).populate('categoryID', 'categoryName').populate('sellerID', 'username');
+            const product = await ProductModel.findById(req.params.id).populate('categoryIDs', 'categoryName').populate('sellerID', 'username');
             if (!product) {
                 return res.status(404).json({ success: false, message: "Product not found." });
             }
@@ -59,7 +59,26 @@ const productController = {
         }
     },
 
-
+    getAllProductsBySeller: async (req, res) => {
+        try {
+            const { sellerId } = req.params; 
+            if (!sellerId) {
+                return res.status(400).json({ success: false, message: "Seller not found." });
+            }
+    
+            const products = await ProductModel.find({ sellerID: sellerId }).populate('categoryIDs', 'categoryName').populate('sellerID', 'username'); 
+    
+            if (!products || products.length === 0) {
+                return res.status(404).json({ success: false, message: "No products found for seller." });
+            }
+    
+            return res.status(200).json({ success: true, products });
+        } catch (error) {
+            console.error("Error fetching products by seller:", error);
+            return res.status(500).json({ success: false, message: "Failed to fetch products by seller." });
+        }
+    },
+    
     updateProductStatus: async (req, res) => {
         try {
             const { status } = req.body; 

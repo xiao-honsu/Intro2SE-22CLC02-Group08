@@ -1,49 +1,86 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import "../styles/ProductDetail.scss";
 import Footer from "../components/Footer";
-  
+
+import UserContext from "../context/userContext";
+import productAPI from "../services/product";
+
 function ProductDetail() {
-  const [userType, setUserType] = useState("seller");
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProductDetail = async () => {
+      try {
+        const response = await productAPI.getProductById(id);
+        if (response.success) {
+            setProduct(response.product);
+        } else {
+            console.error(response.message);
+        } 
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProductDetail();
+  }, [id]);
+
+  if (loading) return <div>Loading...</div>;
+
+  if (!product) return <div>Product not found.</div>;
+  const handleCancel = () => {
+        navigate(-1);
+  };
+
   return (
     <div className="main-container">
-      <div className="header-wrapper">
-        <Header userType={userType} />
-      </div>
+      <Header />
 
       <div className="information">Information</div>
       <div className="add-image">
         <div className="add-image-header">Images</div>
         <div className="images">
-            <div className="image-item"><img src="ipod-preview-1.jpg" alt="Image 1" /></div>
-            <div className="image-item"><img src="ipod-preview-2.jpg" alt="Image 2" /></div>
-            <div className="image-item"><img src="ipod-preview-3.jpg" alt="Image 3" /></div>
-            <div className="image-item"><img src="ipod-preview-4.jpg" alt="Image 4" /></div>
+            {product.images.map((image, index) => (
+              <div className="image-item"><img key={index} src={image} alt={`Product ${index}`} /></div>
+            ))}
         </div>          
       </div>
-      <div className="name-product">
-        <div className="name-product-head">Name</div>
-        <div className="display-name">iPod</div>
+      <div className="product-detail-attributes">
+      <div className="product-detail-attribute">
+        <div className="attribute-head">Name</div>
+        <div className="display">{product.productName}</div>
       </div>
-      <div className="cost">
-        <div className="cost-head">Cost</div>
-        <div className="display-cost">125000</div>
+      <div className="product-detail-attribute">
+        <div className="attribute-head">Cost</div>
+        <div className="display">{product.price}</div>
       </div>
-      <div className="address">
-        <div className="address-head">Address</div>
-        <div className="display-address">District 3, Ho Chi Minh City</div>
+      <div className="product-detail-attribute">
+        <div className="attribute-head">Address</div>
+        <div className="display">{product.address}</div>
       </div>
-      <div className="category">
-        <div className="category-head">Category</div>
-        <div className="display-category">Electronics</div>
+      <div className="product-detail-attribute">
+        <div className="attribute-head">Category</div>
+        <div className="display">
+          {" "}
+          {product.categoryIDs.map((category) => category.categoryName).join(", ")}
+        </div>
       </div>
-      <div className="description">
-        <div className="description-head">Description</div>
-        <div className="display-description">I've had this iPod Classic for about a year now. It's definitely a well-loved device, but it still works great! While it's not brand new, it's been well-maintained and has plenty of life left in it.</div>
+      <div className="product-detail-attribute">
+        <div className="attribute-head">Description</div>
+        <div className="display">{product.description}</div>
       </div>
+
       <div className="button-choice">
-        <button className="back-button">Back</button>
+        <button className="back-button" onClick={() => handleCancel()}>Back</button>
       </div>
+      </div>
+      
       <Footer showBanner={false} />
     </div>
   );
