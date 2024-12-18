@@ -47,17 +47,28 @@ const productController = {
     },
 
     getProductById: async (req, res) => {
+        const { id } = req.params;
+    
+        if (!id || id.length !== 24) {
+            return res.status(400).json({ success: false, message: "Invalid or missing product ID." });
+        }
+    
         try {
-            const product = await ProductModel.findById(req.params.id).populate('categoryIDs', 'categoryName').populate('sellerID', 'username');
+            const product = await ProductModel.findById(id)
+                .populate('categoryIDs', 'categoryName')
+                .populate('sellerID', 'username');
+    
             if (!product) {
                 return res.status(404).json({ success: false, message: "Product not found." });
             }
+    
             return res.status(200).json({ success: true, product });
         } catch (error) {
             console.error("Error fetching product:", error);
             return res.status(500).json({ success: false, message: "Failed to fetch product." });
         }
     },
+    
 
     getAllProductsBySeller: async (req, res) => {
         try {
