@@ -56,19 +56,27 @@ function ImageUploader({ onImagesChange }) {
 
 function DropdownMultiple({ categories, onCategorySelect }) {
     const [selectedCategories, setSelectedCategories] = useState([]);
+    const [selectedCategoryNames, setSelectedCategoryNames] = useState([]); 
 
     const [isOpen, setIsOpen] = useState(false);
     const toggleDropdown = () => {
       setIsOpen((prev) => !prev); 
     };
-    const handleSelect = (categoryId) => {
-          setSelectedCategories((prev) =>
-              prev.includes(categoryId)
-                  ? prev.filter((id) => id !== categoryId)
-                  : [...prev, categoryId]
-          );
-          setIsOpen(false);
+    const handleSelect = (category) => {
+        const { _id, categoryName } = category;
+        setSelectedCategories((prev) =>
+            prev.includes(_id)
+                ? prev.filter((id) => id !== _id)
+                : [...prev, _id]
+        );
+        setSelectedCategoryNames((prev) =>
+            prev.includes(categoryName)
+                ? prev.filter((name) => name !== categoryName)
+                : [...prev, categoryName]
+        );
+        
     };
+    
 
     useEffect(() => {
         onCategorySelect(selectedCategories);
@@ -77,7 +85,7 @@ function DropdownMultiple({ categories, onCategorySelect }) {
     return (
         <div className="dropdown">
             <div className="dropdown-header" onClick={toggleDropdown}>
-                {selectedCategories}
+                {selectedCategoryNames.length > 0 ? selectedCategoryNames.join(", ") : "Select Categories"}
                 <span className={`dropdown-arrow ${isOpen ? "open" : ""}`}>▼</span>
             </div>
             {isOpen && (
@@ -86,7 +94,7 @@ function DropdownMultiple({ categories, onCategorySelect }) {
                         <li key={category._id} className="dropdown-item">
                             <label>
                                 <input type="checkbox" checked={selectedCategories.includes(category._id)}
-                                onChange={() => handleSelect(category._id)}
+                                onChange={() => handleSelect(category)}
                                 />
                                 {category.categoryName}
                             </label>
@@ -111,7 +119,6 @@ function SellerUploadProduct() {
         price: "",
         address: "",
         description: "",
-        quantity: 1,
         categoryIDs: [],
         images: [],
         sellerID: userInfo?.userId || "",
@@ -151,7 +158,6 @@ function SellerUploadProduct() {
         formData.images.forEach((file) => uploadData.append("images", file));
         uploadData.append("productName", formData.productName);
         uploadData.append("price", formData.price);
-        uploadData.append("quantity", formData.quantity);
         uploadData.append("address", formData.address);
         uploadData.append("description", formData.description);
         uploadData.append("categoryIDs", JSON.stringify(formData.categoryIDs));
@@ -190,9 +196,6 @@ function SellerUploadProduct() {
                     <input type="number" name="price" placeholder="Price" onChange={handleInputChange} className="input-container" />
                 </div>
                 <div>
-                    <input type="number" name="quantity" placeholder="Quantity" onChange={handleInputChange}  className="input-container"/>
-                </div>
-                <div>
                     <textarea name="address" placeholder="Address" onChange={handleInputChange} className="input-container"/>
                 </div>
                 <div>
@@ -202,7 +205,7 @@ function SellerUploadProduct() {
 
             <div className="category">
                 <div className="category-head">Category</div>
-                    <DropdownMultiple categories={categories} onCategorySelect={handleCategorySelect} />
+                <DropdownMultiple categories={categories} onCategorySelect={handleCategorySelect} />
             </div>
 
 

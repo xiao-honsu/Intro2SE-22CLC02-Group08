@@ -12,20 +12,25 @@ function HomePageAdmin() {
 
     return (
         <div className="main-container">
-            
+            <div className="header-wrapper">
                 <Header userType={userType} />
-           
+            </div>
             <Stats />
             <div className="today-post">
                 <div className="today-post-text">
                     Today's Posts
                 </div>  
                 <div className="inner-today-post">
+                    <div className="inner-header">
+                        <div className="inner-header-name">
+                            Name
+                        </div>
+                        <div className="inner-header-product">
+                            Product
+                        </div>
+                    </div>
                     <Posts />
-                    <Link to='/PostsSeeAll'>
-                        See All
-                    </Link>
-                    
+                    <a href="/PostsSeeAll" >See All</a>
                 </div>
             </div>
             <div className="unapproved-products">
@@ -33,11 +38,16 @@ function HomePageAdmin() {
                     Unapproved Products
                 </div>
                 <div className="inner-unapproved-products">
+                    <div className="inner-header">
+                        <div className="inner-header-name">
+                            Name
+                        </div>
+                        <div className="inner-header-product">
+                            Product
+                        </div>
+                    </div>
                     <Products />
-                    <Link to='/ProductsSeeAll'>
-                        See All
-                    </Link>
-                    
+                    <a href="/ProductsSeeAll" >See All</a>
                 </div>
             </div>
             <div className="reports">
@@ -45,11 +55,22 @@ function HomePageAdmin() {
                     Report
                 </div>
                 <div className="inner-reports">
+                    <div className="inner-report-header">
+                        <div className="inner-report-header-name">
+                            Reported person's name
+                        </div>
+                        <div className="inner-report-header-psid">
+                            Reported person's id
+                        </div>
+                        <div className="inner-report-header-prtid">
+                            Reported product's id
+                        </div>
+                        <div className="inner-report-header-des">
+                            Description
+                        </div>
+                    </div>
                     <Reports />
-                    <Link to='/ReportsSeeAll'>
-                        See All
-                    </Link>
-                    
+                    <a href="/ReportsSeeAll" >See All</a>
                 </div>
             </div>
         </div>
