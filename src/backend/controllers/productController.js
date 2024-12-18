@@ -3,10 +3,10 @@ const ProductModel = require('../models/ProductModel');
 const productController = {
     createProduct: async (req, res) => {
         try {
-            const { productName, description, price, address, quantity, categoryIDs, sellerID } = req.body;
+            const { productName, description, price, address, categoryIDs, sellerID } = req.body;
 
-            if (!productName || !price || !quantity) {
-                return res.status(400).json({ success: false, message: "Product name, price, and quantity are required." });
+            if (!productName || !price) {
+                return res.status(400).json({ success: false, message: "Product name, price are required." });
             }
 
             const images = req.files.map((file) => {
@@ -22,7 +22,6 @@ const productController = {
                 description,
                 price,
                 address,
-                quantity,
                 categoryIDs: JSON.parse(categoryIDs),
                 sellerID,
                 images,

@@ -39,16 +39,19 @@ const UserSidebar = () => {
         <div>
         <div className="user-sidebar">
             <div className="user-avatar">
-                {userInfo.avatar ? (  
+                {userInfo && userInfo.avatar ? (  
                     <img src={userInfo.avatar} alt="Avatar" style={{width: "40px", height: "40px", borderRadius: "50%", objectFit: "cover", }} />
                 ) : (
                     <FontAwesomeIcon icon={faUser} />
                 )}
             </div>
             <div className="user-info">
-                <h4> {userInfo.username || "username" } </h4>
-                <p>Joined on: { new Date(userInfo.signupDate).toLocaleDateString() } </p>
-                {userType === "seller" && (
+                <h4> {userInfo ? userInfo.username : "username" } </h4>
+                <p> Joined on:{" "}
+                        {userInfo?.signupDate
+                            ? new Date(userInfo.signupDate).toLocaleDateString()
+                            : "Unknown"} </p>
+                {userType === "seller" && userInfo && (
                     <>
                         <p> Sold: {userInfo.numItems} items </p>
                         <p> Rating: {userInfo.rating} </p>
