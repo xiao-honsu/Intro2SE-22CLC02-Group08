@@ -1,0 +1,39 @@
+.support-container { 
+    position: fixed; 
+    right: 90px; 
+    bottom: 10%; 
+    display: flex;  
+    width: 400px;  
+    height: 450px; 
+  }  
+  
+  .support-area {  
+    flex: 1;  
+    display: flex;  
+    flex-direction: column;  
+    border: 3px solid black; 
+    background-color: white;
+  }  
+  
+  .support-header {  
+    display: flex;  
+    align-items: center;  
+    background-color: white;
+    font-weight: bold;  
+    margin: 8px;
+  }  
+  
+  .message-support-area {  
+    flex: 1;  
+    border: 1px solid #ced4da;  
+    overflow-y: auto;  
+    background-color: white;
+    border-top: 2px solid black; 
+  }  
+  
+  .message-support-input {  
+    width: 100%;  
+    padding: 8px;  
+    border: 1px solid #ced4da;  
+    border-radius: 4px;  
+  }

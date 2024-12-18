@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Form, FormControl } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faCartShopping, faUser, faBell, faCommentDots } from "@fortawesome/free-solid-svg-icons";
+import Chat from './Chat';
+import Notification from "./Notification";
 
 import UserContext from "../context/userContext";
 import userAPI from "../services/user";
@@ -17,10 +19,19 @@ function Header({ showSearch = true, showNav = true }) {
     const navigate = useNavigate();
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+    const [isChatOpen, setIsChatOpen] = useState(false);
 
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
+    const toggleNotification = () => {
+        setIsNotificationOpen(!isNotificationOpen);
+    };
+    const toggleChat = () => {
+        setIsChatOpen(!isChatOpen);
+    };
+    
 
     useEffect(() => {
         const fetchUserInfo = async () => {
@@ -123,12 +134,24 @@ function Header({ showSearch = true, showNav = true }) {
             {userType === "seller" && userInfo && (
                 <>
                     <Link to="/SellerUploadProduct" className="btn btn-warning mx-2">Sell now</Link>
-                    <Link to="/" className="nav-icon mx-2">
-                        <FontAwesomeIcon icon={faBell} />
-                    </Link>
-                    <Link to="/" className="nav-icon mx-2">
-                        <FontAwesomeIcon icon={faCommentDots} />
-                    </Link>
+
+                    <div className="notification-dropdown">
+                        <div className="nav-icon mx-2 noti-icon" onClick={toggleNotification} style={{ cursor: "pointer" }} >
+                               <FontAwesomeIcon icon={faBell} />
+                        </div>
+                        {isNotificationOpen && (
+                            <Notification />
+                        )}
+                    </div>
+
+                    <div className="chat-box">
+                        <div className="nav-icon mx-2" onClick={toggleChat} style={{ cursor: "pointer" }}>
+                            <FontAwesomeIcon icon={faCommentDots} />
+                        </div>
+                        {isChatOpen && (
+                            <Chat />
+                        )}
+                    </div>
 
                     <div className="profile-dropdown">
                         <div className="nav-icon mx-2 profile-icon" onClick={toggleDropdown} style={{ cursor: "pointer" }} >
@@ -154,12 +177,24 @@ function Header({ showSearch = true, showNav = true }) {
                     <Link to="/CartPage" className="nav-icon mx-2">
                         <FontAwesomeIcon icon={faCartShopping} />
                     </Link>
-                    <Link to="/" className="nav-icon mx-2">
-                        <FontAwesomeIcon icon={faBell} />
-                    </Link>
-                    <Link to="/" className="nav-icon mx-2">
-                        <FontAwesomeIcon icon={faCommentDots} />
-                    </Link>
+
+                    <div className="notification-dropdown">
+                        <div className="nav-icon mx-2 noti-icon" onClick={toggleNotification} style={{ cursor: "pointer" }} >
+                               <FontAwesomeIcon icon={faBell} />
+                        </div>
+                        {isNotificationOpen && (
+                            <Notification />
+                        )}
+                    </div>
+
+                    <div className="chat-box">
+                        <div className="nav-icon mx-2" onClick={toggleChat} style={{ cursor: "pointer" }}>
+                            <FontAwesomeIcon icon={faCommentDots} />
+                        </div>
+                        {isChatOpen && (
+                            <Chat />
+                        )}
+                    </div>
 
                     <div className="profile-dropdown">
                         <div className="nav-icon mx-2 profile-icon" onClick={toggleDropdown} style={{ cursor: "pointer" }} >
@@ -182,12 +217,23 @@ function Header({ showSearch = true, showNav = true }) {
 
             {userType === "admin" && (
                 <>
-                    <Link to="/" className="nav-icon mx-2">
-                        <FontAwesomeIcon icon={faBell} />
-                    </Link>
-                    <Link to="/" className="nav-icon mx-2">
-                        <FontAwesomeIcon icon={faCommentDots} />
-                    </Link>
+                    <div className="notification-dropdown">
+                        <div className="nav-icon mx-2 noti-icon" onClick={toggleNotification} style={{ cursor: "pointer" }} >
+                               <FontAwesomeIcon icon={faBell} />
+                        </div>
+                        {isNotificationOpen && (
+                            <Notification />
+                        )}
+                    </div>
+
+                    <div className="chat-box">
+                        <div className="nav-icon mx-2" onClick={toggleChat} style={{ cursor: "pointer" }}>
+                            <FontAwesomeIcon icon={faCommentDots} />
+                        </div>
+                        {isChatOpen && (
+                            <Chat />
+                        )}
+                    </div>
 
                     <div className="profile-dropdown">
                         <div className="nav-icon mx-2 profile-icon" onClick={toggleDropdown} style={{ cursor: "pointer" }} >

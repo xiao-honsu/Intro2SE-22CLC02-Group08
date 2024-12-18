@@ -7,6 +7,7 @@ import Category from '../components/Category';
 import BuyerProduct from "../components/BuyerProduct";
 import SellerProduct from "../components/SellerProduct";
 import UserSidebar from "../components/UserSidebar";
+import Help from '../components/Help';
 
 import UserContext from "../context/userContext";
 import userAPI from "../services/user";
@@ -86,6 +87,7 @@ function Profile() {
               <Tab eventKey="Canceled" title="Canceled" />
             </Tabs>
            <BuyerProduct orders={filteredOrders} />
+           <Help />
           </>
         )}
         {userType === "seller" && (
@@ -98,6 +100,7 @@ function Profile() {
               <Tab eventKey="Purchased" title="Purchased" />
             </Tabs>
            <SellerProduct orders={filteredOrders2} />
+           <Help />
           </>
         )}
         </div>
