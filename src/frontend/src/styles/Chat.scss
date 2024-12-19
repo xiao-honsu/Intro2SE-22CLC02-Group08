@@ -5,10 +5,11 @@
     display: flex;  
     width: 700px;  
     height: 450px; 
+    z-index: 2;
   }  
   
   .sidebar {  
-    width: 300px;  
+    width: 250px;  
     background-color: white;  
     border: 3px solid black;  
     padding: 16px;  
@@ -82,6 +83,29 @@
     overflow-y: auto;  
     background-color: white;
     border-top: 2px solid black; 
+    overflow-y: auto;
+
+    .message {  
+      padding: 8px ;  
+      margin: 5px 10px;  
+      border-radius: 10px;  
+      max-width: 70%;  
+      width: fit-content;   
+      word-wrap: break-word;
+      
+      &.me {  
+        background-color: #d1e7dd; 
+        align-self: flex-end;  
+        margin-left: auto;  
+        text-align: right;
+      }  
+  
+      &.other {  
+        background-color: #fff3cd; 
+        align-self: flex-start;  
+        margin-right: auto;  
+      }  
+    }
   }  
   
   .message-input {  

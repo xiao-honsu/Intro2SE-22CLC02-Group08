@@ -29,6 +29,29 @@
     overflow-y: auto;  
     background-color: white;
     border-top: 2px solid black; 
+    overflow-y: auto;
+
+    .message {  
+      padding: 8px;  
+      margin: 5px 10px;  
+      border-radius: 10px;  
+      max-width: 70%;  
+      width: fit-content;   
+      word-wrap: break-word;
+      
+      &.user {  
+        background-color: #d1e7dd; 
+        align-self: flex-end;  
+        margin-left: auto;  
+        text-align: right;
+      }  
+  
+      &.admin {  
+        background-color: #fff3cd; 
+        align-self: flex-start;  
+        margin-right: auto;  
+      }  
+    }
   }  
   
   .message-support-input {  

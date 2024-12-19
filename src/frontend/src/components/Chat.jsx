@@ -1,7 +1,14 @@
-import React from 'react';  
-import "../styles/Chat.scss";
+import React, { useState } from 'react';  
+import "../styles/Chat.scss";  
 
 const Chat = () => {  
+  const [messages, setMessages] = useState([  
+    { id: 1, text: "Ê, đi ăn hong?", sender: "me" },  
+    { id: 2, text: "Leader bao hả?", sender: "other" },  
+    { id: 3, text: "Ừa, lẹ lên :>", sender: "me" },  
+    { id: 4, text: "Quá đã, cho t 5p thay đồ", sender: "other" },  
+  ]);  
+
   return (  
     <div className="chat-container">  
       <div className="sidebar">  
@@ -20,18 +27,22 @@ const Chat = () => {
             <span className="user-name">name</span>  
           </li>  
           <li className="user-item">  
-            <img src="avt1.jpg" alt="User" className="user-icon" />    
+            <img src="avt1.jpg" alt="User" className="user-icon" />  
             <span className="user-name">name</span>  
           </li>  
         </ul>  
       </div>  
       <div className="chat-area">  
         <div className="chat-header">  
-            <img src="avt1.jpg" alt="User" className="user-icon" />  
+          <img src="avt1.jpg" alt="User" className="user-icon" />  
           <span className="chat-name">name</span>  
         </div>  
         <div className="message-area">  
-          {/* Content area for messages */}  
+          {messages.map(message => (  
+            <div key={message.id} className={`message ${message.sender}`}>  
+              {message.text}  
+            </div>  
+          ))}  
         </div>  
         <input type="text" placeholder="Enter Content" className="message-input" />  
       </div>  
