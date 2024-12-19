@@ -36,9 +36,9 @@ const productController = {
         }
     },
 
-    getAllProducts: async (req, res) => {
+    getAllProductsPending: async (req, res) => {
         try {
-            const products = await ProductModel.find().populate('categoryIDs', 'categoryName').populate('sellerID', 'username');
+            const products = await ProductModel.find({ status: 'Pending Approval' }).populate('categoryIDs', 'categoryName').populate('sellerID', 'username');
             return res.status(200).json({ success: true, products });
         } catch (error) {
             console.error("Error fetching products:", error);

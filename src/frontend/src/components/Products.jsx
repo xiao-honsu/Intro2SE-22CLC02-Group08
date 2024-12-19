@@ -1,37 +1,43 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const Products = () => {
+const Products = ({ products }) => {
     const navigate = useNavigate();
 
-    const handleNavigate = () => {
-      navigate("/UnapprovedDetail"); 
+    // Hàm chuyển hướng tới trang chi tiết sản phẩm
+    const handleNavigate = (product) => {
+        navigate("/UnapprovedDetail", { state: { product } }); // Truyền dữ liệu sản phẩm qua state
     };
+
     return (
-      <section className="products">
-        <div className="post-item" role="button"  onClick={handleNavigate}>
-          <img src="avt1.jpg" className="avt" alt="Post" />
-          <h6>bocchi</h6>
-          <img src="mostSearch-bag.jpg" className="prtImg" alt="Post" />
-          <div className="post-details">
-            <p>blabla</p>
-            <p>300,000</p>
-            <p>Description: Lorem ipsum dolor sit amet...</p>
-          </div>  
-        </div>
-        <div className="post-item" role="button" onClick={handleNavigate}>
-          <img src="avt1.jpg" className="avt" alt="Post" />
-          <h6>bocchi</h6>
-          <img src="mostSearch-bag.jpg" className="prtImg" alt="Post" />
-          <div className="post-details">
-            <p>blabla</p>
-            <p>300,000</p>
-            <p>Description: Lorem ipsum dolor sit amet...</p>
-          </div>  
-        </div>
-      </section>
+        <section className="products">
+            {products.map((product, index) => (
+                <div
+                    className="post-item"
+                    role="button"
+                    key={product._id || index} // Dùng `product._id` nếu có, nếu không dùng index
+                    onClick={() => handleNavigate(product)} // Khi nhấn, chuyển hướng đến trang chi tiết sản phẩm
+                >
+                    <img
+                        src={product.sellerID?.avatar || "default-avatar.jpg"} // Ảnh đại diện người bán
+                        className="avt"
+                        alt="Seller Avatar"
+                    />
+                    <h6>{product.sellerID?.username || "Unknown Seller"}</h6>
+                    <img
+                        src={product.images?.[0] || "default-product.jpg"} // Ảnh sản phẩm
+                        className="prtImg"
+                        alt="Product"
+                    />
+                    <div className="post-details">
+                        <p>{product.productName || "Unnamed Product"}</p>
+                        <p>{`${product.price.toLocaleString()} VND`}</p>
+                        <p>Description: {product.description || "No description available"}</p>
+                    </div>
+                </div>
+            ))}
+        </section>
     );
-  };
-  
-  export default Products;
-  
+};
+
+export default Products;

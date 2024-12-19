@@ -54,6 +54,44 @@ const productAPI = {
             console.error("Error fetching product detail:", error);
             return { success: false, message: "An error occurred" };
         }
+    },
+
+    getAllProductsPending: async () => {
+        try {
+            const response = await fetch(`${BASE_URL}/`, {
+                method: "GET",
+            });
+
+            if (!response.ok) {
+                throw new Error("Lỗi khi lấy danh sách sản phẩm");
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error("Lỗi khi lấy danh sách sản phẩm:", error);
+            return { success: false, message: "Đã có lỗi xảy ra" };
+        }
+    },
+
+    updateProductStatus: async (productId, newStatus) => {
+        try {
+            const response = await fetch(`${BASE_URL}/update-status/${productId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ status: newStatus }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to update product status for ${productId}`);
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error("Error updating product status:", error);
+            return { success: false, message: "An error occurred" };
+        }
     }
 };
 export default productAPI;

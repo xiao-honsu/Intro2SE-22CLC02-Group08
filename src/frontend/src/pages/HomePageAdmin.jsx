@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Stats from "../components/Stats";
 import Posts from "../components/Posts";
@@ -6,9 +6,39 @@ import Products from "../components/Products";
 import Reports from "../components/Reports";
 import { Link } from "react-router-dom";
 import '../styles/HomePageAdmin.scss';
+import productAPI from '../services/product'; 
 
 function HomePageAdmin() {
-    const [userType, setUserType] = useState('admin');
+    const [userType] = useState('admin');
+    const [products, setProducts] = useState([]); 
+    const [loading, setLoading] = useState(true); 
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await productAPI.getAllProductsPending();
+                console.log(response);
+                if (response.success) {
+                    setProducts(response.products || []);
+                } else {
+                    console.error('Failed to fetch products:', response.message);
+                }
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    // Lấy tối đa 3 sản phẩm đầu tiên
+    const productsToShow = products.slice(0, 3);
 
     return (
         <div className="main-container">
@@ -30,7 +60,7 @@ function HomePageAdmin() {
                         </div>
                     </div>
                     <Posts />
-                    <a href="/PostsSeeAll" >See All</a>
+                    <Link to="/PostsSeeAll">See All</Link>
                 </div>
             </div>
             <div className="unapproved-products">
@@ -46,8 +76,9 @@ function HomePageAdmin() {
                             Product
                         </div>
                     </div>
-                    <Products />
-                    <a href="/ProductsSeeAll" >See All</a>
+                    {/* Truyền danh sách sản phẩm có tối đa 3 sản phẩm vào component Products */}
+                    <Products products={productsToShow} />
+                    <Link to="/ProductsSeeAll">See All</Link>
                 </div>
             </div>
             <div className="reports">
@@ -70,7 +101,7 @@ function HomePageAdmin() {
                         </div>
                     </div>
                     <Reports />
-                    <a href="/ReportsSeeAll" >See All</a>
+                    <Link to="/ReportsSeeAll">See All</Link>
                 </div>
             </div>
         </div>
