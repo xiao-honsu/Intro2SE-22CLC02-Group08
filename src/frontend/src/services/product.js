@@ -73,14 +73,14 @@ const productAPI = {
         }
     },
 
-    updateProductStatus: async (productId, newStatus) => {
+    updateProductStatus: async (productId, status) => {
         try {
             const response = await fetch(`${BASE_URL}/update-status/${productId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ status: newStatus }),
+                body: JSON.stringify({ status }),
             });
 
             if (!response.ok) {
@@ -92,6 +92,20 @@ const productAPI = {
             console.error("Error updating product status:", error);
             return { success: false, message: "An error occurred" };
         }
-    }
+    },
+
+    searchProduct: async (keyword) => {
+        try {
+            const response = await fetch(`${BASE_URL}/search?keyword=${encodeURIComponent(keyword)}`);
+            if (!response.ok) {
+                throw new Error("Failed to fetch search results.");
+            }
+            return await response.json();
+        } catch (error) {
+            console.error("Error fetching product:", error);
+            return { success: false, message: "An error occurred" };
+        }
+    },
+
 };
 export default productAPI;

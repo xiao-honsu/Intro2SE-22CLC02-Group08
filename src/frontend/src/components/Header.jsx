@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Form, FormControl } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faCartShopping, faUser, faBell, faCommentDots } from "@fortawesome/free-solid-svg-icons";
@@ -21,6 +20,7 @@ function Header({ showSearch = true, showNav = true }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
     const [isChatOpen, setIsChatOpen] = useState(false);
+    const [searchKeyword, setSearchKeyword] = useState("");
 
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
@@ -31,7 +31,14 @@ function Header({ showSearch = true, showNav = true }) {
     const toggleChat = () => {
         setIsChatOpen(!isChatOpen);
     };
-    
+    const handleSearch = () => {
+        if (searchKeyword.trim()) {
+            navigate(`/search?keyword=${encodeURIComponent(searchKeyword)}`);
+        } else {
+            alert("Please enter a keyword to search");
+        }
+    };
+
 
     useEffect(() => {
         const fetchUserInfo = async () => {
@@ -97,8 +104,8 @@ function Header({ showSearch = true, showNav = true }) {
 
         {showSearch && (
             <div className="header-search flex-grow-1 mx-3">
-                <Form className="searchBar">
-                    <FormControl type="search" placeholder="Search for anything" className="search-input" aria-label="Search" />
+                <Form className="searchBar" onSubmit={(e) => {e.preventDefault(); handleSearch()}}>
+                    <FormControl type="search" value={searchKeyword} onChange={(e) => setSearchKeyword(e.target.value)} placeholder="Search for anything" className="search-input" aria-label="Search" />
                     <FontAwesomeIcon icon={faSearch} className="search-icon" />
                 </Form>
             </div>
@@ -114,7 +121,7 @@ function Header({ showSearch = true, showNav = true }) {
 </Link>
                     <Link to="/SignUp" className="nav-link mx-2" onClick={() => console.log('Navigating to sign up')}> Sign Up</Link>
                     <Link to="/login" className="btn btn-warning mx-2">Sell now</Link>
-                    <Link to="/cart" className="nav-icon mx-2">
+                    <Link to="/CartPage" className="nav-icon mx-2">
                         <FontAwesomeIcon icon={faCartShopping} />
                     </Link>
 
@@ -163,7 +170,7 @@ function Header({ showSearch = true, showNav = true }) {
                         </div>
                         {isDropdownOpen && (
                             <div className="dropdown-menu">
-                                <Link to="/Profile" className="dropdown-item">Profile</Link>
+                                <Link to={`/Profile/${userInfo.userId}`} className="dropdown-item">Profile</Link>
                                 <Link to="/ChooseRole" className="dropdown-item">Role</Link>
                                 <Link to="/login" className="dropdown-item" onClick={handleLogout}>Log out</Link>
                             </div>
@@ -206,7 +213,7 @@ function Header({ showSearch = true, showNav = true }) {
                         </div>
                         {isDropdownOpen && (
                             <div className="dropdown-menu">
-                                <Link to="/Profile" className="dropdown-item">Profile</Link>
+                                <Link to={`/Profile/${userInfo.userId}`} className="dropdown-item">Profile</Link>
                                 <Link to="/ChooseRole" className="dropdown-item">Role</Link>
                                 <Link to="/login" className="dropdown-item" onClick={handleLogout}>Log out</Link>
                             </div>

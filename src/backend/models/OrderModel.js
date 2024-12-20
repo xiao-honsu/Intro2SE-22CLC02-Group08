@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
+    productID: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
     buyerID: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     receiverName: { type: String, required: true },
     receiverPhoneNumber: { type: String, required: true },
@@ -10,8 +11,7 @@ const orderSchema = new mongoose.Schema({
     bank: { type: String },
     bankAccount: { type: String },
     orderDate: { type: Date, default: Date.now },
-    totalPrice: { type: Number, required: true },
-    status: { type: String, enum: ['Pending', 'Completed', 'Cancelled'], default: 'Pending' }
+    status: { type: String, enum: ['Confirming', 'Shipping', 'Received', 'Cancelled'], default: 'Comfirming' }
 });
 
 module.exports = mongoose.model('Order', orderSchema);

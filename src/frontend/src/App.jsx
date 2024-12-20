@@ -17,7 +17,7 @@ import ProductDetail from './pages/ProductDetail';
 import EditProfile from './pages/EditProfile';
 import CartPage from './pages/CartPage';
 import Payment from './pages/Payment';
-
+import SearchResult from './pages/SearchResult';
 
 import ScrollToTop from './components/SrollToTop';
 import { UserProvider } from "./context/userContext";
@@ -53,10 +53,11 @@ function App() {
         <Route path="/ProductDetail/:id" element={<ProductDetail />} />
         
         <Route path="/preview_product/:id" element={<Preview />} />
-        <Route path="/Profile" element={<Profile />} />
+        <Route path="/Profile/:id" element={<Profile />} />
         <Route path="/EditProfile" element={<EditProfile />} />
         <Route path="/CartPage" element={<CartPage />} />
-        <Route path="/Payment" element={<Payment />} />
+        <Route path="/Payment/:productID" element={<Payment />} />
+        <Route path="/search" element={<SearchResult />} />
 
 
         <Route path="/HomePageAdmin" element={<HomePageAdmin />} />

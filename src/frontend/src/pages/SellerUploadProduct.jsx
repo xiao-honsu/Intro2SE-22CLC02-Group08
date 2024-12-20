@@ -167,7 +167,7 @@ function SellerUploadProduct() {
             const response = await productAPI.createProduct(uploadData);
             if (response.success) {
                 alert("Product uploaded successfully!");
-                navigate("/profile");
+                navigate(`/Profile/${userInfo.userId}`);
             } else {
                 alert("Failed to upload product!");
             }

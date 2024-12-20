@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Card, Button, Badge } from "react-bootstrap";
 
 import "../styles/SellerProduct.scss";
+
 import productAPI from "../services/product";
 
-const SellerProduct = ({ list_orders }) => {
+const SellerProduct = ({ list_orders, isMyProfile }) => {
   const [orders, setOrders] = useState(list_orders);
   const navigate = useNavigate();
   useEffect(() => {
@@ -60,13 +61,23 @@ const SellerProduct = ({ list_orders }) => {
                   <p>{order.sellerID.username}</p>
                 </div>
               </div>
-              
             </div>
+
+            {isMyProfile && (
             <div className="order-actions d-flex justify-content-start mt-3">
                   {order.status === "Pending Approval" && <Button className="btn" onClick={() => handleDelete(order._id)}>Delete</Button>}
                   {order.status === "Not Purchased" && <Button className="btn" onClick={() => handleDelete(order._id)}>Delete</Button>}
                   <Button className="btn" onClick={() => handleDetail(order._id)}>Detail</Button>
             </div>
+            )}
+
+            {!isMyProfile && (
+            <div className="order-actions d-flex justify-content-start mt-3">
+                <Button className="btn" onClick={() => navigate(`/preview_product/${order._id}`)}>
+                           See preview
+                </Button>
+            </div>
+            )}
           </Card.Body>
         </Card>
       ))}

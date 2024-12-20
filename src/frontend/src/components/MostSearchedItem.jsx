@@ -1,11 +1,14 @@
 import React, { useRef } from 'react';
-import { Card, Row, Col } from 'react-bootstrap';
+import { Card, Row, Col, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import '../styles/MostSearchedItem.scss'; 
 
+import { useNavigate } from "react-router-dom";
+
 function MostSearchedItems() {
+  const navigate = useNavigate();
   const rowRef = useRef(null); 
 
   const items = [
@@ -40,7 +43,7 @@ function MostSearchedItems() {
                 <Card.Img variant="top" src={item.image} className="most-searched-img" />
                 <Card.Body>
                   <Card.Title className="most-searched-title-text">
-                    <a href="/"> {item.title} </a>
+                    <Button onClick={() => navigate(`/search?keyword=${encodeURIComponent(item.title)}`)} className="btnMostSearch"> {item.title} </Button>
                   </Card.Title>
                 </Card.Body>
               </Card>

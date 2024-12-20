@@ -25,7 +25,8 @@ const productController = {
                 categoryIDs: JSON.parse(categoryIDs),
                 sellerID,
                 images,
-                status: "Pending Approval" 
+                status: "Pending Approval",
+                statusUpdatedAt: Date.now()
             });
 
             await newProduct.save();
@@ -56,7 +57,7 @@ const productController = {
         try {
             const product = await ProductModel.findById(id)
                 .populate('categoryIDs', 'categoryName')
-                .populate('sellerID', 'username');
+                .populate('sellerID', 'username avatar');
     
             if (!product) {
                 return res.status(404).json({ success: false, message: "Product not found." });
@@ -91,16 +92,16 @@ const productController = {
     },
     
     updateProductStatus: async (req, res) => {
-        try {
-            const { status } = req.body; 
-            const allowedStatus = ["Pending Approval", "Not Purchased", "Shipping", "Purchased"];
+        try {      
+            const { status } = req.body.status; 
+            const allowedStatus = ["Pending Approval", "Not Purchased", "To confirm", "Shipping", "Purchased"];
             if (!allowedStatus.includes(status)) {
                 return res.status(400).json({ success: false, message: "Invalid status value." });
             }
 
             const updatedProduct = await ProductModel.findByIdAndUpdate(
                 req.params.id,
-                { status },
+                { status, statusUpdatedAt: Date.now() },
                 { new: true }
             );
 
@@ -129,7 +130,33 @@ const productController = {
             console.error("Error deleting product:", error);
             return res.status(500).json({ success: false, message: "Failed to delete product." });
         }
-    }
+    },
+
+    searchProduct: async (req, res) => {
+        try {
+            const { keyword } = req.query;
+    
+            if (!keyword || keyword.trim() === "") {
+                return res.status(400).json({ success: false, message: "Keyword is required for search." });
+            }
+            const regex = new RegExp(keyword, 'i');
+    
+            const products = await ProductModel.find({
+                $or: [
+                    { productName: regex },
+                    { categoryIDs: { $elemMatch: { categoryName: regex } } }
+                ]
+            }).populate("categoryIDs", "categoryName")
+              .populate("sellerID", "username avatar");
+    
+            res.status(200).json({ success: true, products });
+        } catch (error) {
+            console.error("Error searching products:", error);
+            res.status(500).json({ success: false, message: "Failed to search products" });
+        }
+    },
+    
+
 };
 
 module.exports = productController;

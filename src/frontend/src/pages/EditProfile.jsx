@@ -22,7 +22,7 @@ const EditProfile = () => {
     if (userInfo) {
       setFormData({
         avatar: userInfo.avatar || "",
-        usename: userInfo.username || "",
+        username: userInfo.username || "",
         bank: userInfo.bank || "",
         bankAccount: userInfo.bankAccount || "",
       });
@@ -46,7 +46,7 @@ const EditProfile = () => {
   };
 
   const handleCancel = () => {
-    navigate("/profile");
+    navigate(`/Profile/${userInfo.userId}`);
   };
 
   const handleSave = async () => {
@@ -62,7 +62,7 @@ const EditProfile = () => {
         if (res.success) {
             alert("Profile updated successfully!");
             setUserInfo(res.updatedUser); 
-            navigate("/profile");
+            navigate(`/Profile/${userInfo.userId}`);
         } else {
             alert(response.message || "Failed to update profile");
         }

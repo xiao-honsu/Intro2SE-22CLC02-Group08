@@ -14,7 +14,6 @@ import '../styles/HomePage.scss';
 function HomePageSeller() {
   const { userType, setUserType } = useContext(UserContext);
   const { userInfo, setUserInfo } = useContext(UserContext);
-
   const dummyProducts = Array(16).fill({  // tạo tạm trước khi có sb
     image: '/mostSearch-laptop.jpg', 
     name: 'Tên đồ', 

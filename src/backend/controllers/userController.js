@@ -16,6 +16,7 @@ const userController = {
                 userId: user._id,
                 username: user.username,
                 avatar: user.avatar || "", 
+                role: user.role,
                 signupDate: user.registrationDate,
                 numItems: user.totalSoldProducts || 0,
                 rating: user.rating || "None",

@@ -1,6 +1,4 @@
 const AdminModel = require('../models/AdminModel');
-const path = require('path');
-const fs = require('fs');
 
 
 const adminController = {
@@ -8,16 +6,16 @@ const adminController = {
         const { adminId } = req.params;
 
         try {
-            const admin = await AdminModel.findOne({ where: { AdminID: adminId } });
+            const admin = await AdminModel.findById(adminId);
 
             if (!admin) {
-                return res.status(404).json({ success: false, message: "User not found" });
+                return res.status(404).json({ success: false, message: "Admin not found" });
             }
 
             return res.status(200).json({ success: true, 
-                                          adminId: admin.AdminID,
-                                          username: admin.Username,
-                                          profileImage: admin.profilePicture,
+                                          adminId: admin._id,
+                                          username: admin.username,
+                                          avatar: admin.avatar || "", 
             });
         } catch (error) {
             console.error("Error during login: ", error);

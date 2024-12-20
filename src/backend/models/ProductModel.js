@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema({
     sellerID: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     status: {
         type: String,
-        enum: ['Pending Approval', 'Not Purchased', 'Shipping', 'Purchased'],
+        enum: ['Pending Approval', 'Not Purchased', 'To confirm', 'Shipping', 'Purchased'],
         default: 'Pending Approval'
     },
     images: {
@@ -20,7 +20,8 @@ const productSchema = new mongoose.Schema({
             },
             message: 'You can upload up to 5 images only.'
         }
-    }
+    },
+    statusUpdatedAt: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('Product', productSchema);
