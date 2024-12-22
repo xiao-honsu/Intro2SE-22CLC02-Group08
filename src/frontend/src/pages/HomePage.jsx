@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Nav from 'react-bootstrap/Nav';
 import Banner from '../components/Banner';
@@ -6,23 +6,40 @@ import MostSearchedItems from '../components/MostSearchedItem';
 import ProductCard from '../components/ProductCard';
 import About from '../components/About';
 import UserContext from "../context/userContext";
-
 import { Link } from "react-router-dom";
-
 import Footer from '../components/Footer';
-
 
 import '../styles/HomePage.scss';
 
+import productAPI from '../services/product';
+
 function HomePage() {
   const { userType } = useContext(UserContext);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const dummyProducts = Array(16).fill({  // tạo tạm trước khi có sb
-    id: '1',
-    image: '/mostSearch-laptop.jpg', 
-    name: 'Tên đồ', 
-    price: 'Giá tiền', 
-  });
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await productAPI.getAllProductsNotPurchased();
+        if (response.success) {
+          setProducts(response.products);
+        } else {
+          console.error(response.message);
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (!products.length) return <div>No products available at the moment.</div>;
+
 
   return (
     <div className="main-container">
@@ -72,14 +89,13 @@ function HomePage() {
         <div className="product-list-container">
           <h2 className="product-list-title">Recently Posted</h2>
           <div className="product-grid">
-            {dummyProducts.map((product) => (
+            {products.map((product) => (
               <ProductCard
-                key={product.id}
-                id={product.id}
-                image={product.image}
-                name={product.name}
+                key={product._id}
+                id={product._id}
+                image={product.images[0] || "/product-placeholder.png"}
+                name={product.productName}
                 price={product.price}
-               
               />
             ))}
           </div>

@@ -73,6 +73,23 @@ const productAPI = {
         }
     },
 
+    getAllProductsNotPurchased: async () => {
+        try {
+            const response = await fetch(`${BASE_URL}/notpurchased`, {
+                method: "GET",
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch products with status 'Not Purchased'.");
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error("Error fetching products:", error);
+            return { success: false, message: "An error occurred while fetching products." };
+        }
+    },
+
     updateProductStatus: async (productId, status) => {
         try {
             const response = await fetch(`${BASE_URL}/update-status/${productId}`, {

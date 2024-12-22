@@ -5,8 +5,9 @@ import { Card, Button, Badge } from "react-bootstrap";
 import "../styles/SellerProduct.scss";
 
 import productAPI from "../services/product";
+import orderAPI from "../services/order";
 
-const SellerProduct = ({ list_orders, isMyProfile }) => {
+const SellerProduct = ({ list_orders, isMyProfile, onProductsChange }) => {
   const [orders, setOrders] = useState(list_orders);
   const navigate = useNavigate();
   useEffect(() => {
@@ -39,6 +40,40 @@ const SellerProduct = ({ list_orders, isMyProfile }) => {
     }
   };
 
+  const handleConfirmOrder = async (productId) => {
+    try {
+      const response = await productAPI.updateProductStatus(productId, { status: 'Shipping' });
+      if (response.success) {
+          alert('Product has been comfirmed');
+          if (onProductsChange) {
+            onProductsChange(); 
+        }
+      } else {
+          alert('Đã có lỗi xảy ra khi cập nhật trạng thái sản phẩm.');
+      }
+  } catch (error) {
+      console.error('Lỗi khi phê duyệt sản phẩm:', error);
+      alert('Lỗi khi phê duyệt sản phẩm.');
+  }
+};
+
+  const handleComplete = async (productId) => {
+    try {
+      const response = await productAPI.updateProductStatus(productId, { status: 'Purchased' });
+      if (response.success) {
+          alert('Complete delivery');
+          if (onProductsChange) {
+            onProductsChange(); 
+        }
+      } else {
+          alert('Đã có lỗi xảy ra khi cập nhật trạng thái sản phẩm.');
+      }
+  } catch (error) {
+      console.error('Lỗi khi phê duyệt sản phẩm:', error);
+      alert('Lỗi khi phê duyệt sản phẩm.');
+  }
+};
+
   const handleDetail = (productId) => {
     navigate(`/ProductDetail/${productId}`);
   };
@@ -67,6 +102,8 @@ const SellerProduct = ({ list_orders, isMyProfile }) => {
             <div className="order-actions d-flex justify-content-start mt-3">
                   {order.status === "Pending Approval" && <Button className="btn" onClick={() => handleDelete(order._id)}>Delete</Button>}
                   {order.status === "Not Purchased" && <Button className="btn" onClick={() => handleDelete(order._id)}>Delete</Button>}
+                  {order.status === "To Confirm" && <Button className="btn" onClick={() => handleConfirmOrder(order._id)}>Confirm</Button>}
+                  {order.status === "Shipping" && <Button className="btn" onClick={() => handleComplete(order._id)}>Complete</Button>}
                   <Button className="btn" onClick={() => handleDetail(order._id)}>Detail</Button>
             </div>
             )}

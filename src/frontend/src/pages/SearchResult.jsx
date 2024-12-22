@@ -42,8 +42,7 @@ function SearchResult() {
             setLoading(false);
         }
     }, [search]);
-    if (loading) return <div>Loading...</div>;
-    if (!products.length) return <div>No products found</div>
+
 
     return (
         <div className="main-container">
@@ -53,16 +52,26 @@ function SearchResult() {
 
                 <div className="product-list-container">
                     <h2 className="product-list-title">Search results for keyword '{keyword}'</h2>
-                    <div className="cart-container">
-                        <div className="cart-items">
-                        {products.map((product) => (
-                            <ProductCartItem 
-                                key={product._id}
-                                product={product}
-                            />
-                        ))}
+                    {loading && <div>Loading...</div>}
+                    
+                    {!loading && products.length === 0 && (
+                        <div className="no-products-message" style={{ flex: 1, textAlign: 'center', padding: '20px', marginTop: '3rem' }}>
+                            No products found for the keyword.
                         </div>
-                    </div>
+                    )}
+
+                    {!loading && products.length > 0 && (
+                        <div className="cart-container">
+                            <div className="cart-items">
+                                {products.map((product) => (
+                                    <ProductCartItem 
+                                        key={product._id}
+                                        product={product}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 <Footer />

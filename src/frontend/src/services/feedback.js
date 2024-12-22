@@ -5,7 +5,10 @@ const feedbackAPI = {
         try {
             const response = await fetch(`${BASE_URL}/create`, {
                 method: "POST",
-                body: data,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
             });
             return await response.json();
         } catch (error) {
@@ -14,17 +17,17 @@ const feedbackAPI = {
         }
     },
 
-    getFeedbackBySeller: async (sellerId) => {
+    getFeedbackBySeller: async (sellerID) => {
         try {
-            const response = await fetch(`${BASE_URL}/seller/${sellerId}`, {
-                method: "GET",
-            });
+            const response = await fetch(`${BASE_URL}/seller/${sellerID}`, { method: "GET" });
 
             if (!response.ok) {
-                throw new Error(`Failed to fetch feedback for seller ${sellerId}`);
+                console.error("Failed to fetch feedback:", response.statusText);
+                throw new Error(`Error fetching feedback for seller ${sellerId}`);
             }
 
-            return await response.json();
+            const data = await response.json();
+            return data;
         } catch (error) {
             console.error("Error during fetching feedback by seller:", error);
             return { success: false, message: "An error occurred" };

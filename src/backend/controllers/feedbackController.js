@@ -7,6 +7,7 @@ const feedbackController = {
     createFeedback: async (req, res) => {
         try {
             const { sellerID, buyerID, rating, comment } = req.body;
+            console.log("Request body:", req.body);
 
             const feedback  = new FeedbackModel({
                 sellerID,
@@ -27,11 +28,21 @@ const feedbackController = {
     getSellerFeedback: async (req, res) => {
         try {
             const { sellerID } = req.params;
-            const feedbacks = await FeedbackModel.find({ sellerID });
-           
-            res.status(200).json({
-                success: true, feedbacks
-            });                                       
+    
+            if (!sellerID) {
+                console.log("Seller ID not provided in request.");
+                return res.status(400).json({ success: false, message: "Seller ID is required." });
+            }
+    
+            const feedbacks = await FeedbackModel.find({ sellerID })
+                .populate("buyerID", "username avatar");
+    
+            if (!feedbacks || feedbacks.length === 0) {
+                console.log("No feedback found for sellerID:", sellerID);
+                return res.status(200).json({ success: true, message: "No feedback available.", feedbacks: [] });
+            }
+    
+            res.status(200).json({ success: true, feedbacks });
         } catch (error) {
             console.error("Error fetching feedback:", error);
             res.status(500).json({ success: false, message: "Failed to fetch feedback." });

@@ -14,6 +14,8 @@ import UserContext from "../context/userContext";
 import userAPI from "../services/user";
 import productAPI from '../services/product';
 import orderAPI from '../services/order';
+import feedbackAPI from '../services/feedback';
+
 
 import "../styles/Profile.scss";
 
@@ -25,6 +27,7 @@ function Profile() {
 
     const [orders1, setOrders1] = useState([]);
     const [orders2, setOrders2] = useState([]);
+    const [feedbacks, setFeedbacks] = useState([]);
     const [activeStatus, setActiveStatus] = useState("All");
 
     useEffect(() => {
@@ -65,9 +68,32 @@ function Profile() {
         }
     };
 
+    const refreshProduct = async () => {
+        const productRes = await productAPI.getProductsBySeller(profileInfo.userId);
+        if (productRes.success) {
+            setOrders2(productRes.products); 
+        } else {
+            console.log("Failed to refresh products:", productRes.message);
+        }
+    };
+
     
     const filteredOrders1 = activeStatus === "All" ? orders1 : orders1.filter(order => order.status === activeStatus);
     const filteredOrders2 = activeStatus === "All" ? orders2 : orders2.filter(order => order.status === activeStatus);
+
+    useEffect(() => {
+        const fetchFeedback = async () => {
+            if (profileInfo && profileInfo.role === "seller") {
+                const feedbackRes = await feedbackAPI.getFeedbackBySeller(profileInfo.userId);
+                if (feedbackRes.success) {
+                    setFeedbacks(feedbackRes.feedbacks);
+                } else {
+                    console.log("Failed to fetch feedback:", feedbackRes.message);
+                }
+            }
+        };
+        fetchFeedback();
+    }, [profileInfo]);
 
     return (
         <div className="main-container">
@@ -103,23 +129,56 @@ function Profile() {
                             <Tab eventKey="Shipping" title="Shipping" />
                             <Tab eventKey="Purchased" title="Purchased" />
                         </Tabs>
-                        <SellerProduct list_orders={filteredOrders2} isMyProfile={isMyProfile} />
+                        <SellerProduct list_orders={filteredOrders2} isMyProfile={isMyProfile} onProductsChange={refreshProduct} />
                         <Help />
                     </>
                 )}
 
                 {!isMyProfile && profileInfo && (
-                      <>
-                          <Tabs activeKey="Not Purchased" className="tabs mb-3">
-                              <Tab eventKey="Not Purchased" title="Not Purchased" />
-                          </Tabs>
-                          <SellerProduct list_orders={filteredOrders2.filter(order => order.status === "Not Purchased")} 
+                    <>
+                        <Tabs activeKey="Not Purchased" className="tabs mb-3">
+                            <Tab eventKey="Not Purchased" title="Not Purchased" />
+                        </Tabs>
+                        <SellerProduct list_orders={filteredOrders2.filter(order => order.status === "Not Purchased")} 
                             isMyProfile={isMyProfile} />
-                          <Help />
-                      </>
+                        <Help />
+                    </>
                 )}
+
+                {profileInfo && profileInfo.role === "seller" && (
+                    <>
+                        <div className="feedback-section">
+                            <h3>Feedback</h3>
+                            {feedbacks.length > 0 ? (
+                                feedbacks.map((feedback) => (
+                                    <Card key={feedback._id} className="mb-3">
+                                        <Card.Body>
+                                            <div className="d-flex align-items-center">
+                                                <img src={feedback.buyerID.avatar || "/default-avatar.png"} alt="avatar" className="avatar"
+                                                    style={{ width: "50px", height: "50px", borderRadius: "50%", marginRight: "15px" }} />
+                                                <div>
+                                                    <h5>{feedback.buyerID.username}</h5>
+                                                    <p>{feedback.comment}</p>
+                                                    <div className="rating">
+                                                        {"★".repeat(Math.floor(feedback.rating))}
+                                                        {feedback.rating % 1 ? "½" : ""}
+                                                    </div>
+                                                    <small className="text-muted">{new Date(feedback.feedbackDate).toLocaleDateString()}</small>
+                                                </div>
+                                            </div>
+                                        </Card.Body>
+                                    </Card>
+                                ))
+                            ) : (
+                                <p>No feedback available.</p>
+                            )}
+                    </div>
+                </>
+            )}
                 </div>
             </div>
+
+            
             <Footer />
         </div>
     );

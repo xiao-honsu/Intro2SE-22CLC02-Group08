@@ -5,6 +5,7 @@ import { faStar, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
 
 import orderAPI from '../services/order';
+import feedbackAPI from '../services/feedback';
 
 import "../styles/BuyerProduct.scss";
 
@@ -50,7 +51,7 @@ const BuyerProduct = ({ orders, onOrdersChange }) => {
         }
     };
   
-    const handleSubmit = () => {
+    const handleSubmit = async (order) => {
         const feedbackText = document.querySelector("textarea").value.trim(); 
         if (rating === 0) {
             alert("Please select a rating before submitting your feedback.");
@@ -60,8 +61,32 @@ const BuyerProduct = ({ orders, onOrdersChange }) => {
             alert("Please write some feedback before submitting.");
             return;
         }
-        alert(`Thank you for your feedback! You rated ${rating} stars and wrote: "${feedbackText}".`);
-        handleClose(); 
+        console.log("Order data:", order);
+
+        console.log("Submitting feedback data:", {
+            sellerID: order.productID.sellerID,
+            buyerID: order.buyerID,
+            rating,
+            comment: feedbackText
+        });
+        try {
+            const response = await feedbackAPI.createFeedback({
+                sellerID: order.productID.sellerID,
+                buyerID: order.buyerID,
+                rating,
+                comment: feedbackText
+            });
+    
+            if (response.success) {
+                alert(`Thank you for your feedback! You rated ${rating} stars and wrote: "${feedbackText}".`);
+                handleClose(); 
+            } else {
+                alert(response.message || "Failed to submit feedback.");
+            }
+        } catch (error) {
+            console.error("Error submitting feedback:", error);
+            alert("An error occurred while submitting feedback.");
+        }
     };
 
 
@@ -117,7 +142,7 @@ const BuyerProduct = ({ orders, onOrdersChange }) => {
                             </Modal.Body>
                             <Modal.Footer>
                                 <Button variant="secondary" onClick={handleClose}> Cancel </Button>
-                                <Button variant="primary" onClick={handleSubmit}> Send </Button>
+                                <Button variant="primary" onClick={() => handleSubmit(order)}> Send </Button>
                             </Modal.Footer>
                         </Modal>
                     </Card.Body>

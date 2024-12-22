@@ -1,5 +1,7 @@
 const OrderModel = require('../models/OrderModel');
 const ProductModel = require('../models/ProductModel');
+const CartModel = require('../models/CartModel');
+const CartDetailModel = require('../models/CartDetailModel');
 
 const orderController = {
     createOrder: async (req, res) => {
@@ -9,7 +11,6 @@ const orderController = {
         }
 
         try {
-
             const existingOrder = await OrderModel.findOne({ productID, buyerID, status: { $ne: "Cancelled" } });
             if (existingOrder) {
                 return res.status(400).json({ success: false, message: "This product has already been purchased" });
@@ -42,6 +43,24 @@ const orderController = {
                 return res.status(404).json({ success: false, message: "Product not found for updating status." });
             }
 
+            const deletedCartDetail = await CartDetailModel.findOneAndDelete({ productID });
+            if (!deletedCartDetail) {
+                console.warn("Product not found in cart. It might have been removed already.");
+            }
+
+            const product = await ProductModel.findById(productID);
+            if (!product) {
+                return res.status(404).json({ success: false, message: "Product not found." });
+            }
+
+            const cart = await CartModel.findOne({ buyerID });
+            if (cart) {
+                cart.totalAmount = Math.max(0, cart.totalAmount - product.price); // Đảm bảo totalAmount không âm
+                await cart.save();
+            } else {
+                console.warn("Cart not found for the buyer.");
+            }
+
             return res.status(201).json({ success: true, message: "Order created successfully.", order: newOrder });
         } catch (error) {
             console.error("Error creating order: ", error);
@@ -55,10 +74,11 @@ const orderController = {
             if (!buyerId) {
                 return res.status(400).json({ success: false, message: "Buyer not found." });
             }
-            const orders = await OrderModel.find({ buyerID: buyerId }).populate('productID', 'productName price images'); 
-        
+            const orders = await OrderModel.find({ buyerID: buyerId })
+                                            .populate('productID', 'productName price sellerID images');
+                                            
             if (!orders || orders.length === 0) {
-                return res.status(404).json({ success: false, message: "No orders found for buyer" });
+                return res.status(200).json({ success: true, message: "No orders found for buyer", orders: [] });
             }
             return res.status(200).json({ success: true, orders });
         } catch (error) {
@@ -74,7 +94,6 @@ const orderController = {
             if (!allowedStatus.includes(status)) {
                 return res.status(400).json({ success: false, message: "Invalid status value." });
             }
-            console.log(req.params.orderId);
             const updatedOrder = await OrderModel.findByIdAndUpdate(
                 req.params.orderId,
                 { status },

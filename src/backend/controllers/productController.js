@@ -1,4 +1,5 @@
 const ProductModel = require('../models/ProductModel');
+const OrderModel = require("../models/OrderModel");
 
 const productController = {
     createProduct: async (req, res) => {
@@ -40,6 +41,16 @@ const productController = {
     getAllProductsPending: async (req, res) => {
         try {
             const products = await ProductModel.find({ status: 'Pending Approval' }).populate('categoryIDs', 'categoryName').populate('sellerID', 'username');
+            return res.status(200).json({ success: true, products });
+        } catch (error) {
+            console.error("Error fetching products:", error);
+            return res.status(500).json({ success: false, message: "Failed to fetch products." });
+        }
+    },
+
+    getAllProductsNotPurchased: async (req, res) => {
+        try {
+            const products = await ProductModel.find({ status: 'Not Purchased' });
             return res.status(200).json({ success: true, products });
         } catch (error) {
             console.error("Error fetching products:", error);
@@ -94,7 +105,7 @@ const productController = {
     updateProductStatus: async (req, res) => {
         try {      
             const { status } = req.body.status; 
-            const allowedStatus = ["Pending Approval", "Not Purchased", "To confirm", "Shipping", "Purchased"];
+            const allowedStatus = ["Pending Approval", "Not Purchased", "To Confirm", "Shipping", "Purchased"];
             if (!allowedStatus.includes(status)) {
                 return res.status(400).json({ success: false, message: "Invalid status value." });
             }
@@ -107,6 +118,22 @@ const productController = {
 
             if (!updatedProduct) {
                 return res.status(404).json({ success: false, message: "Product not found." });
+            }
+
+            if (status === "Shipping") {
+                const updatedOrders = await OrderModel.updateMany(
+                    { productID: req.params.id },
+                    { status: "Shipping" }, 
+                    { new: true }
+                );
+            }
+
+            if (status === "Purchased") {
+                const updatedOrders = await OrderModel.updateMany(
+                    { productID: req.params.id },
+                    { status: "Received" }, 
+                    { new: true }
+                );
             }
 
             return res.status(200).json({ success: true, message: "Product status updated successfully.", product: updatedProduct });
@@ -142,9 +169,14 @@ const productController = {
             const regex = new RegExp(keyword, 'i');
     
             const products = await ProductModel.find({
-                $or: [
-                    { productName: regex },
-                    { categoryIDs: { $elemMatch: { categoryName: regex } } }
+                $and: [
+                    { status: "Not Purchased" },
+                    {
+                        $or: [
+                            { productName: regex },
+                            { categoryIDs: { $elemMatch: { categoryName: regex } } }
+                        ]
+                    }
                 ]
             }).populate("categoryIDs", "categoryName")
               .populate("sellerID", "username avatar");
