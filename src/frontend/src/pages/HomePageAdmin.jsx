@@ -7,22 +7,30 @@ import Reports from "../components/Reports";
 import { Link } from "react-router-dom";
 import '../styles/HomePageAdmin.scss';
 import productAPI from '../services/product'; 
-
+import reportAPI from '../services/report'; 
 function HomePageAdmin() {
     const [userType] = useState('admin');
-    const [products, setProducts] = useState([]); 
+    const [products, setProducts] = useState([]);
+    const [reports, setReports] = useState([]);  
     const [loading, setLoading] = useState(true); 
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await productAPI.getAllProductsPending();
-                console.log(response);
-                if (response.success) {
-                    setProducts(response.products || []);
+                const productResponse = await productAPI.getAllProductsPending();
+                if (productResponse.success) {
+                    setProducts(productResponse.products || []);
                 } else {
-                    console.error('Failed to fetch products:', response.message);
+                    console.error('Failed to fetch products:', productResponse.message);
                 }
+
+                const reportResponse = await reportAPI.getAllReport();
+                if (reportResponse.success) {
+                    setReports(reportResponse.reports || []);
+                } else {
+                    console.error('Failed to fetch reports:', reportResponse.message);
+                }
+
             } catch (error) {
                 console.error('Error fetching products:', error);
             } finally {
@@ -39,7 +47,7 @@ function HomePageAdmin() {
 
     // Lấy tối đa 3 sản phẩm đầu tiên
     const productsToShow = products.slice(0, 3);
-
+    const reportsToShow = reports.slice(0, 3);
     return (
         <div className="main-container">
             <div className="header-wrapper">
@@ -90,17 +98,17 @@ function HomePageAdmin() {
                         <div className="inner-report-header-name">
                             Reported person's name
                         </div>
-                        <div className="inner-report-header-psid">
-                            Reported person's id
+                        <div className="inner-report-header-email">
+                            Email
                         </div>
-                        <div className="inner-report-header-prtid">
-                            Reported product's id
+                        <div className="inner-report-header-prtName">
+                            Reported product's name
                         </div>
                         <div className="inner-report-header-des">
                             Description
                         </div>
                     </div>
-                    <Reports />
+                    <Reports reports={reportsToShow} />
                     <Link to="/ReportsSeeAll">See All</Link>
                 </div>
             </div>

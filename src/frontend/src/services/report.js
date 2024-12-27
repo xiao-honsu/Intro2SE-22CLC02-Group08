@@ -17,7 +17,20 @@ const reportAPI = {
         }
     },
 
-    
+    getAllReport: async () => {
+        try {
+            const response = await fetch(`${BASE_URL}/get`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            return await response.json();
+        } catch (error) {
+            console.error("Error during fetching all reports", error);
+            return { success: false, message: "An error occurred" };
+        }
+    },
 
     
 };

@@ -20,7 +20,23 @@ const reportController = {
         }
     },
 
+    getAllReport: async (req, res) => {
+        try {
+            const reports = await ReportModel.find()
+                .populate('reporterID', 'username email avatar') 
+                .populate('reportedID', 'username email avatar') 
+                .populate('productID', 'productName price'); 
     
+            res.status(200).json({
+                success: true,
+                message: "Reports fetched successfully",
+                reports,
+            });
+        } catch (error) {
+            console.error("Error fetching reports: ", error);
+            return res.status(500).json({ success: false, message: "An error occurred" });
+        }
+    },
 
 };
 
