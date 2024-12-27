@@ -13,6 +13,7 @@ import cartAPI from "../services/cart";
 import feedbackAPI from '../services/feedback';
 
 import '../styles/Preview_Product_Page.scss';
+import reportAPI from '../services/report';
 
 
 function Preview() {
@@ -43,12 +44,30 @@ function Preview() {
             setSelectedReason(""); 
     }, [show_report_box]);
 
-    const handleSubmit = () => {
-        if (selectedReason.trim() === "") 
+    const handleSubmit = async (product) => {
+        const reportText = selectedReason; 
+        if (!reportText) {
             alert("Please select a reason before submitting the report!");
-        else {
-            alert(`Your report has been submitted with the reason: ${selectedReason}`);
-            handleClose(); 
+            return;
+        }
+        
+        try {
+            const response = await reportAPI.createReport({
+                reporterID: userInfo.userId,
+                reportedID: product.sellerID,
+                productID: product._id,
+                description: reportText
+            });
+    
+            if (response.success) {
+                alert(`Your report has been submitted with the reason: ${selectedReason}`);
+                handleClose(); 
+            } else {
+                alert(response.message || "Failed to create report");
+            }
+        } catch (error) {
+            console.error("Error submitting report:", error);
+            alert("An error occurred while submitting report.");
         }
     };
     // end report
@@ -201,7 +220,7 @@ function Preview() {
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}> Cancel </Button>
-                            <Button variant="primary" onClick={handleSubmit}> Send report </Button>
+                            <Button variant="primary" onClick={() => handleSubmit(product)}> Send report </Button>
                         </Modal.Footer>
                     </Modal>
                 </div>
