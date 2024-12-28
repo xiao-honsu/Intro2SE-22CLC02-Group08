@@ -74,7 +74,8 @@ const BuyerProduct = ({ orders, onOrdersChange }) => {
                 sellerID: order.productID.sellerID,
                 buyerID: order.buyerID,
                 rating,
-                comment: feedbackText
+                comment: feedbackText,
+                productName: order.productID.productName,
             });
     
             if (response.success) {

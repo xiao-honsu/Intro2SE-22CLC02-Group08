@@ -1,4 +1,5 @@
-import React, { useState } from 'react';  
+import React, { useState, useEffect } from "react";
+import messageAPI from "../services/message"; 
 import "../styles/Chat.scss";  
 
 const Chat = () => {  

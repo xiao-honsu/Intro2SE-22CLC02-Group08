@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Form, FormControl } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faCartShopping, faUser, faBell, faCommentDots } from "@fortawesome/free-solid-svg-icons";
+import BellWithDot from "./BellWithDot";
 import Chat from './Chat';
 import Notification from "./Notification";
 
@@ -19,6 +20,7 @@ function Header({ showSearch = true, showNav = true }) {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+    const [hasUnread, setHasUnread] = useState(false);
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [searchKeyword, setSearchKeyword] = useState("");
 
@@ -144,10 +146,10 @@ function Header({ showSearch = true, showNav = true }) {
 
                     <div className="notification-dropdown">
                         <div className="nav-icon mx-2 noti-icon" onClick={toggleNotification} style={{ cursor: "pointer" }} >
-                               <FontAwesomeIcon icon={faBell} />
+                               <BellWithDot hasUnread={hasUnread} />
                         </div>
                         {isNotificationOpen && (
-                            <Notification />
+                            <Notification receiverID={userInfo.userId} role={userType} onUnreadStatusChange={(status) => setHasUnread(status)}  />
                         )}
                     </div>
 
@@ -187,10 +189,10 @@ function Header({ showSearch = true, showNav = true }) {
 
                     <div className="notification-dropdown">
                         <div className="nav-icon mx-2 noti-icon" onClick={toggleNotification} style={{ cursor: "pointer" }} >
-                               <FontAwesomeIcon icon={faBell} />
+                               <BellWithDot hasUnread={hasUnread} />
                         </div>
                         {isNotificationOpen && (
-                            <Notification />
+                            <Notification receiverID={userInfo.userId} role={userType} onUnreadStatusChange={(status) => setHasUnread(status)}  />
                         )}
                     </div>
 
@@ -226,10 +228,10 @@ function Header({ showSearch = true, showNav = true }) {
                 <>
                     <div className="notification-dropdown">
                         <div className="nav-icon mx-2 noti-icon" onClick={toggleNotification} style={{ cursor: "pointer" }} >
-                               <FontAwesomeIcon icon={faBell} />
+                               <BellWithDot hasUnread={hasUnread} />
                         </div>
                         {isNotificationOpen && (
-                            <Notification />
+                            <Notification receiverID={userInfo.userId} role={userType} onUnreadStatusChange={(status) => setHasUnread(status)} />
                         )}
                     </div>
 

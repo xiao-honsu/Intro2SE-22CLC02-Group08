@@ -1,21 +1,29 @@
 const FeedbackModel = require('../models/FeedbackModel');
-const path = require('path');
-const fs = require('fs');
+const NotificationModel = require("../models/NotificationModel");
 
 
 const feedbackController = {
     createFeedback: async (req, res) => {
         try {
-            const { sellerID, buyerID, rating, comment } = req.body;
+            const { sellerID, buyerID, rating, comment, productName } = req.body;
             console.log("Request body:", req.body);
 
             const feedback  = new FeedbackModel({
                 sellerID,
                 buyerID,
                 rating,
-                comment
+                comment,
             });
-            await feedback.save();
+            const savedFeedback = await feedback.save();
+
+            const populatedFeedback = await FeedbackModel.findById(savedFeedback._id).populate('buyerID', 'username');
+           
+            const notificationContent = `Buyer "${populatedFeedback.buyerID.username}" has left feedback for your product "${productName}": "${comment}" (Rating: ${rating}/5).`;
+            await NotificationModel.create({
+                receiverID: sellerID,
+                content: notificationContent,
+                role: "seller",
+            });
 
             res.status(201).json({ success: true, message: "Feedback created successfully", feedback});
 

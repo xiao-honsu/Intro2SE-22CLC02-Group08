@@ -1,7 +1,6 @@
 const ReportModel = require('../models/ReportModel');
-const path = require('path');
-const fs = require('fs');
-
+const NotificationModel = require("../models/NotificationModel");
+const ProductModel = require("../models/ProductModel");
 
 const reportController = {
     createReport: async (req, res) => {
@@ -12,6 +11,14 @@ const reportController = {
             const report  = new ReportModel({ reporterID, reportedID, productID, description });
             await report.save();
 
+            const product = await ProductModel.findOne({ productID}).populate('sellerID', 'username');
+
+            const notificationContent = `You have reported product "${product.productName}" of "${product.sellerID.username}" shop.`;
+            await NotificationModel.create({
+                receiverID: order.buyerID, 
+                content: notificationContent,
+                role: "buyer",
+            });
             res.status(201).json({ success: true, message: "Report created successfully", report});
 
         } catch (error) {

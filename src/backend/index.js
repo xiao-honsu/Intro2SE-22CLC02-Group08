@@ -12,6 +12,8 @@ const feedbackRoutes = require("./routes/feedbackRoute");
 const cartRoutes = require("./routes/cartRoute");
 const orderRoutes = require("./routes/orderRoute");
 const reportRoutes = require("./routes/reportRoute");
+const notificationRoutes = require("./routes/notificationRoute");
+const messageRoutes = require("./routes/messageRoute");
 
 dotenv.config();
 const app = express();
@@ -19,7 +21,7 @@ app.use('/mockData', express.static(path.join(__dirname, 'mockData')));
 // Middleware
 app.use(cors({
     origin: '*', 
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     credentials: true
 }));
 
@@ -41,6 +43,8 @@ app.use("/feedback", feedbackRoutes);
 app.use("/cart", cartRoutes);
 app.use("/order", orderRoutes);
 app.use("/report", reportRoutes);
+app.use("/notification", notificationRoutes);
+app.use("/message", messageRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {

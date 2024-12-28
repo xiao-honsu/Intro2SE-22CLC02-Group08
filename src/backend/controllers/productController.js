@@ -1,5 +1,6 @@
-const ProductModel = require('../models/ProductModel');
+const ProductModel = require("../models/ProductModel");
 const OrderModel = require("../models/OrderModel");
+const NotificationModel = require("../models/NotificationModel");
 
 const productController = {
     createProduct: async (req, res) => {
@@ -120,20 +121,42 @@ const productController = {
                 return res.status(404).json({ success: false, message: "Product not found." });
             }
 
+            const order = await OrderModel.findOne({ productID: req.params.id });
+
+            if (status === "Not Purchased") {
+                const notificationContent = `Your product "${updatedProduct.productName}" has been approved.`;
+                await NotificationModel.create({
+                    receiverID: updatedProduct.sellerID, 
+                    content: notificationContent,
+                    role: "seller",
+                });
+            }
+
             if (status === "Shipping") {
-                const updatedOrders = await OrderModel.updateMany(
-                    { productID: req.params.id },
-                    { status: "Shipping" }, 
-                    { new: true }
-                );
+                await OrderModel.findByIdAndUpdate(order._id, { status: "Shipping" });
+                const notificationContent = `Your order for product "${updatedProduct.productName}" is now shipping.`;
+                await NotificationModel.create({
+                    receiverID: order.buyerID, 
+                    content: notificationContent,
+                    role: "buyer",
+                });
             }
 
             if (status === "Purchased") {
-                const updatedOrders = await OrderModel.updateMany(
-                    { productID: req.params.id },
-                    { status: "Received" }, 
-                    { new: true }
-                );
+                await OrderModel.findByIdAndUpdate(order._id, { status: "Received" });
+                const sellerNotification = `Your product "${updatedProduct.productName}" has been successfully delivered to the buyer.`;
+                await NotificationModel.create({
+                    receiverID: updatedProduct.sellerID,
+                    content: sellerNotification,
+                    role: "seller",
+                });
+
+                const buyerNotification = `Your order #${order._id} for "${updatedProduct.productName}" has been successfully delivered.`;
+                await NotificationModel.create({
+                    receiverID: order.buyerID,
+                    content: buyerNotification,
+                    role: "buyer",
+                });
             }
 
             return res.status(200).json({ success: true, message: "Product status updated successfully.", product: updatedProduct });
@@ -151,6 +174,12 @@ const productController = {
             if (!deletedProduct) {
                 return res.status(404).json({ success: false, message: "Product not found." });
             }
+            const notificationContent = `Your product "${updatedProduct.productName}" has been deleted.`;
+            await NotificationModel.create({
+                receiverID: updatedProduct.sellerID, 
+                content: notificationContent,
+                role: "seller",
+            });
 
             return res.status(200).json({ success: true, message: "Product deleted successfully." });
         } catch (error) {

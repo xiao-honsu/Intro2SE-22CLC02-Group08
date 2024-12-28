@@ -2,6 +2,7 @@ const OrderModel = require('../models/OrderModel');
 const ProductModel = require('../models/ProductModel');
 const CartModel = require('../models/CartModel');
 const CartDetailModel = require('../models/CartDetailModel');
+const NotificationModel = require("../models/NotificationModel");
 
 const orderController = {
     createOrder: async (req, res) => {
@@ -38,6 +39,13 @@ const orderController = {
                 { new: true }
             );
 
+            const notificationContent = `Order for your product "${updatedProduct.productName}" requires your confirmation.`;
+            await NotificationModel.create({
+                receiverID: updatedProduct.sellerID, 
+                content: notificationContent,
+                role: "seller",
+            });
+
             if (!updatedProduct) {
                 console.error("Failed to update product status. Product not found.");
                 return res.status(404).json({ success: false, message: "Product not found for updating status." });
@@ -55,7 +63,7 @@ const orderController = {
 
             const cart = await CartModel.findOne({ buyerID });
             if (cart) {
-                cart.totalAmount = Math.max(0, cart.totalAmount - product.price); // Đảm bảo totalAmount không âm
+                cart.totalAmount = Math.max(0, cart.totalAmount - product.price); 
                 await cart.save();
             } else {
                 console.warn("Cart not found for the buyer.");
