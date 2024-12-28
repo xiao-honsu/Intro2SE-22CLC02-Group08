@@ -5,13 +5,13 @@ body {
   font-family: 'Roboto';
   margin: 0;
   padding: 0;
-  min-width: 1200px; 
-  overflow-x: auto; 
+
 }
 
 .main-container {
-  width: 100%; 
   display: block; 
+  min-width: 1200px; 
+  overflow-x: auto; 
 }
 
 .stats {
@@ -106,8 +106,9 @@ section {
   font-family: 'Roboto';
   font-size: large;
   color: black;
-  right: 50%;
+  left: 50%;
   bottom: 10px;
+  transform: translateX(-50%)
 }
 
 
@@ -118,6 +119,7 @@ section {
   padding: 20px;
   border-radius: 20px;
   position: relative;
+  
 }
 
 .inner-header, .inner-report-header {
@@ -126,34 +128,40 @@ section {
 }
 
 .inner-header-name   {
+  font-size: 18px;
   text-align: center;
   width: 30%;
 }
 
 .inner-report-header-name {
+  font-size: 18px;
   text-align: center;
   width: 25%;
 }
 
 .inner-report-header-prtName, .reports-item .reported-product {
+  font-size: 18px;
   text-align: center;
   width: 20%;
   padding: 0 1rem;
 }
 
 .inner-report-header-email, .reports-item .reported-email {
+  font-size: 18px;
   text-align: center;
   width: 15%;
   padding: 0 1rem;
 }
 
 .inner-report-header-des, .description {
+  font-size: 18px;
   text-align: center;
   width: 40%;
   padding: 0 1rem;
 }
 
 .inner-header-product {
+  font-size: 18px;
   width: 70%;
 }
 

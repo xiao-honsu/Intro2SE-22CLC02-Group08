@@ -94,8 +94,8 @@ function UnapprovedDetail() {
                         <h6>{product.sellerID?.username || "Unknown Seller"}</h6>
                         <div className="item-details">
                             <img src={product.images?.[0] || "default-product.jpg"} className="prtImg" alt="Product" />
-                            <p>{product.productName}</p>
-                            <p>{`${product.price.toLocaleString()} VND`}</p>
+                            <p>Product name: {product.productName}</p>
+                            <p>Price: {`${product.price.toLocaleString()} VND`}</p>
                             <p>Description: {product.description}</p>
                         </div>
                     </div>

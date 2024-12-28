@@ -54,9 +54,13 @@
     color: white;
 }
 
-.approve, .decline {
-    margin: 0 4rem;
+.approve {
+    margin-left: 5rem;
+}
+
+.decline {
+    margin-left: 2rem;
 }
 .back {
-    margin-left: calc(100% - 40rem );
+    margin-left: calc(100% - 30rem );
 }

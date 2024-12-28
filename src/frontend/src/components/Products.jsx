@@ -30,8 +30,8 @@ const Products = ({ products }) => {
                         alt="Product"
                     />
                     <div className="post-details">
-                        <p>{product.productName || "Unnamed Product"}</p>
-                        <p>{`${product.price.toLocaleString()} VND`}</p>
+                        <p>Product name: {product.productName || "Unnamed Product"}</p>
+                        <p>Price: {`${product.price.toLocaleString()} VND`}</p>
                         <p>Description: {product.description || "No description available"}</p>
                     </div>
                 </div>
