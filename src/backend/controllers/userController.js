@@ -119,6 +119,25 @@ const userController = {
             return res.status(500).json({ success: false, message: "An error occurred while deleting the user" });
         }
     },
+
+    searchUsers: async (req, res) => {
+        try {
+            const { keyword } = req.query;
+    
+            if (!keyword || keyword.trim() === "") {
+                return res.status(400).json({ success: false, message: "Keyword is required" });
+            }
+    
+            const users = await UserModel.find({
+                username: { $regex: keyword, $options: "i" }, 
+            }).select("username avatar _id");
+    
+            res.status(200).json({ success: true, users });
+        } catch (error) {
+            console.error("Error searching users:", error);
+            res.status(500).json({ success: false, message: "Internal server error" });
+        }
+    },
 };
 
 module.exports = userController;

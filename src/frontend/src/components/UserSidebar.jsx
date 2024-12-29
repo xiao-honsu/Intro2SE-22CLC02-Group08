@@ -3,26 +3,15 @@ import { useNavigate} from 'react-router-dom';
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faUser } from "@fortawesome/free-solid-svg-icons";
-import Chat from './Chat';
 
 import "../styles/UserSidebar.scss"
 
 const UserSidebar = ({ profileInfo, isMyProfile }) => {
     const navigate = useNavigate();
-    const [showChatBox, setShowChatBox] = useState(false);
-    const [chatSeller, setChatSeller] = useState({ sellerID: null, sellerName: "" });
   
     const handleEditProfile = () => {
         navigate("/EditProfile");
     }
-
-    const handleChatWithSeller = () => {
-        setChatSeller({
-            sellerID: profileInfo._id,
-            sellerName: profileInfo.username,
-        });
-        setShowChatBox(true);
-    };
 
     return (
         <div>
@@ -63,18 +52,6 @@ const UserSidebar = ({ profileInfo, isMyProfile }) => {
                     Add Product
                 </Button>
             </div>
-        )}
-        
-        { profileInfo && profileInfo.role === "seller" && !isMyProfile && (
-             <div className="add-product-button">
-                <Button variant="warning" onClick={handleChatWithSeller}>
-                    Chat with Seller
-                </Button>
-            </div>
-        )}
-        
-        {showChatBox && chatSeller.sellerID && (
-                <Chat sellerID={chatSeller.sellerID} sellerName={chatSeller.sellerName} />
         )}
         </div>
     );

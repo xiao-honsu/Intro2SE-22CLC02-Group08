@@ -16,6 +16,7 @@ const notificationRoutes = require("./routes/notificationRoute");
 const messageRoutes = require("./routes/messageRoute");
 const accessHistoryRoutes = require("./routes/accessHistoryRoute");
 const StatisticsRoutes = require("./routes/statisticsRoute");
+const supportRoutes = require("./routes/supportRoute");
 
 dotenv.config();
 const app = express();
@@ -49,6 +50,7 @@ app.use("/notification", notificationRoutes);
 app.use("/message", messageRoutes);
 app.use("/access_history", accessHistoryRoutes);
 app.use("/statistics", StatisticsRoutes);
+app.use("/support", supportRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {

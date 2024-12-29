@@ -42,6 +42,7 @@ function Profile() {
                 setIsMyProfile(false);
                 const data = await userAPI.getProfile(id);
                 if (data) {
+                    data.role = "seller";
                     setProfileInfo(data);
                 }
             }
@@ -49,7 +50,7 @@ function Profile() {
         };
     
         fetchUserInfo();
-    }, [id, userInfo, setUserType]); // Chỉ chạy khi `id`, `userInfo`, hoặc `setUserType` thay đổi
+    }, [id, userInfo, setUserType]); 
     
     useEffect(() => {
         const fetchAdditionalData = async () => {
@@ -73,7 +74,7 @@ function Profile() {
         };
     
         fetchAdditionalData();
-    }, [profileInfo, isMyProfile]); // Chỉ chạy khi `profileInfo` hoặc `isMyProfile` thay đổi
+    }, [profileInfo, isMyProfile]); 
     
      
     const refreshOrders = async () => {
@@ -133,7 +134,7 @@ function Profile() {
                             <Tab eventKey="Canceled" title="Canceled" />
                         </Tabs>
                         <BuyerProduct orders={filteredOrders1} onOrdersChange={refreshOrders} />
-                        <Help />
+                        
                     </> 
                 )}
                 {isMyProfile && profileInfo && profileInfo.role === "seller" && (
@@ -147,7 +148,7 @@ function Profile() {
                             <Tab eventKey="Purchased" title="Purchased" />
                         </Tabs>
                         <SellerProduct list_orders={filteredOrders2} isMyProfile={isMyProfile} onProductsChange={refreshProduct} />
-                        <Help />
+                        
                     </>
                 )}
 

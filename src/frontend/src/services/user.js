@@ -56,9 +56,20 @@ const userAPI = {
             if (!response.ok) {
                 throw new Error('Failed to fetch users');
             }
-            return await response.json(); // Giả sử API trả về { success: true, users: [...] }
+            return await response.json(); 
         } catch (error) {
             console.error("Error fetching users:", error);
+            return { success: false, message: "An error occurred" };
+        }
+    },
+
+    searchUsers: async (keyword) => {
+        try {
+            const response = await fetch(`${BASE_URL}/search?keyword=${keyword}`);
+            if (!response.ok) throw new Error('Failed to search users');
+            return await response.json(); 
+        } catch (error) {
+            console.error("Error searching users:", error);
             return { success: false, message: "An error occurred" };
         }
     },
