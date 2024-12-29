@@ -6,16 +6,15 @@ const reportController = {
     createReport: async (req, res) => {
         try {
             const { reporterID, reportedID, productID, description } = req.body;
-            console.log("Request body:", req.body);
 
-            const report  = new ReportModel({ reporterID, reportedID, productID, description });
+            const report = new ReportModel({ reporterID, reportedID, productID, description });
             await report.save();
 
-            const product = await ProductModel.findOne({ productID}).populate('sellerID', 'username');
+            const product = await ProductModel.findOne({ _id: productID }).populate('sellerID', 'username');
 
             const notificationContent = `You have reported product "${product.productName}" of "${product.sellerID.username}" shop.`;
             await NotificationModel.create({
-                receiverID: order.buyerID, 
+                receiverID: reporterID, 
                 content: notificationContent,
                 role: "buyer",
             });

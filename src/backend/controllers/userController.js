@@ -1,16 +1,32 @@
 const UserModel = require('../models/UserModel');
+const FeedbackModel = require('../models/FeedbackModel');
+const mongoose = require('mongoose');
 
 const userController = {
     getProfile: async (req, res) => {
         const { userId } = req.params; 
-    
+        
         try {
             const user = await UserModel.findById(userId);
     
             if (!user) {
                 return res.status(404).json({ success: false, message: "User not found" });
             }
-    
+            
+            let averageRating = 0;
+            if (user.role === "seller") {
+                const result = await FeedbackModel.aggregate([
+                    { $match: { sellerID: user._id } }, 
+                    {
+                        $group: {
+                            _id: "$sellerID",
+                            averageRating: { $avg: "$rating" },
+                        },
+                    },
+                ]);
+                averageRating = result.length > 0 ? parseFloat(result[0].averageRating.toFixed(1)) : 0;
+            }
+
             return res.status(200).json({
                 success: true,
                 userId: user._id,
@@ -19,7 +35,7 @@ const userController = {
                 role: user.role,
                 signupDate: user.registrationDate,
                 numItems: user.totalSoldProducts || 0,
-                rating: user.rating || "None",
+                rating: averageRating || "0",
                 bank: user.bank || "",
                 backAccount: user.bankAccount || "",
             });

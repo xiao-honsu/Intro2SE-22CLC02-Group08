@@ -1,5 +1,6 @@
 const UserModel = require('../models/UserModel');
 const AdminModel = require('../models/AdminModel');
+const AccessHistoryModel = require('../models/AccessHistoryModel');
 
 const authController = {
 
@@ -57,6 +58,11 @@ const authController = {
 
             const user = await UserModel.findOne({ email: email, password: password });
             if (user) {
+                await AccessHistoryModel.create({
+                    userID: user._id,
+                    status: 'Logged In', 
+                });
+
                 return res.status(200).json({
                     success: true,
                     userType: "user",

@@ -30,6 +30,22 @@ const messageAPI = {
             return { success: false, message: "An error occurred" };
         }
     },
+
+    getChatList: async (userID) => {
+        try {
+            const response = await fetch(`${BASE_URL}/chat-list/${userID}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+            });
+            if (!response.ok) {
+                throw new Error("Failed to send message");
+            }
+            return await response.json();
+        } catch (error) {
+            console.error("Error during fetching chat list:", error);
+            return { success: false, message: "An error occurred" };
+        }
+    },
 };
 
 export default messageAPI;

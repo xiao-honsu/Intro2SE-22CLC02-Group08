@@ -1,12 +1,11 @@
 const FeedbackModel = require('../models/FeedbackModel');
 const NotificationModel = require("../models/NotificationModel");
-
+const mongoose = require('mongoose');
 
 const feedbackController = {
     createFeedback: async (req, res) => {
         try {
             const { sellerID, buyerID, rating, comment, productName } = req.body;
-            console.log("Request body:", req.body);
 
             const feedback  = new FeedbackModel({
                 sellerID,
@@ -38,7 +37,6 @@ const feedbackController = {
             const { sellerID } = req.params;
     
             if (!sellerID) {
-                console.log("Seller ID not provided in request.");
                 return res.status(400).json({ success: false, message: "Seller ID is required." });
             }
     
@@ -46,7 +44,6 @@ const feedbackController = {
                 .populate("buyerID", "username avatar");
     
             if (!feedbacks || feedbacks.length === 0) {
-                console.log("No feedback found for sellerID:", sellerID);
                 return res.status(200).json({ success: true, message: "No feedback available.", feedbacks: [] });
             }
     
@@ -60,18 +57,30 @@ const feedbackController = {
     getSellerRating: async (req, res) => {
         try {
             const { sellerID } = req.params;
-            const feedbacks = await FeedbackModel.find({ sellerID });
-            const averageRating = feedbacks.length ? (feedbacks.reduce((sum, f) => sum + f.rating, 0) / feedbacks.length).toFixed(1)
-                                                    : 0;
-            res.status(200).json({
-                success: true, averageRating
-            });                                       
+    
+            if (!mongoose.isValidObjectId(sellerID)) {
+                return res.status(400).json({ success: false, message: "Invalid sellerID format." });
+            }
+    
+            const result = await FeedbackModel.aggregate([
+                { $match: { sellerID: new mongoose.Types.ObjectId(sellerID) } }, 
+                {
+                    $group: {
+                        _id: "$sellerID",
+                        averageRating: { $avg: "$rating" }, 
+                    },
+                },
+            ]);
+    
+            const averageRating = result.length > 0 ? parseFloat(result[0].averageRating.toFixed(1)) : 0;
+    
+            res.status(200).json({ success: true, averageRating, });
         } catch (error) {
-            console.error("Error fetching feedback:", error);
-            res.status(500).json({ success: false, message: "Failed to fetch feedback." });
+            console.error("Error fetching average rating:", error);
+            res.status(500).json({ success: false, message: "Failed to fetch average rating." });
         }
-    }
-
+    },
+    
 };
 
 module.exports = feedbackController;

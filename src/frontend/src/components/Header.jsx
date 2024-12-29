@@ -10,6 +10,8 @@ import Notification from "./Notification";
 import UserContext from "../context/userContext";
 import userAPI from "../services/user";
 import adminAPI from "../services/admin";
+import notificationAPI from "../services/notification";
+import accessHistoryAPI from "../services/accessHistory";
 
 import "../styles/Header.scss";
 
@@ -21,6 +23,7 @@ function Header({ showSearch = true, showNav = true }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
     const [hasUnread, setHasUnread] = useState(false);
+    const [notifications, setNotifications] = useState([]);
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [searchKeyword, setSearchKeyword] = useState("");
 
@@ -30,6 +33,35 @@ function Header({ showSearch = true, showNav = true }) {
     const toggleNotification = () => {
         setIsNotificationOpen(!isNotificationOpen);
     };
+
+    useEffect(() => {
+        const fetchNotifications = async () => {
+            if (userInfo?.userId) {
+                const response = await notificationAPI.getNotification(userInfo.userId, userType);
+                
+                if (response.success) {
+                    setNotifications(response.notifications);               
+                    const unreadExists = response.notifications.some((noti) => !noti.isRead);
+                    setHasUnread(unreadExists);
+                }
+            }
+        };
+        fetchNotifications();
+    }, [userInfo?.userId, userType]);
+
+    const handleMarkAsRead = async (notificationID) => {
+        const response = await notificationAPI.markAsRead(notificationID);
+        if (response.success) {
+            setNotifications((prevNotifications) =>
+                prevNotifications.map((noti) =>
+                    noti._id === notificationID ? { ...noti, isRead: true } : noti
+                )
+            );
+            const unreadExists = notifications.some((noti) => noti._id !== notificationID && !noti.isRead);
+            setHasUnread(unreadExists);
+        }
+    };
+
     const toggleChat = () => {
         setIsChatOpen(!isChatOpen);
     };
@@ -77,16 +109,30 @@ function Header({ showSearch = true, showNav = true }) {
         fetchUserInfo();
     }, [setUserInfo]);
 
-    const handleLogout = () => {
+    const handleLogout = async (event) => {
         event.preventDefault(); 
         console.log("id: ", localStorage.getItem("id"));
-        localStorage.removeItem("id");
-        localStorage.removeItem("userType");
-        setUserType(null); 
-        setUserInfo(null);
-        console.log("id: ", localStorage.getItem("id"));
-        console.log("type: ", localStorage.getItem("userType"));
-        navigate("/login"); 
+        try {
+            if (userType === "buyer" || userType === "seller") {
+                const response = await accessHistoryAPI.addHistory({
+                    userID: userInfo.userId,
+                    status: "Logged Out",
+                });
+    
+                if (!response.success) {
+                    console.error("Failed to log access history:", response.message);
+                }
+            }
+            localStorage.removeItem("id");
+            localStorage.removeItem("userType");
+            setUserType(null); 
+            setUserInfo(null);
+            console.log("id: ", localStorage.getItem("id"));
+            console.log("type: ", localStorage.getItem("userType"));
+            navigate("/login");
+        } catch (error) {
+            console.error("Error during logout:", error);
+        }   
     };
 
     const handleToHome = () => {
@@ -149,7 +195,7 @@ function Header({ showSearch = true, showNav = true }) {
                                <BellWithDot hasUnread={hasUnread} />
                         </div>
                         {isNotificationOpen && (
-                            <Notification receiverID={userInfo.userId} role={userType} onUnreadStatusChange={(status) => setHasUnread(status)}  />
+                            <Notification notifications={notifications} onMarkAsRead={handleMarkAsRead}  />
                         )}
                     </div>
 
@@ -158,7 +204,7 @@ function Header({ showSearch = true, showNav = true }) {
                             <FontAwesomeIcon icon={faCommentDots} />
                         </div>
                         {isChatOpen && (
-                            <Chat />
+                            <Chat userID={userInfo.userId}/>
                         )}
                     </div>
 
@@ -192,7 +238,7 @@ function Header({ showSearch = true, showNav = true }) {
                                <BellWithDot hasUnread={hasUnread} />
                         </div>
                         {isNotificationOpen && (
-                            <Notification receiverID={userInfo.userId} role={userType} onUnreadStatusChange={(status) => setHasUnread(status)}  />
+                            <Notification notifications={notifications} onMarkAsRead={handleMarkAsRead}  />
                         )}
                     </div>
 
@@ -201,7 +247,7 @@ function Header({ showSearch = true, showNav = true }) {
                             <FontAwesomeIcon icon={faCommentDots} />
                         </div>
                         {isChatOpen && (
-                            <Chat />
+                            <Chat userID={userInfo.userId} />
                         )}
                     </div>
 
@@ -231,7 +277,7 @@ function Header({ showSearch = true, showNav = true }) {
                                <BellWithDot hasUnread={hasUnread} />
                         </div>
                         {isNotificationOpen && (
-                            <Notification receiverID={userInfo.userId} role={userType} onUnreadStatusChange={(status) => setHasUnread(status)} />
+                            <Notification notifications={notifications} onMarkAsRead={handleMarkAsRead}  />
                         )}
                     </div>
 
@@ -240,7 +286,7 @@ function Header({ showSearch = true, showNav = true }) {
                             <FontAwesomeIcon icon={faCommentDots} />
                         </div>
                         {isChatOpen && (
-                            <Chat />
+                            <Chat userID={userInfo.userId} />
                         )}
                     </div>
 

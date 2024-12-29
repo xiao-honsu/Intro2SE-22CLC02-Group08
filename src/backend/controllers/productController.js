@@ -1,6 +1,7 @@
 const ProductModel = require("../models/ProductModel");
 const OrderModel = require("../models/OrderModel");
 const NotificationModel = require("../models/NotificationModel");
+const UserModel = require('../models/UserModel');
 
 const productController = {
     createProduct: async (req, res) => {
@@ -144,6 +145,15 @@ const productController = {
 
             if (status === "Purchased") {
                 await OrderModel.findByIdAndUpdate(order._id, { status: "Received" });
+                
+                const seller = await UserModel.findById(updatedProduct.sellerID);
+                if (seller) {
+                    await UserModel.findByIdAndUpdate(
+                        updatedProduct.sellerID,
+                        { $inc: { totalSoldProducts: 1 } } 
+                    );
+                }
+                
                 const sellerNotification = `Your product "${updatedProduct.productName}" has been successfully delivered to the buyer.`;
                 await NotificationModel.create({
                     receiverID: updatedProduct.sellerID,

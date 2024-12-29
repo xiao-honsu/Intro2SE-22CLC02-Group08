@@ -34,17 +34,18 @@ const feedbackAPI = {
         }
     },
 
-    getRatingBySeller: async (sellerId) => {
+    getRatingBySeller: async (sellerID) => {
         try {
-            const response = await fetch(`${BASE_URL}/sellerRating/${sellerId}`, {
+            const response = await fetch(`${BASE_URL}/sellerRating/${sellerID}`, {
                 method: "GET",
             });
 
             if (!response.ok) {
-                throw new Error(`Failed to fetch rating for seller ${sellerId}`);
+                throw new Error(`Failed to fetch rating for seller ${sellerID}`);
             }
 
-            return await response.json();
+            const result = await response.json();
+            return result;
         } catch (error) {
             console.error("Error during fetching rating by seller:", error);
             return { success: false, message: "An error occurred" };

@@ -1,46 +1,28 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate} from 'react-router-dom';
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faUser } from "@fortawesome/free-solid-svg-icons";
-
-import UserContext from "../context/userContext";
-import userAPI from "../services/user";
+import Chat from './Chat';
 
 import "../styles/UserSidebar.scss"
 
-const UserSidebar = () => {
-    const { userType, setUserType, userInfo, setUserInfo } = useContext(UserContext);
+const UserSidebar = ({ profileInfo, isMyProfile }) => {
     const navigate = useNavigate();
-    const { id } = useParams();
-    const [profileInfo, setProfileInfo] = useState(null);
-    const [isMyProfile, setIsMyProfile] = useState(false);
+    const [showChatBox, setShowChatBox] = useState(false);
+    const [chatSeller, setChatSeller] = useState({ sellerID: null, sellerName: "" });
   
-    useEffect(() => {
-        const fetchUserInfo = async () => {
-            const userId = localStorage.getItem("id");
-            setUserType(localStorage.getItem("userType"))
-            if (id === userId) {
-                setIsMyProfile(true);
-                setProfileInfo(userInfo); 
-            } else {
-                setIsMyProfile(false);
-
-                const userRes = await userAPI.getProfile(id);
-                if (userRes) {
-                    setProfileInfo(userRes);
-                } else {
-                    console.error("Failed to fetch profile info");
-                }
-            }
-        };
-
-        fetchUserInfo();
-    }, [id, userInfo, setUserType]);
-
     const handleEditProfile = () => {
         navigate("/EditProfile");
     }
+
+    const handleChatWithSeller = () => {
+        setChatSeller({
+            sellerID: profileInfo._id,
+            sellerName: profileInfo.username,
+        });
+        setShowChatBox(true);
+    };
 
     return (
         <div>
@@ -58,10 +40,10 @@ const UserSidebar = () => {
                         {profileInfo?.signupDate
                             ? new Date(profileInfo.signupDate).toLocaleDateString()
                             : "Unknown"} </p>
-                {profileInfo && profileInfo.role === "seller" && profileInfo && (
+                {profileInfo && profileInfo.role === "seller" && (
                     <>
-                        <p> Sold: {profileInfo.numItems} items </p>
-                        <p> Rating: {profileInfo.rating} </p>
+                        <p> Sold: {profileInfo.numItems || 0} items </p>
+                        <p> Rating: {profileInfo.rating || "N/A"} </p>
                     </>
                 )}
             </div>
@@ -81,6 +63,18 @@ const UserSidebar = () => {
                     Add Product
                 </Button>
             </div>
+        )}
+        
+        { profileInfo && profileInfo.role === "seller" && !isMyProfile && (
+             <div className="add-product-button">
+                <Button variant="warning" onClick={handleChatWithSeller}>
+                    Chat with Seller
+                </Button>
+            </div>
+        )}
+        
+        {showChatBox && chatSeller.sellerID && (
+                <Chat sellerID={chatSeller.sellerID} sellerName={chatSeller.sellerName} />
         )}
         </div>
     );

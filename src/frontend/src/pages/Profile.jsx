@@ -34,30 +34,47 @@ function Profile() {
         const fetchUserInfo = async () => {
             const userId = localStorage.getItem("id");
             setUserType(localStorage.getItem("userType"));
-
+    
             if (id === userId) {
                 setIsMyProfile(true);
                 setProfileInfo(userInfo);
             } else {
                 setIsMyProfile(false);
-                const userRes = await userAPI.getProfile(id);
-                if (userRes) setProfileInfo(userRes);
+                const data = await userAPI.getProfile(id);
+                if (data) {
+                    setProfileInfo(data);
+                }
             }
-
+            console.log(profileInfo);
+        };
+    
+        fetchUserInfo();
+    }, [id, userInfo, setUserType]); // Chỉ chạy khi `id`, `userInfo`, hoặc `setUserType` thay đổi
+    
+    useEffect(() => {
+        const fetchAdditionalData = async () => {
             if (profileInfo && (profileInfo.role === "seller" || !isMyProfile)) {
                 const productRes = await productAPI.getProductsBySeller(profileInfo.userId);
-                if (productRes.success) setOrders2(productRes.products);
-                else console.log("Fail to fetch seller products:", productRes.message);
-
+                if (productRes.success) {
+                    setOrders2(productRes.products);
+                } else {
+                    console.log("Fail to fetch seller products:", productRes.message);
+                }
             }
+    
             if (profileInfo && isMyProfile && profileInfo.role === "buyer") {
                 const orderRes = await orderAPI.getOrdersByBuyer(profileInfo.userId);
-                if (orderRes.success) setOrders1(orderRes.orders);
-                else console.log("fail to fetch order");
+                if (orderRes.success) {
+                    setOrders1(orderRes.orders);
+                } else {
+                    console.log("fail to fetch order");
+                }
             }
         };
-        fetchUserInfo();
-    }, [id, userInfo, setUserType, profileInfo]);
+    
+        fetchAdditionalData();
+    }, [profileInfo, isMyProfile]); // Chỉ chạy khi `profileInfo` hoặc `isMyProfile` thay đổi
+    
      
     const refreshOrders = async () => {
         const orderRes = await orderAPI.getOrdersByBuyer(profileInfo.userId);
@@ -103,7 +120,7 @@ function Profile() {
             </div>
             <div className="profile-page-container">
                 <div className="profile-sidebar">
-                    <UserSidebar />
+                    <UserSidebar profileInfo={profileInfo} isMyProfile={isMyProfile} />
                 </div>
                 <div className="profile-content">
                 {isMyProfile && profileInfo && profileInfo.role === "buyer" && (
@@ -170,7 +187,7 @@ function Profile() {
                                     </Card>
                                 ))
                             ) : (
-                                <p>No feedback available.</p>
+                                <p>No feedback</p>
                             )}
                     </div>
                 </>
