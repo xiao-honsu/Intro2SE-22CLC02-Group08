@@ -8,11 +8,15 @@ import { Link } from "react-router-dom";
 import '../styles/HomePageAdmin.scss';
 import productAPI from '../services/product'; 
 import reportAPI from '../services/report'; 
+import statisticsAPI from '../services/statistics';
+
+
 function HomePageAdmin() {
     const [userType] = useState('admin');
     const [products, setProducts] = useState([]);
     const [reports, setReports] = useState([]);  
     const [loading, setLoading] = useState(true); 
+    const [statistics, setStatistics] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,6 +33,13 @@ function HomePageAdmin() {
                     setReports(reportResponse.reports || []);
                 } else {
                     console.error('Failed to fetch reports:', reportResponse.message);
+                }
+
+                const statisticsResponse = await statisticsAPI.getStatistics();
+                if (statisticsResponse.success) {
+                    setStatistics(statisticsResponse.statistics); 
+                } else {
+                    console.error('Không thể lấy thống kê:', statisticsResponse.message);
                 }
 
             } catch (error) {
@@ -53,7 +64,13 @@ function HomePageAdmin() {
             <div className="header-wrapper">
                 <Header userType={userType} />
             </div>
-            <Stats />
+            {statistics && (
+                <Stats 
+                    totalUsers={statistics.totalUsers} 
+                    totalVisitToday={statistics.totalVisitToday} 
+                    currentVisitors={statistics.currentVisitors}
+                />
+            )}
             <div className="today-post">
                 <div className="today-post-text">
                     Today's Posts

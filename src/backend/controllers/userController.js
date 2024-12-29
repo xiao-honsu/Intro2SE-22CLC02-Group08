@@ -89,6 +89,36 @@ const userController = {
             return res.status(500).json({ success: false, message: "An error occurred while updating the role" });
         }
     },
+
+    getAllUsers: async (req, res) => {
+        try {
+          const users = await UserModel.find(); 
+          if (!users || users.length === 0) {
+            return res.status(404).json({ success: false, message: 'No users found' });
+          }
+          res.status(200).json({ success: true, users });
+        } catch (error) {
+          console.error('Error fetching users:', error);
+          res.status(500).json({ success: false, message: 'Server error' });
+        }
+    },
+
+    deleteUser: async (req, res) => {
+        const { userId } = req.params;  
+
+        try {
+            const user = await UserModel.findByIdAndDelete(userId);  
+
+            if (!user) {
+                return res.status(404).json({ success: false, message: "User not found" });
+            }
+
+            return res.status(200).json({ success: true, message: "User deleted successfully" });
+        } catch (error) {
+            console.error("Error deleting user:", error);
+            return res.status(500).json({ success: false, message: "An error occurred while deleting the user" });
+        }
+    },
 };
 
 module.exports = userController;
