@@ -227,6 +227,32 @@ const productController = {
         }
     },
     
+    getRecentProductsBySeller: async (req, res) => {
+        try {
+            const { sellerId } = req.params; 
+            const limit = parseInt(req.query.limit) || 2; 
+    
+            if (!sellerId || sellerId.length !== 24) {
+                return res.status(400).json({ success: false, message: "Invalid or missing seller ID." });
+            }
+    
+            const products = await ProductModel.find({ sellerID: sellerId, status: 'Not Purchased'  })
+                .sort({ createdAt: -1 }) 
+                .limit(limit) 
+                .populate("categoryIDs", "categoryName") 
+                .populate("sellerID", "username avatar");
+    
+            if (products.length === 0) {
+                return res.status(404).json({ success: false, message: "No recent products found for this seller." });
+            }
+    
+            return res.status(200).json({ success: true, products });
+        } catch (error) {
+            console.error("Error fetching recent products by seller:", error);
+            return res.status(500).json({ success: false, message: "Failed to fetch recent products by seller." });
+        }
+    },
+    
 
 };
 

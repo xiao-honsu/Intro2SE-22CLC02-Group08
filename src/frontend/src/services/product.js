@@ -124,5 +124,22 @@ const productAPI = {
         }
     },
 
+    getRecentProductsBySeller: async (sellerId, limit = 2) => {
+        try {
+            const response = await fetch(`${BASE_URL}/recent/${sellerId}?limit=${limit}`, {
+                method: "GET",
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to fetch recent products for seller ${sellerId}`);
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error("Error during fetching recent products by seller:", error);
+            return { success: false, message: "An error occurred" };
+        }
+    },
+
 };
 export default productAPI;

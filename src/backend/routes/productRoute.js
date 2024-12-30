@@ -13,5 +13,6 @@ router.get("/:id", productController.getProductById);
 router.put("/update-status/:id", productController.updateProductStatus);
 router.delete("/:id", productController.deleteProduct);
 router.get("/seller/:sellerId", productController.getAllProductsBySeller);
+router.get('/recent/:sellerId', productController.getRecentProductsBySeller);
 
 module.exports = router;

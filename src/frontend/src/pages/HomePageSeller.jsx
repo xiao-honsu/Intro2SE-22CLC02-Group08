@@ -68,8 +68,13 @@ function HomePageSeller() {
         </div>
 
         <div className="homepageseller-recent-posted-container">
-          <RecentPostedSeller />
-        </div>
+  {userInfo && userInfo.userId ? (
+    <RecentPostedSeller userID={userInfo.userId} />
+  ) : (
+    <p></p> 
+  )}
+</div>
+
 
         
 

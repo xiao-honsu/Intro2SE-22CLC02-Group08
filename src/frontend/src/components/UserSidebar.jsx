@@ -48,7 +48,7 @@ const UserSidebar = ({ profileInfo, isMyProfile }) => {
         </div>
         {profileInfo && profileInfo.role === "seller" && isMyProfile && (
              <div className="add-product-button">
-                <Button variant="warning">
+                <Button variant="warning" onClick={() => navigate(`/SellerUploadProduct`)}>
                     Add Product
                 </Button>
             </div>

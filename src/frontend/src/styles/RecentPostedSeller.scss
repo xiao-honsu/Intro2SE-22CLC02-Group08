@@ -15,8 +15,9 @@
   
   .RecentPostedSeller-content {
     display: flex;
-    justify-content: center; /* Chia đều khoảng cách giữa các mục */
+    justify-content: center;
     gap: 3rem;
+    align-items: stretch;
   }
   
   .RecentPostedSeller-section {
@@ -35,6 +36,7 @@
   .RecentPostedSeller-img {
     width: 90%;
     height: auto;
+    min-height: 480px;
     border-radius: 5px;
     object-fit: cover;
     align-self: center;
