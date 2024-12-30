@@ -124,6 +124,7 @@
 .category {
     margin-left: 9%;
     margin-top: 1%;
+    margin-bottom: 8rem;
 }
 
 .category-head {
@@ -194,18 +195,29 @@
     }
   }
   
-.button-choice {
+  .button-choice {
+    all: unset;
     margin-top: 2rem;
-    margin-left: 6rem;
+    margin-left: 24rem;
     display: flex;
+    justify-content: center;
     gap: 30px;
 }
-  
+
 .delete-button, .upload-button {
     padding: 10px 30px;
     background-color: #FB8500;
     color: white;
+    border: none;
     border-radius: 20px;
+    font-size: 16px;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
 }
+
+.delete-button:hover, .upload-button:hover {
+    background-color: #FFB703;
+    transform: scale(1.05);
+}
+
   

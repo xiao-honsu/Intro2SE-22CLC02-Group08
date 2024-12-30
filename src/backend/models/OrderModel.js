@@ -7,7 +7,7 @@ const orderSchema = new mongoose.Schema({
     receiverPhoneNumber: { type: String, required: true },
     receiverEmail: { type: String, required: true },
     address: { type: String, required: true },
-    paymentMethod: { type: String, enum: ['COD', 'BANKING'], required: true },
+    paymentMethod: { type: String, enum: ['COD', 'Banking'], required: true },
     bank: { type: String },
     bankAccount: { type: String },
     orderDate: { type: Date, default: Date.now },
