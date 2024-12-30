@@ -209,7 +209,7 @@ function SellerUploadProduct() {
             </div>
 
 
-            <div className="button-choice">
+            <div className="button-choice-container">
                 <button className="delete-button" onClick={handleCancel}>Delete</button>
                 <button className="upload-button" onClick={handleUpload}>Upload</button>
             </div>
