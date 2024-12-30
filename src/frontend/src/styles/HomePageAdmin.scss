@@ -66,6 +66,7 @@ section {
 }
 
 .post-item .avt, .reports-item .avt {
+  width: 10%;
   margin-right: 30px;
   width: 60px;
   height: 60px;
@@ -74,23 +75,28 @@ section {
 }
 
 .post-item .prtImg  {
-  margin-left: 30px;
+  width: 20%;
+  margin-right: 30px;
   width: 150px;
   height: 150px;
   border: 2px black solid;
 }
 
 .post-item h6, .reports-item h6 {
+  width: 100px;
   padding-top: 10px;
   font-family: 'Roboto';
   font-size: 15px;
-  width: calc(25% - 90px);
 }
 
+.post-profile {
+  display: flex;
+}
 
 .post-details {
   margin-left: 50px;
   position: relative;
+  display: flex;
 }
 
 .button-container {

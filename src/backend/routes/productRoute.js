@@ -14,5 +14,6 @@ router.put("/update-status/:id", productController.updateProductStatus);
 router.delete("/:id", productController.deleteProduct);
 router.get("/seller/:sellerId", productController.getAllProductsBySeller);
 router.get('/recent/:sellerId', productController.getRecentProductsBySeller);
+router.get('/updated/today', productController.getProductsUpdatedToday);
 
 module.exports = router;

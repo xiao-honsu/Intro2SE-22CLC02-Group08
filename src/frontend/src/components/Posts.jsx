@@ -1,31 +1,36 @@
 import React from "react";
 
-const Posts = () => {
-    return (
-      <section className="posts">
-        <div className="post-item">
-          <img src="avt1.jpg" className="avt" alt="Post" />
-          <h6>bocchi</h6>
-          <img src="mostSearch-bag.jpg" className="prtImg" alt="Post" />
+const Posts = ({ posts }) => {
+  return (
+    <section className="posts">
+      {posts.map((post) => (
+        <div className="post-item" key={post._id}>
+          <div className="post-profile">
+          <img
+            src={post.sellerID.avatar} 
+            className="avt"
+            alt="User Avatar"
+          />
+          <h6>{post.sellerID.username}</h6> 
+          </div>
+          
+
           <div className="post-details">
-            <p>blabla</p>
-            <p>300,000</p>
-            <p>Description: Lorem ipsum dolor sit amet...</p>
-          </div>  
-        </div>
-        <div className="post-item">
-          <img src="avt1.jpg" className="avt" alt="Post" />
-          <h6>a Duke</h6>
-          <img src="mostSearch-bag.jpg" className="prtImg" alt="Post" />
-          <div className="post-details">
-            <p>blabla</p>
-            <p>300,000</p>
-            <p>Description: Lorem ipsum dolor sit amet...</p>
+          <img
+            src={post.images[0]} 
+            className="prtImg"
+            alt="Product"
+          />
+          <div className="post-details-text">
+            <p>Product name: {post.productName}</p>
+            <p>Price: {post.price.toLocaleString()} VND</p> 
+            <p>Description: {post.description}</p>
+          </div>
           </div>
         </div>
-      </section>
-    );
-  };
-  
-  export default Posts;
-  
+      ))}
+    </section>
+  );
+};
+
+export default Posts;

@@ -253,7 +253,27 @@ const productController = {
         }
     },
     
+    getProductsUpdatedToday: async (req, res) => {
+        try {
 
+            const startOfToday = new Date();
+            startOfToday.setHours(0, 0, 0, 0);
+    
+            const endOfToday = new Date();
+            endOfToday.setHours(23, 59, 59, 999);
+            const products = await ProductModel.find({
+                statusUpdatedAt: { $gte: startOfToday, $lt: endOfToday },
+            })
+                .populate('sellerID', 'username email avatar totalSoldProducts') 
+                .exec();
+    
+            res.json({ success: true, products });
+        } catch (error) {
+            console.error('Error fetching products updated today:', error);
+            res.json({ success: false, message: 'Failed to fetch products' });
+        }
+    },
+    
 };
 
 module.exports = productController;

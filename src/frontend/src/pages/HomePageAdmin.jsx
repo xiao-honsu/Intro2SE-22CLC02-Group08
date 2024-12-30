@@ -15,6 +15,7 @@ function HomePageAdmin() {
     const [userType] = useState('admin');
     const [products, setProducts] = useState([]);
     const [reports, setReports] = useState([]);  
+    const [todayPosts, setTodayPosts] = useState([]);
     const [loading, setLoading] = useState(true); 
     const [statistics, setStatistics] = useState(null);
 
@@ -35,6 +36,13 @@ function HomePageAdmin() {
                     console.error('Failed to fetch reports:', reportResponse.message);
                 }
 
+                const todayPostsResponse = await productAPI.getProductsUpdatedToday();
+                if (todayPostsResponse.success) {
+                    setTodayPosts(todayPostsResponse.products || []);
+                } else {
+                    console.error('Failed to fetch today posts:', todayPostsResponse.message);
+                }
+                console.log(todayPostsResponse.products);
                 const statisticsResponse = await statisticsAPI.getStatistics();
                 if (statisticsResponse.success) {
                     setStatistics(statisticsResponse.statistics); 
@@ -59,6 +67,7 @@ function HomePageAdmin() {
     // Lấy tối đa 3 sản phẩm đầu tiên
     const productsToShow = products.slice(0, 3);
     const reportsToShow = reports.slice(0, 3);
+    const todayPostsToShow = todayPosts.slice(0, 3);
     return (
         <div className="main-container">
             <div className="header-wrapper">
@@ -84,7 +93,7 @@ function HomePageAdmin() {
                             Product
                         </div>
                     </div>
-                    <Posts />
+                    <Posts posts={todayPostsToShow} />
                     <Link to="/PostsSeeAll">See All</Link>
                 </div>
             </div>

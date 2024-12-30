@@ -7,16 +7,15 @@ import '../styles/UnapprovedDetail.scss';
 function UnapprovedDetail() {
     const [userType, setUserType] = useState('admin');
     const [loading, setLoading] = useState(true);
-    const location = useLocation(); // Lấy thông tin từ state
-    const [product, setProduct] = useState(location.state?.product || null); // Lấy sản phẩm từ state
-    const navigate = useNavigate(); // Dùng để điều hướng về trang trước
+    const location = useLocation();
+    const [product, setProduct] = useState(location.state?.product || null); 
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         if (!product) {
-            // Nếu không có sản phẩm trong state, có thể gọi API để lấy dữ liệu
             const fetchProductDetails = async () => {
                 try {
-                    const response = await productAPI.getProductById(productId); // Giả sử bạn có productId
+                    const response = await productAPI.getProductById(productId); 
                     if (response.success) {
                         setProduct(response.product);
                     } else {
@@ -31,9 +30,9 @@ function UnapprovedDetail() {
 
             fetchProductDetails();
         } else {
-            setLoading(false); // Nếu có sản phẩm trong state thì không cần gọi API
+            setLoading(false); 
         }
-    }, [product, location.state?.product]); // Nếu state thay đổi thì gọi lại
+    }, [product, location.state?.product]); 
 
     if (loading) {
         return <div>Loading...</div>;
@@ -49,15 +48,15 @@ function UnapprovedDetail() {
             const response = await productAPI.updateProductStatus(product._id, { status: 'Not Purchased' });
             if (response.success) {
                 // Hiển thị thông báo thành công
-                alert('Sản phẩm đã được phê duyệt và cập nhật trạng thái thành công.');
+                alert('The product has been approved and the status updated successfully.');
                 // Quay lại trang ProductsSeeAll
                 navigate('/ProductsSeeAll');
             } else {
-                alert('Đã có lỗi xảy ra khi cập nhật trạng thái sản phẩm.');
+                alert('An error occurred while updating the product status.');
             }
         } catch (error) {
             console.error('Lỗi khi phê duyệt sản phẩm:', error);
-            alert('Lỗi khi phê duyệt sản phẩm.');
+            alert('Error when approving product.');
         }
     };
 
@@ -66,14 +65,14 @@ function UnapprovedDetail() {
         try {
             const response = await productAPI.deleteProduct(product._id); // Xóa sản phẩm
             if (response.success) {
-                alert('Sản phẩm đã bị từ chối và xóa khỏi hệ thống.');
+                alert('The product has been declined and removed from the system.');
                 navigate('/ProductsSeeAll'); // Quay lại trang ProductsSeeAll
             } else {
-                alert('Đã có lỗi xảy ra khi từ chối và xóa sản phẩm.');
+                alert('An error occurred while declining and deleting the product.');
             }
         } catch (error) {
             console.error('Lỗi khi từ chối và xóa sản phẩm:', error);
-            alert('Lỗi khi từ chối và xóa sản phẩm.');
+            alert('Error when declining and deleting products.');
         }
     };
 

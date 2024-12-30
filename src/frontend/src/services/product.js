@@ -141,5 +141,22 @@ const productAPI = {
         }
     },
 
+    getProductsUpdatedToday: async () => {
+        try {
+            const response = await fetch(`${BASE_URL}/updated/today`, {
+                method: "GET",
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch today's products.");
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error("Error fetching today's products:", error);
+            return { success: false, message: "An error occurred" };
+        }
+    },
+
 };
 export default productAPI;
