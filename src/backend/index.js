@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const dotenv = require("dotenv");
+require('dotenv').config();
 const mongoose = require("mongoose");
 const path = require("path");
 const authRoutes = require("./routes/authRoute"); 
@@ -18,7 +18,6 @@ const accessHistoryRoutes = require("./routes/accessHistoryRoute");
 const StatisticsRoutes = require("./routes/statisticsRoute");
 const supportRoutes = require("./routes/supportRoute");
 
-dotenv.config();
 const app = express();
 app.use('/mockData', express.static(path.join(__dirname, 'mockData')));
 // Middleware

@@ -1,42 +1,63 @@
-import React, { useContext } from 'react';    
-import { Link } from "react-router-dom";
-import { Card, Form, Button } from "react-bootstrap";
+import React, { useState } from 'react';
+import { Card, Form, Button, Alert } from "react-bootstrap";
+import authAPI from "../services/auth";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import UserContext from "../context/userContext";
-import '../styles/PasswordRecovery.scss'
+import '../styles/PasswordRecovery.scss';
 
-function PasswordRecoveryPage () {
-    const { setUserType } = useContext(UserContext);
-    setUserType("guest")
+function PasswordRecoveryPage() {
+    const [email, setEmail] = useState("");
+    const [message, setMessage] = useState("");
+    const [error, setError] = useState("");
+
+    const handlePasswordRecovery = async (e) => {
+        e.preventDefault();
+        setMessage("");
+        setError("");
+
+        try {
+            const res = await authAPI.forgotPassword({ email });
+            if (res.success) {
+                setMessage("A new password has been sent to your email.");
+            } else {
+                setError(res.message || "Failed to reset password.");
+            }
+        } catch (error) {
+            console.error("Error during password recovery:", error);
+            setError("An error occurred.");
+        }
+    };
 
     return (
         <div className="main-container">
-            <div className="header-wrapper">
-                <Header showSearch={false} showNav={false}  />
-            </div>
+            <Header showSearch={false} showNav={false} />
             <div className="pass-recover-container">
                 <Card className="pass-recover-card">
                     <Card.Body>
-                        <h3 className="pass-recover-title">Password Recovery</h3>
-                        <Form>
+                        <h3 className="pass-recover-title">Forgot Password</h3>
+                        <Form onSubmit={handlePasswordRecovery}>
                             <Form.Group controlId="formEmail" className="mb-3">
-                                <Form.Control type="email" placeholder="Your email" className="pass-recover-input" />
-                            </Form.Group>        
-                            <Link to="/login">
-                                <Button variant="warning" className="pass-recover-button">Submit</Button>
-                            </Link>
+                                <Form.Control
+                                    type="email"
+                                    placeholder="Your email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                            </Form.Group>
+                            <Button type="submit" variant="warning" className="pass-recover-button">
+                                Reset Password
+                            </Button>
                         </Form>
-
-                        <hr />
+                        {message && <Alert variant="success" className="mt-3">{message}</Alert>}
+                        {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
                         <p className="login-text">
-                        Already have an account? <a href="/login">Log in</a>
+                            Go to Login page <a href="/login">Log in</a>
                         </p>
-                        <hr />
                     </Card.Body>
                 </Card>
             </div>
-            <Footer showBanner={ false }/>
+            <Footer showBanner={false} />
         </div>
     );
 }

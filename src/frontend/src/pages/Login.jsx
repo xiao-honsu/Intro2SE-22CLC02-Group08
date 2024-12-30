@@ -90,6 +90,11 @@ function LoginPage() {
                         <p className="signup-text">
                             Forgot password? <a href="/PasswordRecovery">Reset password</a>
                         </p>
+
+                        <p className="signup-text">
+                        Change your password? <a href="/update-password">Update Password</a>
+                        </p>
+
                     </Card.Body>
                 </Card>
             </div>

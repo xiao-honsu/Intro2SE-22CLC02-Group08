@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/Login';
-
+import UpdatePasswordPage from './pages/UpdatePasswordPage';
 import SignUpPage from './pages/SignUp';
 import ChooseRolePage from './pages/ChooseRole';
 import PasswordRecoveryPage from './pages/PasswordRecovery';
@@ -45,6 +45,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/update-password" element={<UpdatePasswordPage />} />
         <Route path="/SignUp" element={<SignUpPage />} />
         <Route path="/ChooseRole" element={<ChooseRolePage />} />
         <Route path="/PasswordRecovery" element={<PasswordRecoveryPage />} />
