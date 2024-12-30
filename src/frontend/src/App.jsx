@@ -41,7 +41,7 @@ function App() {
   <UserProvider>
     <Router>
       <ScrollToTop />
-      <HelpButton />
+      
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
