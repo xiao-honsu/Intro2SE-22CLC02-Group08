@@ -82,8 +82,15 @@ section {
   border: 2px black solid;
 }
 
-.post-item h6, .reports-item h6 {
+.post-item h6  {
   width: 100px;
+  padding-top: 10px;
+  font-family: 'Roboto';
+  font-size: 15px;
+}
+
+.reports-item h6 {
+  width: calc(25% - 90px);
   padding-top: 10px;
   font-family: 'Roboto';
   font-size: 15px;
