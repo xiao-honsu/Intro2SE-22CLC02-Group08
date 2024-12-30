@@ -1,5 +1,6 @@
 const MessageModel = require("../models/MessageModel");
 const UserModel = require("../models/UserModel");
+const NotificationModel = require("../models/NotificationModel");
 
 const messageController = {
     getMessagesWithUser: async (req, res) => {
@@ -29,10 +30,26 @@ const messageController = {
                 receiverID,
                 content
             });
-    
-            const savedMessage = await newMessage.save();
-            console.log(savedMessage);
-    
+            
+            const lastMessage = await MessageModel.findOne({
+                senderID: receiverID,
+                receiverID: senderID,
+            }).sort({ timestamp: -1 });
+
+            const currentTime = new Date();
+
+            if (!lastMessage || (currentTime - new Date(lastMessage.timestamp)) / (1000 * 60) > 15 ) {
+                const senderUser = await UserModel.findById(senderID).select("username");
+                const notificationContent = `${senderUser.username} has sent you a message.`;
+
+                await NotificationModel.create({
+                    receiverID,
+                    content: notificationContent,
+                    role: senderUser.role, 
+                });
+            }
+
+            const savedMessage = await newMessage.save();    
             res.status(201).json({ success: true, message: savedMessage });
         } catch (error) {
             console.error("Error sending message:", error);

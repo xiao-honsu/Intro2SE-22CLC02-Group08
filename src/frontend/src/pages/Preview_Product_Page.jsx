@@ -24,6 +24,7 @@ function Preview() {
     const [rating, setRating] = useState(null);
     const [loading, setLoading] = useState(true);
     const [mainImage, setMainImage] = useState("");
+    const [listProducts, setListProducts] = useState([]);
 
     // start report
     const [show_report_box, setShow_report_box] = useState(false);
@@ -92,6 +93,21 @@ function Preview() {
     
         fetchProductDetail();
     }, [id]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await productAPI.getAllProductsNotPurchased();
+                if (response.success) {
+                    setListProducts(response.products);
+                }
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            }
+        };
+
+        fetchProducts();
+    }, []);
 
     useEffect(() => {
         if (product && product.images && product.images.length > 0) {
@@ -231,8 +247,8 @@ function Preview() {
             <div className="product-list-container">
                 <h2 className="product-list-title">Similar items</h2>
                 <div className="product-grid">
-                    {dummyProducts.map((product) => (
-                      <ProductCard key={product.id} id={product.id} image={product.image} name={product.name} price={product.price} />
+                    {listProducts.map((product) => (
+                      <ProductCard key={product._id} id={product._id} image={product.images[0]} name={product.productName} price={product.price} />
                     ))}
                 </div>
             </div>

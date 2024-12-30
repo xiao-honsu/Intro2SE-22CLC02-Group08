@@ -6,6 +6,7 @@ import MostSearchedItems from '../components/MostSearchedItem';
 import ProductCard from '../components/ProductCard';
 import About from '../components/About';
 import Footer from '../components/Footer';
+import HelpButton from '../components/Help';
 import UserContext from "../context/userContext";
 import userAPI from "../services/user";
 
@@ -56,7 +57,7 @@ function HomePageBuyer() {
 
   return (
     <div className="main-container">
-    
+
     
         <Header />
     
@@ -88,6 +89,7 @@ function HomePageBuyer() {
 
     <About />
     <Footer />
+    <HelpButton />
       </div>
     </div>
   );

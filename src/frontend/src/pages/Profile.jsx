@@ -8,7 +8,7 @@ import Category from '../components/Category';
 import BuyerProduct from "../components/BuyerProduct";
 import SellerProduct from "../components/SellerProduct";
 import UserSidebar from "../components/UserSidebar";
-import Help from '../components/Help';
+import HelpButton from '../components/Help';
 
 import UserContext from "../context/userContext";
 import userAPI from "../services/user";
@@ -159,7 +159,6 @@ function Profile() {
                         </Tabs>
                         <SellerProduct list_orders={filteredOrders2.filter(order => order.status === "Not Purchased")} 
                             isMyProfile={isMyProfile} />
-                        <Help />
                     </>
                 )}
 
@@ -198,6 +197,7 @@ function Profile() {
 
             
             <Footer />
+            <HelpButton />
         </div>
     );
 }

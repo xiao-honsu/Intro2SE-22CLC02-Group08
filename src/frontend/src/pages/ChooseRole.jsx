@@ -27,9 +27,6 @@ function ChooseRolePage () {
                 setUserType(role);
                 localStorage.setItem("userType", role);
 
-                console.log("id: ", localStorage.getItem("id"));
-                console.log("type: ", localStorage.getItem("userType"));
-                
                 const userInfo = await userAPI.getProfile(id); // Gọi API lấy thông tin người dùng
                 if (userInfo.success) {
                     setUserInfo(userInfo);  // Lưu thông tin người dùng vào context

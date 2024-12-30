@@ -1,7 +1,9 @@
 const ProductModel = require("../models/ProductModel");
 const OrderModel = require("../models/OrderModel");
 const NotificationModel = require("../models/NotificationModel");
+const AdminNotificationModel = require("../models/AdminNotificationModel");
 const UserModel = require('../models/UserModel');
+const AdminModel = require('../models/AdminModel');
 
 const productController = {
     createProduct: async (req, res) => {
@@ -33,6 +35,15 @@ const productController = {
             });
 
             await newProduct.save();
+
+            const admins = await AdminModel.find(); 
+            const notifications = admins.map(admin => ({
+                receiverID: admin._id,
+                content: `New product "${productName}" has been posted and is awaiting approval.`,
+                role: "admin",
+            }));
+
+        await AdminNotificationModel.insertMany(notifications);
             return res.status(201).json({ success: true, message: "Product uploaded successfully, awaiting admin approval.", product: newProduct });
         } catch (error) {
             console.error("Error creating product:", error);
@@ -52,7 +63,7 @@ const productController = {
 
     getAllProductsNotPurchased: async (req, res) => {
         try {
-            const products = await ProductModel.find({ status: 'Not Purchased' });
+            const products = await ProductModel.find({ status: 'Not Purchased' }).sort({ statusUpdatedAt: -1 });
             return res.status(200).json({ success: true, products });
         } catch (error) {
             console.error("Error fetching products:", error);
@@ -68,9 +79,9 @@ const productController = {
         }
     
         try {
-            const product = await ProductModel.findById(id)
+            const product = await ProductModel.findById(id).sort({ statusUpdatedAt: -1 })
                 .populate('categoryIDs', 'categoryName')
-                .populate('sellerID', 'username avatar');
+                .populate('sellerID', 'username avatar bank bankAccount');
     
             if (!product) {
                 return res.status(404).json({ success: false, message: "Product not found." });
@@ -236,7 +247,7 @@ const productController = {
                 return res.status(400).json({ success: false, message: "Invalid or missing seller ID." });
             }
     
-            const products = await ProductModel.find({ sellerID: sellerId, status: 'Not Purchased'  })
+            const products = await ProductModel.find({ sellerID: sellerId, status: 'Not Purchased'  }).sort({ statusUpdatedAt: -1 })
                 .sort({ createdAt: -1 }) 
                 .limit(limit) 
                 .populate("categoryIDs", "categoryName") 

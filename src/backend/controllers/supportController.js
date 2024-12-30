@@ -1,57 +1,38 @@
 const SupportModel = require("../models/SupportModel");
 const AdminModel = require("../models/AdminModel");
+const mongoose = require("mongoose");
 
 const supportController = {
-    sendMessage: async (req, res) => {
+    findAdminForUser: async (req, res) => {
         try {
-            const { senderID, message } = req.body;
-
-           
-            console.log("Fetching admin list...");
-            const admins = await AdminModel.find();
-            console.log("Admins found:", admins);
-
-            if (admins.length === 0) {
-                return res.status(404).json({ success: false, message: "No admin available" });
+            const { userID } = req.body;
+    
+            if (!mongoose.Types.ObjectId.isValid(userID)) {
+                return res.status(400).json({ success: false, message: "Invalid userID" });
             }
-
-            const randomAdmin = admins[Math.floor(Math.random() * admins.length)];
-            console.log("Selected admin:", randomAdmin);
-
-           
-            const newMessage = new SupportModel({
-                senderID,
-                receiverID: randomAdmin._id,
-                message,
-            });
-
-            const savedMessage = await newMessage.save();
-            console.log("Saved message:", savedMessage);
-
-            return res.status(201).json({ success: true, message: savedMessage });
+    
+            let existingMessage = await SupportModel.findOne({ senderID: userID }).sort({ timestamp: -1 });
+    
+            let adminID;
+            if (!existingMessage) {
+                const admins = await AdminModel.find();
+                if (admins.length === 0) {
+                    return res.status(404).json({ success: false, message: "No admin available" });
+                }
+    
+                const randomAdmin = admins[Math.floor(Math.random() * admins.length)];
+                adminID = randomAdmin._id;
+            } else {
+                adminID = existingMessage.receiverID;
+            }
+    
+            return res.status(200).json({ success: true, adminID });
         } catch (error) {
-            console.error("Error sending support message:", error);
-            res.status(500).json({ success: false, message: "Failed to send message" });
+            console.error("Error finding admin for user:", error.message);
+            res.status(500).json({ success: false, message: "Failed to find admin." });
         }
     },
-
-   
-    getMessages: async (req, res) => {
-        try {
-            const { userId } = req.params;
-
-            const messages = await SupportModel.find({
-                senderID: userId,
-            })
-                .populate("receiverID", "username")
-                .sort({ timestamp: 1 });
-
-            res.status(200).json({ success: true, messages: messages || [] });
-        } catch (error) {
-            console.error("Error fetching support messages:", error);
-            res.status(500).json({ success: false, message: "Failed to fetch messages" });
-        }
-    },
+    
 };
 
 module.exports = supportController;

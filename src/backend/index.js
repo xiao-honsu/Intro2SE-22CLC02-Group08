@@ -17,6 +17,8 @@ const messageRoutes = require("./routes/messageRoute");
 const accessHistoryRoutes = require("./routes/accessHistoryRoute");
 const StatisticsRoutes = require("./routes/statisticsRoute");
 const supportRoutes = require("./routes/supportRoute");
+const adminNotificationRoutes = require("./routes/adminNotificationRoute");
+const supportChatRoutes = require("./routes/supportChatRoute");
 
 const app = express();
 app.use('/mockData', express.static(path.join(__dirname, 'mockData')));
@@ -50,6 +52,8 @@ app.use("/message", messageRoutes);
 app.use("/access_history", accessHistoryRoutes);
 app.use("/statistics", StatisticsRoutes);
 app.use("/support", supportRoutes);
+app.use("/admin-notification", adminNotificationRoutes);
+app.use("/support-chat", supportChatRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {

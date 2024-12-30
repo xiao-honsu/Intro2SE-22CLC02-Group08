@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Stats from "../components/Stats";
 import Posts from "../components/Posts";
@@ -9,10 +9,11 @@ import '../styles/HomePageAdmin.scss';
 import productAPI from '../services/product'; 
 import reportAPI from '../services/report'; 
 import statisticsAPI from '../services/statistics';
-
+import UserContext from "../context/userContext";
+import adminAPI from '../services/admin';
 
 function HomePageAdmin() {
-    const [userType] = useState('admin');
+    const { userType, setUserType, userInfo, setUserInfo } = useContext(UserContext);
     const [products, setProducts] = useState([]);
     const [reports, setReports] = useState([]);  
     const [todayPosts, setTodayPosts] = useState([]);
@@ -22,6 +23,22 @@ function HomePageAdmin() {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const userId = localStorage.getItem("id");
+                const stored_userType = localStorage.getItem("userType");
+
+                if (userId) {
+                    const data = await adminAPI.getProfile(userId);
+                    if (data.success) {
+                        setUserInfo(data);
+                    } else {
+                        console.error("Failed to fetch user info");
+                    }
+                }
+
+                if (stored_userType) {
+                    setUserType(stored_userType);
+                }
+
                 const productResponse = await productAPI.getAllProductsPending();
                 if (productResponse.success) {
                     setProducts(productResponse.products || []);
@@ -58,7 +75,7 @@ function HomePageAdmin() {
         };
 
         fetchData();
-    }, []);
+    }, [setUserType, setUserInfo]);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -71,7 +88,7 @@ function HomePageAdmin() {
     return (
         <div className="main-container">
             <div className="header-wrapper">
-                <Header userType={userType} />
+                <Header />
             </div>
             {statistics && (
                 <Stats 

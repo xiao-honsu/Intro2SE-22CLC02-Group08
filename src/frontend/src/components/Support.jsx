@@ -1,31 +1,42 @@
 import React, { useState, useEffect } from "react";
 import supportAPI from "../services/support";
+import supportChatAPI from "../services/supportChat";
 import "../styles/Support.scss";
 
 const Support = () => { 
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const userID = localStorage.getItem("id");
+  const [adminID, setAdminID] = useState(null);
+
   useEffect(() => {
-    const fetchMessages = async () => {
+    const initializeChat = async () => {
         try {
-            const response = await supportAPI.getMessages(userID);
-            if (response.success) {
-                setMessages(response.messages);
+            // Tìm admin đã gán hoặc gán admin mới
+            const adminResponse = await supportAPI.findAdminForUser(userID);
+            if (adminResponse.success) {
+                setAdminID(adminResponse.adminID);
+
+                // Sau khi có adminID, lấy danh sách tin nhắn
+                const messagesResponse = await supportChatAPI.getMessages(userID, adminResponse.adminID);
+                if (messagesResponse.success) {
+                    setMessages(messagesResponse.messages);
+                }
             }
         } catch (error) {
-            console.error("Error fetching support messages:", error);
+            console.error("Error initializing chat:", error);
         }
     };
 
-    fetchMessages();
+    initializeChat();
 }, [userID]);
 
 const handleSendMessage = async () => {
     if (newMessage.trim() === "") return;
 
     try {
-        const response = await supportAPI.sendMessage(userID, newMessage);
+      console.log("Sending data:", { senderID: userID, message: newMessage });
+      const response = await supportChatAPI.sendMessage(userID, adminID, newMessage, "user");
         if (response.success) {
             setMessages((prev) => [...prev, response.message]);
             setNewMessage("");

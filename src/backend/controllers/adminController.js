@@ -16,6 +16,7 @@ const adminController = {
                                           adminId: admin._id,
                                           username: admin.username,
                                           avatar: admin.avatar || "", 
+                                          role: "admin",
             });
         } catch (error) {
             console.error("Error during login: ", error);

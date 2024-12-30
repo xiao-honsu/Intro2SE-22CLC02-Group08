@@ -1,20 +1,20 @@
-const NotificationModel = require("../models/NotificationModel");
+const AdminNotificationModel = require("../models/AdminNotificationModel");
 
-const notificationController = {
+const adminNotificationController = {
     getNotifications: async (req, res) => {
         try {
             const { receiverID } = req.params;
             const { role } = req.query;
-            
+
             const filter = { receiverID };
             if (role) {
                 filter.role = role; 
             }
 
-            const notifications = await NotificationModel.find(filter)
+            const notifications = await AdminNotificationModel.find(filter)
                 .sort({ timestamp: -1 }) 
                 .limit(50); 
-            
+
             return res.status(200).json({ success: true, notifications });
         } catch (error) {
             console.error("Error fetching notifications:", error);
@@ -26,7 +26,7 @@ const notificationController = {
         try {
             const { notificationID } = req.params;
     
-            const updatedNotification = await NotificationModel.findByIdAndUpdate(
+            const updatedNotification = await AdminNotificationModel.findByIdAndUpdate(
                 notificationID,
                 { isRead: true },
                 { new: true }
@@ -50,4 +50,4 @@ const notificationController = {
 
 };
 
-module.exports = notificationController;
+module.exports = adminNotificationController;

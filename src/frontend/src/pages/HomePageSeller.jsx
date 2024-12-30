@@ -6,6 +6,7 @@ import MostSearchedItems from '../components/MostSearchedItem';
 import ProductCard from '../components/ProductCard';
 import About from '../components/About';
 import Footer from '../components/Footer';
+import HelpButton from '../components/Help';
 import RecentPostedSeller from '../components/RecentPostedSeller';
 import UserContext from "../context/userContext";
 import '../styles/HomePage.scss';
@@ -74,10 +75,6 @@ function HomePageSeller() {
     <p></p> 
   )}
 </div>
-
-
-        
-
         <div className="product-list-container">
           <h2 className="product-list-title">Recently Posted</h2>
           <div className="product-grid">
@@ -95,6 +92,7 @@ function HomePageSeller() {
         
     <About />
     <Footer />
+    <HelpButton />
       </div>
     </div>
   );

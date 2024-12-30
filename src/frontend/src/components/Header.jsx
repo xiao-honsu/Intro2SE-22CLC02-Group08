@@ -5,12 +5,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faCartShopping, faUser, faBell, faCommentDots } from "@fortawesome/free-solid-svg-icons";
 import BellWithDot from "./BellWithDot";
 import Chat from './Chat';
+import ChatAdmin from './ChatAdmin';
 import Notification from "./Notification";
 
 import UserContext from "../context/userContext";
 import userAPI from "../services/user";
 import adminAPI from "../services/admin";
+import adminNotificationAPI from "../services/adminNotification";
 import notificationAPI from "../services/notification";
+
 import accessHistoryAPI from "../services/accessHistory";
 
 import "../styles/Header.scss";
@@ -36,9 +39,13 @@ function Header({ showSearch = true, showNav = true }) {
 
     useEffect(() => {
         const fetchNotifications = async () => {
-            if (userInfo?.userId) {
-                const response = await notificationAPI.getNotification(userInfo.userId, userType);
-                
+            if (userInfo?.userId || userInfo?.adminId) {
+                let response;
+                if (userInfo.role === "buyer" || userInfo.role === "seller") {
+                    response = await notificationAPI.getNotification(userInfo.userId, userInfo.role);
+                } else if (userInfo.role === "admin") {
+                    response = await adminNotificationAPI.getNotification(userInfo.adminId, userInfo.role);
+                }
                 if (response.success) {
                     setNotifications(response.notifications);               
                     const unreadExists = response.notifications.some((noti) => !noti.isRead);
@@ -47,10 +54,15 @@ function Header({ showSearch = true, showNav = true }) {
             }
         };
         fetchNotifications();
-    }, [userInfo?.userId, userType]);
+    }, [userInfo?.userId, userInfo?.adminId, userInfo?.role]);
 
     const handleMarkAsRead = async (notificationID) => {
-        const response = await notificationAPI.markAsRead(notificationID);
+        let response;
+        if (userInfo.role === "buyer" || userInfo.role === "seller") {
+            response = await notificationAPI.markAsRead(notificationID);
+        } else if (userInfo.role === "admin") {
+            response = await adminNotificationAPI.markAsRead(notificationID);
+        }
         if (response.success) {
             setNotifications((prevNotifications) =>
                 prevNotifications.map((noti) =>
@@ -286,7 +298,7 @@ function Header({ showSearch = true, showNav = true }) {
                             <FontAwesomeIcon icon={faCommentDots} />
                         </div>
                         {isChatOpen && (
-                            <Chat userID={userInfo.userId} />
+                            <ChatAdmin adminID={userInfo.adminId} />
                         )}
                     </div>
 
