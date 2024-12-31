@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000/support";
+const BASE_URL = "https://intro2se-22clc02-group08-back-end.onrender.com/support";
 
 const supportAPI = {
     findAdminForUser: async (userID) => {

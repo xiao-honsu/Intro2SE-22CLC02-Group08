@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000/categories";
+const BASE_URL = "https://intro2se-22clc02-group08-back-end.onrender.com/categories";
 
 const categoryAPI = {
     getCategories: async () => {
