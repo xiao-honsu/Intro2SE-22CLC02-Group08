@@ -61,7 +61,7 @@ function SignUpPage () {
                                 <Button type="submit" variant="warning" className="signup-button">Sign up</Button>
                            
                         </Form>
-                        {message && <p className="text-center mt-3">{message}</p>}
+                        {message && <p className="text-center mt-3" style={{ color: 'white' }}>{message}</p>}
                         <hr />
                         <p className="login-text">
                         Already have an account? <Link to="/login">Log in</Link>

@@ -154,14 +154,6 @@ function Preview() {
     if (loading) return <div>Loading...</div>;
     if (!product) return <div>Product not found.</div>;
 
-
-    const dummyProducts = Array(16).fill({  
-        id: '1',
-        image: '/mostSearch-laptop.jpg', 
-        name: 'Tên đồ', 
-        price: 'Giá tiền', 
-    });
-
     return (
         <div className="main-container">
             <Header />

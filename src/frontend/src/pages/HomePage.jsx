@@ -37,7 +37,7 @@ function HomePage() {
     fetchProducts();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div></div>;
   if (!products.length) return <div>No products available at the moment.</div>;
 
 

@@ -34,8 +34,6 @@ import SupportPageBuyer from './pages/SupportPageBuyer';
 import PoliciesPageSeller from './pages/PoliciesPageSeller';
 import PoliciesPageBuyer from './pages/PoliciesPageBuyer';
 
-import HelpButton from './components/Help';
-
 function App() {
   return (
   <UserProvider>

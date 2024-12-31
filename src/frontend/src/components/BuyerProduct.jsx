@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Badge, Modal, Form  } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
@@ -10,6 +11,7 @@ import feedbackAPI from '../services/feedback';
 import "../styles/BuyerProduct.scss";
 
 const BuyerProduct = ({ orders, onOrdersChange }) => {
+    const navigate = useNavigate();
     const [show_rating_box, setShow_rating_box] = useState(false);
     const [rating, setRating] = useState(0);
     const [feedbackText, setFeedbackText] = useState("");
@@ -61,14 +63,6 @@ const BuyerProduct = ({ orders, onOrdersChange }) => {
             alert("Please write some feedback before submitting.");
             return;
         }
-        console.log("Order data:", order);
-
-        console.log("Submitting feedback data:", {
-            sellerID: order.productID.sellerID,
-            buyerID: order.buyerID,
-            rating,
-            comment: feedbackText
-        });
         try {
             const response = await feedbackAPI.createFeedback({
                 sellerID: order.productID.sellerID,
@@ -120,7 +114,7 @@ const BuyerProduct = ({ orders, onOrdersChange }) => {
                         <div className="order-actions d-flex justify-content-start mt-3">
                             {order.status === "Confirming" && <Button className="btn" onClick={() => handleCancelOrder(order._id)}>Cancel</Button>}
                             {order.status === "Received" && <Button className="btn" onClick={handleShow}>Rating</Button>}
-                            <Button className="btn">View shop</Button>
+                            <Button className="btn" onClick={() => navigate(`/profile/${order.productID.sellerID}`)}>View shop</Button>
                         </div>
 
                         <Modal show={show_rating_box} onHide={handleClose}>

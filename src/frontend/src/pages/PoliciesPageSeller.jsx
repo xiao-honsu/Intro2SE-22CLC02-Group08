@@ -16,8 +16,6 @@ function PoliciesPageSeller() {
         }
       }, [setUserType]);
     
-      console.log("id: ", localStorage.getItem("id"));
-                    console.log("type: ", localStorage.getItem("userType"));
     return (
         <div className="main-container">
 
@@ -31,7 +29,7 @@ function PoliciesPageSeller() {
         
             <div className="content-container">
                 <div className="title">Policies</div>
-                <div className="subtitle">Prohibited items</div>
+                <div className="subtitle" id="to-Prohibiteditems">Prohibited items</div>
                 <div className="content">
                     T-2Hands strictly prohibits the listing or sale of any items included in the list of prohibited items. If a Seller lists a prohibited item, it will be considered a violation of our Terms of Service regardless of whether the Seller’s actions were intentional. T-2Hands reserves the right to remove any listings it deems to be in violation or inappropriate at its sole discretion, and may also cancel any related transactions, including terminating or suspending accounts.<br/>
                     You are not allowed to use T-2Hands in connection with any products, services, transactions, or activities that:<br/>
@@ -127,7 +125,7 @@ function PoliciesPageSeller() {
                         •&ensp;Items, listings, photos, or content that promote or glorify hatred, violence, racism, or discrimination (as determined by us).
                     </div>
                 </div>
-                <div className="subtitle">Communication policy</div>
+                <div className="subtitle" id="to-communication">Communication policy</div>
                 <div className="content">
                     This policy describes how T-2Hands communicates with you electronically. We may revise this policy at any time by posting a revised version on our website. The revised version will take effect at the time we post it.<br/><br/>
                     Hardware and Software Requirements<br/>
@@ -141,7 +139,7 @@ function PoliciesPageSeller() {
                     <br/>
                     We will notify you if there are any significant changes to the hardware or software required to receive electronic communications from T-2Hands. By agreeing, you confirm that you have access to the necessary equipment and can receive, open, and print or download copies of any notifications for your records. You may print or save a copy of this notice for your records, as it may be modified at a later date.
                 </div>
-                <div className="subtitle">Safety guidelines</div>
+                <div className="subtitle" id="to-safety">Safety guidelines</div>
                 <div className="content">
                     We are committed to providing a safe, secure, and enjoyable marketplace for buyers and sellers. If a transaction encounters issues, someone attempts to scam others, or you notice any prohibited products, please message us at therecordnight202@gmail.com, and we will be happy to assist.<br/>
                     Online Safety:

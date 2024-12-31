@@ -139,9 +139,7 @@ function Header({ showSearch = true, showNav = true }) {
             localStorage.removeItem("userType");
             setUserType(null); 
             setUserInfo(null);
-            console.log("id: ", localStorage.getItem("id"));
-            console.log("type: ", localStorage.getItem("userType"));
-            navigate("/login");
+            navigate("/");
         } catch (error) {
             console.error("Error during logout:", error);
         }   
@@ -176,10 +174,10 @@ function Header({ showSearch = true, showNav = true }) {
         <nav className="header-nav d-flex align-items-center">
             {(userType !== "admin" && userType !== "buyer" && userType !== "seller") && (
                 <>
-                    <Link to="/login" className="nav-link mx-2" onClick={() => console.log('Navigating to login')}>
+                    <Link to="/login" className="nav-link mx-2">
   Login
 </Link>
-                    <Link to="/SignUp" className="nav-link mx-2" onClick={() => console.log('Navigating to sign up')}> Sign Up</Link>
+                    <Link to="/SignUp" className="nav-link mx-2"> Sign Up</Link>
                     <Link to="/login" className="btn btn-warning mx-2">Sell now</Link>
                     <Link to="/CartPage" className="nav-icon mx-2">
                         <FontAwesomeIcon icon={faCartShopping} />
@@ -232,7 +230,7 @@ function Header({ showSearch = true, showNav = true }) {
                             <div className="dropdown-menu">
                                 <Link to={`/Profile/${userInfo.userId}`} className="dropdown-item">Profile</Link>
                                 <Link to="/ChooseRole" className="dropdown-item">Role</Link>
-                                <Link to="/login" className="dropdown-item" onClick={handleLogout}>Log out</Link>
+                                <Link to="/" className="dropdown-item" onClick={handleLogout}>Log out</Link>
                             </div>
                         )}
                     </div>
@@ -275,7 +273,7 @@ function Header({ showSearch = true, showNav = true }) {
                             <div className="dropdown-menu">
                                 <Link to={`/Profile/${userInfo.userId}`} className="dropdown-item">Profile</Link>
                                 <Link to="/ChooseRole" className="dropdown-item">Role</Link>
-                                <Link to="/login" className="dropdown-item" onClick={handleLogout}>Log out</Link>
+                                <Link to="/" className="dropdown-item" onClick={handleLogout}>Log out</Link>
                             </div>
                         )}
                     </div>

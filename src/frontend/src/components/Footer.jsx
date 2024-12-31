@@ -11,19 +11,17 @@ function Footer({ showBanner = true }) {
           <div className="footer-section">
             <h3>Support</h3>
             <ul>
-              <li><a href="#">Sales guidance</a></li>
-              <li><a href="#">Buyer protection policy</a></li>
-              <li><a href="#">Feedback</a></li>
-              <li><a href="#">Operating regulations</a></li>
+              <li><a href="/SupportPageSeller#toSalesguidance">Sales guidance</a></li>
+              <li><a href="/SupportPageSeller#to-protectionpolicy">Buyer protection policy</a></li>
+              <li><a href="/SupportPageSeller#to-feedback">Feedback</a></li>
             </ul>
           </div>
 
           <div className="footer-section">
             <h3>Account</h3>
             <ul>
-              <li><a href="#">Sign up</a></li>
-              <li><a href="#">Log in</a></li>
-              <li><a href="#">Messages</a></li>
+              <li><a href="/SignUp">Sign up</a></li>
+              <li><a href="/login">Log in</a></li>
             </ul>
           </div>
 
@@ -31,16 +29,16 @@ function Footer({ showBanner = true }) {
             <h3>About t2hands</h3>
             <ul>
               <li><a href="#to-about">About t2hands</a></li>
-              <li><a href="https://www.facebook.com/profile.php?id=100024478702552" target="_blank">Contact us</a></li>
+              <li><a href="https://www.facebook.com/profile.php?id=61569666026415" target="_blank">Contact us</a></li>
             </ul>
           </div>
 
           <div className="footer-section">
             <h3>Policies</h3>
             <ul>
-              <li><a href="#">Prohibited items</a></li>
-              <li><a href="#">Communication policy</a></li>
-              <li><a href="#">Safety guidelines</a></li>
+              <li><a href="/PoliciesPageSeller#to-Prohibiteditems">Prohibited items</a></li>
+              <li><a href="/PoliciesPageSeller#to-communication">Communication policy</a></li>
+              <li><a href="/PoliciesPageSeller#to-safety">Safety guidelines</a></li>
             </ul>
           </div>
         </div>
@@ -50,13 +48,13 @@ function Footer({ showBanner = true }) {
         <div className="footer-bottom">
             <div className="logo">t2hands</div>
             <div className="social-icons">
-                <a href="https://www.facebook.com/profile.php?id=100024478702552" target="_blank" className="icon facebook">
+                <a href="https://www.facebook.com/profile.php?id=61569666026415" target="_blank" className="icon facebook">
                     <FontAwesomeIcon icon={faFacebook} />
                 </a>
-                <a href="#" className="icon instagram">
+                <a href="https://www.instagram.com/t2hands_/" target="_blank" className="icon instagram">
                     <FontAwesomeIcon icon={faInstagram} />
                 </a>
-                <a href="#" className="icon twitter">
+                <a href="https://x.com/T2Hands_" target="_blank" className="icon twitter">
                     <FontAwesomeIcon icon={faXTwitter} />
                 </a>
                 <button
