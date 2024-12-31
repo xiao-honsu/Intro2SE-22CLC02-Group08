@@ -14,7 +14,7 @@ function Banner({ userType }) {
           subtitle: "Old but gold",
           description: "You can list your second-hand items for sale,<br />You can find what you need at a reasonable price.",
           buttonText: "SHOP NOW",
-          buttonAction: () => navigate("/Shop"), // Điều hướng tới trang shop
+          
         };
       case "seller":
         return {
@@ -22,7 +22,7 @@ function Banner({ userType }) {
           subtitle: "Turn your items into cash",
           description: "List your items and reach thousands of buyers.",
           buttonText: "SELL NOW",
-          buttonAction: () => navigate("/SellerUploadProduct"), // Điều hướng tới trang upload sản phẩm
+          buttonAction: () => navigate("/SellerUploadProduct"), 
         };
       case 'buyer':
         return {
@@ -30,7 +30,7 @@ function Banner({ userType }) {
           subtitle: "Shop Second-Hand Smartly",
           description: "Find high-quality items at unbeatable prices.",
           buttonText: "SHOP NOW",
-          buttonAction: () => navigate("/Shop"), // Điều hướng tới trang shop
+          
         };
       default:
         return {
@@ -38,7 +38,7 @@ function Banner({ userType }) {
           subtitle: "Find your perfect deal",
           description: "Sign up to explore the best second-hand items.",
           buttonText: "SHOP NOW",
-          buttonAction: () => navigate("/Shop"),
+          
         };
     }
   };

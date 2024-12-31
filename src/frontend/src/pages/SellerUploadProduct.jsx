@@ -154,7 +154,6 @@ function SellerUploadProduct() {
 
     const handleUpload = async () => {
         const uploadData = new FormData();
-        console.log("formData: ", formData);
         formData.images.forEach((file) => uploadData.append("images", file));
         uploadData.append("productName", formData.productName);
         uploadData.append("price", formData.price);
@@ -163,6 +162,10 @@ function SellerUploadProduct() {
         uploadData.append("categoryIDs", JSON.stringify(formData.categoryIDs));
         uploadData.append("sellerID", formData.sellerID);
 
+        if (!userInfo.bank) {
+            alert("Please provide your bank account information before uploading");
+            return;
+        }
         try {
             const response = await productAPI.createProduct(uploadData);
             if (response.success) {

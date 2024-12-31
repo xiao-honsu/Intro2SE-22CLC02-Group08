@@ -46,7 +46,6 @@ function Profile() {
                     setProfileInfo(data);
                 }
             }
-            console.log(profileInfo);
         };
     
         fetchUserInfo();

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/EditProfile.scss";
@@ -8,6 +8,7 @@ import UserContext from "../context/userContext";
 import userAPI from "../services/user";
 
 const EditProfile = () => {
+  const { id } = useParams();
   const { userInfo, setUserInfo } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -46,7 +47,7 @@ const EditProfile = () => {
   };
 
   const handleCancel = () => {
-    navigate(`/Profile/${userInfo.userId}`);
+    navigate(`/Profile/${id}`);
   };
 
   const handleSave = async () => {

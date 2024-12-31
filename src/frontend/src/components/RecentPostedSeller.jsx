@@ -27,8 +27,14 @@ function RecentPostedSeller({ userID }) {
     }
   }, [userID]); 
 
-  if (recentItems.length === 0) {
-    return <p>No recent items found</p>;
+  if (!recentItems || recentItems.length === 0) {
+    return (
+    <div className="RecentPostedSeller-container">
+      <h2 className="RecentPostedSeller-title">Your Recently Posted</h2>
+      <div className="RecentPostedSeller-content">
+      <p>No recent items found</p>
+      </div>
+    </div>)
   }
 
 

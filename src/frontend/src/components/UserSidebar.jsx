@@ -10,7 +10,7 @@ const UserSidebar = ({ profileInfo, isMyProfile }) => {
     const navigate = useNavigate();
   
     const handleEditProfile = () => {
-        navigate("/EditProfile");
+        navigate(`/EditProfile/${profileInfo.userId}`);
     }
 
     return (

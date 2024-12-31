@@ -62,7 +62,32 @@ const userController = {
 
             await user.save(); 
 
-            return res.status(200).json({ success: true, updatedUser: user });
+            let averageRating = 0;
+            if (user.role === "seller") {
+                const result = await FeedbackModel.aggregate([
+                    { $match: { sellerID: user._id } },
+                    {
+                        $group: {
+                            _id: "$sellerID",
+                            averageRating: { $avg: "$rating" },
+                        },
+                    },
+                ]);
+                averageRating = result.length > 0 ? parseFloat(result[0].averageRating.toFixed(1)) : 0;
+            }
+
+            return res.status(200).json({
+                success: true,
+                userId: user._id,
+                username: user.username,
+                avatar: user.avatar || "",
+                role: user.role,
+                signupDate: user.registrationDate,
+                numItems: user.totalSoldProducts || 0,
+                rating: averageRating || "0",
+                bank: user.bank || "",
+                bankAccount: user.bankAccount || "",
+            });
         } catch (error) {
             console.error("Error updating profile:", error);
             return res.status(500).json({ success: false, message: "Failed to update profile" });

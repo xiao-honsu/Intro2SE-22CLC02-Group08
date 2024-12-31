@@ -55,7 +55,7 @@ function App() {
         
         <Route path="/preview_product/:id" element={<Preview />} />
         <Route path="/Profile/:id" element={<Profile />} />
-        <Route path="/EditProfile" element={<EditProfile />} />
+        <Route path="/EditProfile/:id" element={<EditProfile />} />
         <Route path="/CartPage" element={<CartPage />} />
         <Route path="/Payment/:productID" element={<Payment />} />
         <Route path="/search" element={<SearchResult />} />
