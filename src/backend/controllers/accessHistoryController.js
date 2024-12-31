@@ -1,5 +1,5 @@
 const AccessHistoryModel = require('../models/AccessHistoryModel');
-
+const StatisticsModel = require('../models/StatisticsModel');
 
 const accessHistoryController = {
     addHistory: async (req, res) => {
