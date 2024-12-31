@@ -16,7 +16,15 @@ const accessHistoryController = {
             });
     
             await newHistory.save();
-    
+
+            if (status === 'Logged Out') {
+                await StatisticsModel.findOneAndUpdate(
+                    {},
+                    { $inc: { currentVisitors: -1 } },
+                    { sort: { date: -1 } } 
+                );
+            }
+
             res.status(201).json({ success: true, message: "Access history added successfully" });
         } catch (error) {
             console.error("Error adding access history:", error);

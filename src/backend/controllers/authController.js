@@ -1,6 +1,7 @@
 const UserModel = require('../models/UserModel');
 const AdminModel = require('../models/AdminModel');
 const AccessHistoryModel = require('../models/AccessHistoryModel');
+const Statistics = require('../models/StatisticsModel');
 const transporter = require("../config/emailConfig");
 const jwt = require('jsonwebtoken');
 const process = require("process");
@@ -64,13 +65,19 @@ const authController = {
             if (user) {
                 await AccessHistoryModel.create({
                     userID: user._id,
-                    status: 'Logged In', 
+                    status: 'Logged In',
                 });
-
+    
+                await Statistics.findOneAndUpdate(
+                    {},
+                    { $inc: { currentVisitors: 1 } },
+                    { sort: { date: -1 } } 
+                );
+    
                 return res.status(200).json({
                     success: true,
                     userType: "user",
-                    id: user._id, 
+                    id: user._id,
                     username: user.username
                 });
             }

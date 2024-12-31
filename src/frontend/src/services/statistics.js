@@ -20,7 +20,8 @@ const statisticsAPI = {
             console.error("Error during fetching statistics:", error);
             return { success: false, message: "An error occurred" };
         }
-    }
+    },
+
 
 };
 export default statisticsAPI;
